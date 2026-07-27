@@ -1,9 +1,9 @@
-# Daily IOC Report - 2026-07-27 13:35
+# Daily IOC Report - 2026-07-27 18:30
 
-- **urlhaus.csv**: Error - HTTPSConnectionPool(host='urlhaus.abuse.ch', port=443): Max retries exceeded with url: /downloads/csv_online/ (Caused by NameResolutionError("HTTPSConnection(host='urlhaus.abuse.ch', port=443): Failed to resolve 'urlhaus.abuse.ch' ([Errno -3] Temporary failure in name resolution)"))
-- **feodo_tracker.txt**: Error - HTTPSConnectionPool(host='feodotracker.abuse.ch', port=443): Max retries exceeded with url: /downloads/ipblocklist.txt (Caused by NameResolutionError("HTTPSConnection(host='feodotracker.abuse.ch', port=443): Failed to resolve 'feodotracker.abuse.ch' ([Errno -3] Temporary failure in name resolution)"))
-- **ssl_blacklist.csv**: Error - HTTPSConnectionPool(host='sslbl.abuse.ch', port=443): Max retries exceeded with url: /blacklist/sslipblacklist.csv (Caused by NameResolutionError("HTTPSConnection(host='sslbl.abuse.ch', port=443): Failed to resolve 'sslbl.abuse.ch' ([Errno -3] Temporary failure in name resolution)"))
-- **threatfox_recent.json**: Error - HTTPSConnectionPool(host='threatfox.abuse.ch', port=443): Max retries exceeded with url: /export/json/recent/ (Caused by NameResolutionError("HTTPSConnection(host='threatfox.abuse.ch', port=443): Failed to resolve 'threatfox.abuse.ch' ([Errno -3] Temporary failure in name resolution)"))
-- **top_malicious.txt**: Error - HTTPSConnectionPool(host='raw.githubusercontent.com', port=443): Max retries exceeded with url: /stamparm/ipsum/master/ipsum.txt (Caused by NameResolutionError("HTTPSConnection(host='raw.githubusercontent.com', port=443): Failed to resolve 'raw.githubusercontent.com' ([Errno -3] Temporary failure in name resolution)"))
+- **urlhaus.csv**: 3874 KB
+- **feodo_tracker.txt**: 0 KB
+- **ssl_blacklist.csv**: 0 KB
+- **threatfox_recent.json**: 3906 KB
+- **top_malicious.txt**: 1715 KB
 
-**Success rate:** 0/5 feeds
+**Success rate:** 5/5 feeds
