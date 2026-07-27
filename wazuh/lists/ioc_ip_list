@@ -1,0 +1,6 @@
+# Malicious IPs from daily IOC feed
+# Format: key:value  (value can be anything, usually just "1" or a tag)
+185.220.101.45:1
+45.33.32.156:1
+91.219.237.188:1
+104.244.76.189:1
