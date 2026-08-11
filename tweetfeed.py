@@ -24,6 +24,7 @@ feeds = [
 ]
 
 success_count = 0
+total_iocs = 0
 summary = [f"# Daily IOC Report - {now.strftime('%Y-%m-%d %H:%M')}", ""]
 
 for filename, url in feeds:
@@ -39,12 +40,22 @@ for filename, url in feeds:
         with open(path, "wb") as f:
             f.write(content)
 
+        # Simple IOC counting (line-based)
+        try:
+            text = content.decode("utf-8", errors="ignore")
+            lines = [line for line in text.splitlines() if line.strip() and not line.startswith("#")]
+            ioc_count = len(lines)
+        except:
+            ioc_count = 0
+
+        total_iocs += ioc_count
+
         if size_kb < 1:
             print(f"[!] {filename}: Empty or nearly empty ({size_kb:.1f} KB) - this may be expected")
             summary.append(f"- **{filename}**: Empty ({size_kb:.1f} KB)")
         else:
-            print(f"[+] Saved {filename} ({size_kb:.1f} KB)")
-            summary.append(f"- **{filename}**: {size_kb:.1f} KB")
+            print(f"[+] Saved {filename} ({size_kb:.1f} KB) - ~{ioc_count} entries")
+            summary.append(f"- **{filename}**: {size_kb:.1f} KB | ~{ioc_count} entries")
             success_count += 1
 
     except Exception as e:
@@ -56,6 +67,7 @@ report_path = OUTPUT_DIR / "daily_summary.md"
 with open(report_path, "w") as f:
     f.write("\n".join(summary))
     f.write(f"\n\n**Success rate:** {success_count}/{len(feeds)} feeds with data")
+    f.write(f"\n**Approximate total IOCs collected:** {total_iocs}")
 
 print(f"\n[+] Files saved to: {OUTPUT_DIR}")
 print(f"[+] Summary report saved: {report_path.name}")
