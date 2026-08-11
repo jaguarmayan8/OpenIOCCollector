@@ -14,13 +14,13 @@ This project collects, organizes, and stores IOCs from multiple open-source thre
 
 ## Feeds Currently Collected
 
-| Feed              | Type                  | Status      | Notes                     |
-|-------------------|-----------------------|-------------|---------------------------|
-| URLhaus           | Malware URLs          | Active      | abuse.ch                  |
-| ThreatFox         | Malware IOCs          | Active      | abuse.ch                  |
-| SSL Blacklist     | Malicious certificates| Active      | abuse.ch                  |
-| Feodo Tracker     | Botnet C2 IPs         | Empty       | Currently no active C2s   |
-| Top Malicious IPs | IP blocklist          | Active      | -                         |
+| Feed              | Type                        | Format     | Status    | Notes                                      |
+|-------------------|-----------------------------|------------|-----------|--------------------------------------------|
+| URLhaus           | Malware Distribution URLs   | CSV        | Active    | abuse.ch – recently observed malware URLs  |
+| ThreatFox         | Malware IOCs                | JSON       | Active    | abuse.ch – high confidence malware IOCs    |
+| SSL Blacklist     | Malicious SSL Certificates  | CSV        | Active    | abuse.ch – SHA1 fingerprints of bad certs  |
+| Feodo Tracker     | Botnet C2 IPs               | TXT/CSV    | Empty     | Currently no active C2s (post-takedowns)   |
+| Top Malicious IPs | Suspicious / Malicious IPs  | CSV/TXT    | Active    | Aggregated malicious IP list               |
 
 ## Project Structure
 
@@ -32,12 +32,27 @@ TwitterIoCsfeed/
 ├── tweetfeed.py
 ├── requirements.txt
 └── README.md
-How It Works
 
-The script downloads the latest IOCs from configured feeds.
-Files are saved into daily folders.
-Folders are later organized into Year/Year-Month structure.
-Results are pushed to this repository.
+How to Run
+
+git clone https://github.com/jaguarmayan8/TwitterIoCsfeed.git
+cd TwitterIoCsfeed
+pip install -r requirements.txt
+python3 tweetfeed.py
+
+Wazuh Integration (Planned / In Progress)
+This project is designed to support a detection engineering workflow in a home SOC lab.
+Current idea:
+
+Convert selected IOC files (especially IPs, domains, and hashes) into Wazuh CDB lists.
+Use those lists in custom rules for detection and enrichment.
+Eventually automate the process so new IOCs are regularly pushed into Wazuh.
+
+Example use cases:
+
+Block or alert on known malicious IPs from ThreatFox / SSLBL
+Enrich alerts with context from collected feeds
+Maintain an updated local threat intelligence source inside the lab
 
 Future Improvements
 
@@ -52,10 +67,3 @@ Jorge Tejada
 Cybersecurity | Detection Engineering | Home Lab
 License
 GPL-3.0
-text---
-
-### How to use it:
-
-1. On your Kali box, go to the project folder:
-```bash
-cd ~/TwitterIoCsfeed
