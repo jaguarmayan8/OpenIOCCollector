@@ -5,8 +5,13 @@ import requests
 
 print("=== IOC Collector Started ===")
 
-today = datetime.now().strftime("%Y%m%d")
-OUTPUT_DIR = Path("Output") / today
+now = datetime.now()
+today = now.strftime("%Y%m%d")
+year = now.strftime("%Y")
+year_month = now.strftime("%Y-%m")
+
+# New organized path: Output/2026/2026-08/20260811/
+OUTPUT_DIR = Path("Output") / year / year_month / today
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 feeds = [
@@ -19,7 +24,7 @@ feeds = [
 ]
 
 success_count = 0
-summary = [f"# Daily IOC Report - {datetime.now().strftime('%Y-%m-%d %H:%M')}", ""]
+summary = [f"# Daily IOC Report - {now.strftime('%Y-%m-%d %H:%M')}", ""]
 
 for filename, url in feeds:
     print(f"[*] Downloading {filename}...")
@@ -34,7 +39,7 @@ for filename, url in feeds:
         with open(path, "wb") as f:
             f.write(content)
 
-        if size_kb < 1:  # Less than 1 KB
+        if size_kb < 1:
             print(f"[!] {filename}: Empty or nearly empty ({size_kb:.1f} KB) - this may be expected")
             summary.append(f"- **{filename}**: Empty ({size_kb:.1f} KB)")
         else:
@@ -52,11 +57,11 @@ with open(report_path, "w") as f:
     f.write("\n".join(summary))
     f.write(f"\n\n**Success rate:** {success_count}/{len(feeds)} feeds with data")
 
-print(f"\n[+] Summary report saved: {report_path.name}")
+print(f"\n[+] Files saved to: {OUTPUT_DIR}")
+print(f"[+] Summary report saved: {report_path.name}")
 print(f"[+] Successfully downloaded {success_count}/{len(feeds)} feeds with data")
 print("=== IOC Collector Finished ===")
 
-# Exit with error only if almost everything failed
 if success_count < 2:
     print("[!] Too many failures - exiting with error")
     sys.exit(1)
