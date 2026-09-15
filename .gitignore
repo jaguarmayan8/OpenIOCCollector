@@ -3,3 +3,8 @@ __pycache__/
 cron.log
 run_andpush.sh.bak
 .venv/
+__pycache__/
+*.pyc
+cron.log
+run_andpush.sh.bak
+.venv/

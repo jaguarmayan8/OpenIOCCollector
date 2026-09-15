@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-15T19:17:27Z",
+  "generated_at": "2026-09-15T19:27:01Z",
   "day": "20260915",
   "day_path": "Output/2026/2026-09/20260915",
   "counts": {
@@ -7,7 +7,7 @@
     "domains": 4264,
     "urls": 14119,
     "hashes": 1308,
-    "ssl_sha1": 0
+    "ssl_sha1": 10715
   },
   "whitelist_dropped": {
     "url": 179
@@ -20,6 +20,7 @@
     "threatfox:domain": 3878,
     "threatfox:url": 341,
     "threatfox:hash": 1308,
+    "sslbl:ssl_sha1": 10715,
     "feodo:ip": 5,
     "ipsum:ip": 16604
   },
@@ -50,8 +51,8 @@
       "file": "ssl_blacklist.csv",
       "bytes": 807428,
       "sha256": "3aa0413c6a591529526726e86c58e4941242556278b83ab2a87ddcac5852dc6e",
-      "raw_rows": 0,
-      "status": "empty"
+      "raw_rows": 10715,
+      "status": "ok"
     },
     "feodo": {
       "file": "feodo_tracker.txt",
@@ -72,8 +73,8 @@
     }
   },
   "health": {
-    "ok": 4,
-    "empty": 1,
+    "ok": 5,
+    "empty": 0,
     "missing_or_error": 0,
     "total_configured": 5
   },

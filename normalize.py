@@ -328,8 +328,17 @@ def parse_sslbl(path: Path, buckets: Buckets) -> dict:
     for row in rows:
         if not row:
             continue
-        sha1 = row[0].strip().strip('"').lower()
-        if SHA1_RE.fullmatch(sha1):
+        # Live format: Listingdate,SHA1,Listingreason
+        sha1 = ""
+        if len(row) >= 2 and SHA1_RE.fullmatch(row[1].strip().strip('"').lower()):
+            sha1 = row[1].strip().strip('"').lower()
+        else:
+            for col in row:
+                c = col.strip().strip('"').lower()
+                if SHA1_RE.fullmatch(c):
+                    sha1 = c
+                    break
+        if sha1:
             raw += 1
             buckets.add_ssl(sha1, "sslbl")
     return {"raw_rows": raw, "status": "ok" if raw else "empty"}
