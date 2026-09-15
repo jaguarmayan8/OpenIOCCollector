@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-15T20:06:49Z",
+  "generated_at": "2026-09-15T20:15:03Z",
   "day": "20260915",
   "day_path": "Output/2026/2026-09/20260915",
   "counts": {
-    "ips": 20730,
-    "domains": 4267,
-    "urls": 14079,
+    "ips": 20723,
+    "domains": 4269,
+    "urls": 14052,
     "hashes": 1308,
     "ssl_sha1": 10715
   },
@@ -13,9 +13,9 @@
     "url": 179
   },
   "source_counts": {
-    "urlhaus:url": 13742,
-    "urlhaus:ip": 5533,
-    "urlhaus:domain": 8209,
+    "urlhaus:url": 13715,
+    "urlhaus:ip": 5500,
+    "urlhaus:domain": 8215,
     "threatfox:ip": 3979,
     "threatfox:url": 341,
     "threatfox:domain": 3880,
@@ -27,15 +27,15 @@
   "feeds": {
     "urlhaus": {
       "file": "urlhaus.csv",
-      "bytes": 3422457,
-      "sha256": "dc379f5272d0b82f2ff2b48d5f003ac266bd9705e5ac5c64e336e9cefb34d920",
-      "raw_rows": 13921,
+      "bytes": 3417031,
+      "sha256": "9374bd61bbe646e936b4e7feee59906e8a989ecebed06330b8ed534f8e53d445",
+      "raw_rows": 13894,
       "status": "ok"
     },
     "threatfox": {
       "file": "threatfox_recent.json",
       "bytes": 5747372,
-      "sha256": "bbf8b0a2fb2b4cdd10a92e37b744e0eb84fe5d22d6d312e9840a3a8823f1fc8a",
+      "sha256": "d21adf79884fe5204b299991ca3f404e52777d1b4f23106423ab529f8cf20d2b",
       "raw_rows": 9170,
       "status": "ok",
       "ioc_types": {

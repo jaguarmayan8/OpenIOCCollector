@@ -1518,6 +1518,7 @@ get.activatedd.win
 get.activates.win
 get.activtaed.win
 get.activted.win
+get.actrivated.win
 get.acttivated.win
 get.actvated.win
 get.ativated.win
@@ -2948,6 +2949,7 @@ qyzonygu.workers.dev
 r-exploring.gl.at.ply.gg
 r6qobdol.laken.store
 ra-hornig.de
+rabbitfuns.su
 rabihino.com
 racsoltd.net
 radcru.com
