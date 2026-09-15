@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-15T19:27:01Z",
+  "generated_at": "2026-09-15T20:06:49Z",
   "day": "20260915",
   "day_path": "Output/2026/2026-09/20260915",
   "counts": {
-    "ips": 20717,
-    "domains": 4264,
-    "urls": 14119,
+    "ips": 20730,
+    "domains": 4267,
+    "urls": 14079,
     "hashes": 1308,
     "ssl_sha1": 10715
   },
@@ -13,12 +13,12 @@
     "url": 179
   },
   "source_counts": {
-    "urlhaus:url": 13782,
-    "urlhaus:ip": 5572,
-    "urlhaus:domain": 8210,
-    "threatfox:ip": 3951,
-    "threatfox:domain": 3878,
+    "urlhaus:url": 13742,
+    "urlhaus:ip": 5533,
+    "urlhaus:domain": 8209,
+    "threatfox:ip": 3979,
     "threatfox:url": 341,
+    "threatfox:domain": 3880,
     "threatfox:hash": 1308,
     "sslbl:ssl_sha1": 10715,
     "feodo:ip": 5,
@@ -27,21 +27,21 @@
   "feeds": {
     "urlhaus": {
       "file": "urlhaus.csv",
-      "bytes": 3429540,
-      "sha256": "0f440f9788088fb12e14db0dc0b35c57d4fe2a8c26b02b892d3fafea2c53af50",
-      "raw_rows": 13961,
+      "bytes": 3422457,
+      "sha256": "dc379f5272d0b82f2ff2b48d5f003ac266bd9705e5ac5c64e336e9cefb34d920",
+      "raw_rows": 13921,
       "status": "ok"
     },
     "threatfox": {
       "file": "threatfox_recent.json",
-      "bytes": 5728598,
-      "sha256": "b67e3a96c7128e9669321af8ec3001981939b98e1f3608686d8122b6027a3a0e",
-      "raw_rows": 9140,
+      "bytes": 5747372,
+      "sha256": "bbf8b0a2fb2b4cdd10a92e37b744e0eb84fe5d22d6d312e9840a3a8823f1fc8a",
+      "raw_rows": 9170,
       "status": "ok",
       "ioc_types": {
-        "ip:port": 3831,
-        "domain": 3660,
+        "ip:port": 3859,
         "url": 341,
+        "domain": 3662,
         "sha256_hash": 1154,
         "md5_hash": 77,
         "sha1_hash": 77
