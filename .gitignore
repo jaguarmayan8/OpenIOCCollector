@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+cron.log
+run_andpush.sh.bak
+.venv/
