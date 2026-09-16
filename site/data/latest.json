@@ -1,50 +1,50 @@
 {
-  "generated_at": "2026-09-15T20:15:03Z",
-  "day": "20260915",
-  "day_path": "Output/2026/2026-09/20260915",
+  "generated_at": "2026-09-16T13:30:03Z",
+  "day": "20260916",
+  "day_path": "Output/2026/2026-09/20260916",
   "counts": {
-    "ips": 20723,
-    "domains": 4269,
-    "urls": 14052,
-    "hashes": 1308,
+    "ips": 20620,
+    "domains": 4506,
+    "urls": 14207,
+    "hashes": 1178,
     "ssl_sha1": 10715
   },
   "whitelist_dropped": {
-    "url": 179
+    "url": 173
   },
   "source_counts": {
-    "urlhaus:url": 13715,
-    "urlhaus:ip": 5500,
-    "urlhaus:domain": 8215,
-    "threatfox:ip": 3979,
-    "threatfox:url": 341,
-    "threatfox:domain": 3880,
-    "threatfox:hash": 1308,
+    "urlhaus:url": 13918,
+    "urlhaus:domain": 8200,
+    "urlhaus:ip": 5718,
+    "threatfox:url": 296,
+    "threatfox:domain": 4120,
+    "threatfox:ip": 3468,
+    "threatfox:hash": 1178,
     "sslbl:ssl_sha1": 10715,
     "feodo:ip": 5,
-    "ipsum:ip": 16604
+    "ipsum:ip": 16772
   },
   "feeds": {
     "urlhaus": {
       "file": "urlhaus.csv",
-      "bytes": 3417031,
-      "sha256": "9374bd61bbe646e936b4e7feee59906e8a989ecebed06330b8ed534f8e53d445",
-      "raw_rows": 13894,
+      "bytes": 3453504,
+      "sha256": "175eee5a6a7e1d46be124cb320854413e92d96453a301291cbe6320b3782f320",
+      "raw_rows": 14091,
       "status": "ok"
     },
     "threatfox": {
       "file": "threatfox_recent.json",
-      "bytes": 5747372,
-      "sha256": "d21adf79884fe5204b299991ca3f404e52777d1b4f23106423ab529f8cf20d2b",
-      "raw_rows": 9170,
+      "bytes": 5494722,
+      "sha256": "f4b50a4138c47bac6a9119a3be9a5f1c9f872e04735df4c5a1bf54cbc03a564c",
+      "raw_rows": 8769,
       "status": "ok",
       "ioc_types": {
-        "ip:port": 3859,
-        "url": 341,
-        "domain": 3662,
-        "sha256_hash": 1154,
-        "md5_hash": 77,
-        "sha1_hash": 77
+        "url": 296,
+        "ip:port": 3365,
+        "domain": 3930,
+        "sha256_hash": 1087,
+        "md5_hash": 47,
+        "sha1_hash": 44
       }
     },
     "sslbl": {
@@ -64,10 +64,10 @@
     },
     "ipsum": {
       "file": "top_malicious.txt",
-      "bytes": 1914172,
-      "sha256": "ddd00c637aebd742366301f51d66ed78d89bda90f10e43f391af0ada8cab6f37",
-      "raw_rows": 118113,
-      "kept_rows": 16604,
+      "bytes": 1986556,
+      "sha256": "a001f45114ebb8ce42f4394986773e118bd384f079244c6cb55dbf279aa450c5",
+      "raw_rows": 122565,
+      "kept_rows": 16772,
       "min_score": 3,
       "status": "ok"
     }
