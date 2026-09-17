@@ -1,57 +1,57 @@
 {
-  "generated_at": "2026-09-16T13:30:03Z",
-  "day": "20260916",
-  "day_path": "Output/2026/2026-09/20260916",
+  "generated_at": "2026-09-17T13:30:03Z",
+  "day": "20260917",
+  "day_path": "Output/2026/2026-09/20260917",
   "counts": {
-    "ips": 20620,
-    "domains": 4506,
-    "urls": 14207,
-    "hashes": 1178,
-    "ssl_sha1": 10715
+    "ips": 22660,
+    "domains": 2559,
+    "urls": 14014,
+    "hashes": 1344,
+    "ssl_sha1": 10724
   },
   "whitelist_dropped": {
-    "url": 173
+    "url": 171
   },
   "source_counts": {
-    "urlhaus:url": 13918,
+    "urlhaus:url": 13699,
+    "urlhaus:ip": 5499,
     "urlhaus:domain": 8200,
-    "urlhaus:ip": 5718,
-    "threatfox:url": 296,
-    "threatfox:domain": 4120,
-    "threatfox:ip": 3468,
-    "threatfox:hash": 1178,
-    "sslbl:ssl_sha1": 10715,
+    "threatfox:ip": 3454,
+    "threatfox:domain": 2200,
+    "threatfox:url": 320,
+    "threatfox:hash": 1344,
+    "sslbl:ssl_sha1": 10724,
     "feodo:ip": 5,
-    "ipsum:ip": 16772
+    "ipsum:ip": 18924
   },
   "feeds": {
     "urlhaus": {
       "file": "urlhaus.csv",
-      "bytes": 3453504,
-      "sha256": "175eee5a6a7e1d46be124cb320854413e92d96453a301291cbe6320b3782f320",
-      "raw_rows": 14091,
+      "bytes": 3411604,
+      "sha256": "855f7629ce7b13a0046bd57f7591395b7d5dafa5344b252153c95007ac4d2f26",
+      "raw_rows": 13870,
       "status": "ok"
     },
     "threatfox": {
       "file": "threatfox_recent.json",
-      "bytes": 5494722,
-      "sha256": "f4b50a4138c47bac6a9119a3be9a5f1c9f872e04735df4c5a1bf54cbc03a564c",
-      "raw_rows": 8769,
+      "bytes": 4450492,
+      "sha256": "d9dbf3f56f06c83e73b5711d461d8cad3759482d17ec7915ba25b35158a98548",
+      "raw_rows": 6999,
       "status": "ok",
       "ioc_types": {
-        "url": 296,
-        "ip:port": 3365,
-        "domain": 3930,
-        "sha256_hash": 1087,
-        "md5_hash": 47,
-        "sha1_hash": 44
+        "ip:port": 3364,
+        "domain": 1971,
+        "url": 320,
+        "sha256_hash": 1086,
+        "md5_hash": 205,
+        "sha1_hash": 53
       }
     },
     "sslbl": {
       "file": "ssl_blacklist.csv",
-      "bytes": 807428,
-      "sha256": "3aa0413c6a591529526726e86c58e4941242556278b83ab2a87ddcac5852dc6e",
-      "raw_rows": 10715,
+      "bytes": 808119,
+      "sha256": "9afb2119e646f6cdaf155c22c40705ea9b138b0f9c68fcc313f66a062d5aaf8b",
+      "raw_rows": 10724,
       "status": "ok"
     },
     "feodo": {
@@ -64,10 +64,10 @@
     },
     "ipsum": {
       "file": "top_malicious.txt",
-      "bytes": 1986556,
-      "sha256": "a001f45114ebb8ce42f4394986773e118bd384f079244c6cb55dbf279aa450c5",
-      "raw_rows": 122565,
-      "kept_rows": 16772,
+      "bytes": 2010021,
+      "sha256": "b0bd83261d144a5f82d93e676dc33b2ec779be265de0e2ee59e91e771cab9c29",
+      "raw_rows": 124048,
+      "kept_rows": 18924,
       "min_score": 3,
       "status": "ok"
     }
