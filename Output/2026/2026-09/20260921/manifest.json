@@ -1,0 +1,87 @@
+{
+  "generated_at": "2026-09-21T13:30:03Z",
+  "day": "20260921",
+  "day_path": "Output/2026/2026-09/20260921",
+  "counts": {
+    "ips": 23762,
+    "domains": 2216,
+    "urls": 14149,
+    "hashes": 1201,
+    "ssl_sha1": 10761
+  },
+  "whitelist_dropped": {
+    "url": 171
+  },
+  "source_counts": {
+    "urlhaus:url": 13885,
+    "urlhaus:ip": 5681,
+    "urlhaus:domain": 8204,
+    "threatfox:domain": 1750,
+    "threatfox:ip": 3486,
+    "threatfox:hash": 1201,
+    "threatfox:url": 277,
+    "sslbl:ssl_sha1": 10761,
+    "feodo:ip": 5,
+    "ipsum:ip": 20002
+  },
+  "feeds": {
+    "urlhaus": {
+      "file": "urlhaus.csv",
+      "bytes": 3444930,
+      "sha256": "1b44945d1067551478aeed9ccde16f6cf933b32f0e76d1176a99abd2daf85019",
+      "raw_rows": 14056,
+      "status": "ok"
+    },
+    "threatfox": {
+      "file": "threatfox_recent.json",
+      "bytes": 4099909,
+      "sha256": "c61ca8a040b6a67850b64c65d236452e423fd5378f0f9dde774026495b4efbab",
+      "raw_rows": 6438,
+      "status": "ok",
+      "ioc_types": {
+        "domain": 1615,
+        "ip:port": 3345,
+        "sha256_hash": 1171,
+        "url": 277,
+        "sha1_hash": 15,
+        "md5_hash": 15
+      }
+    },
+    "sslbl": {
+      "file": "ssl_blacklist.csv",
+      "bytes": 810898,
+      "sha256": "e593e4e966029773f8b80c6da4af60c20002b3e4e51a404639809e2d22dedba9",
+      "raw_rows": 10761,
+      "status": "ok"
+    },
+    "feodo": {
+      "file": "feodo_tracker.txt",
+      "bytes": 565,
+      "sha256": "aecc9256c99eea01ddda464e990591eae339f29b0cdbcf55cab39c43ee655228",
+      "raw_rows": 5,
+      "status": "ok",
+      "note": null
+    },
+    "ipsum": {
+      "file": "top_malicious.txt",
+      "bytes": 2143451,
+      "sha256": "53077055949e9b887f80923cf1ea01ceff52d36d7b1a6b6c471716a82771b288",
+      "raw_rows": 132266,
+      "kept_rows": 20002,
+      "min_score": 3,
+      "status": "ok"
+    }
+  },
+  "health": {
+    "ok": 5,
+    "empty": 0,
+    "missing_or_error": 0,
+    "total_configured": 5
+  },
+  "ipsum_min_score": 3,
+  "notes": [
+    "Lab / personal detection-engineering use. Respect source ToS.",
+    "Feodo empty after takedowns is expected.",
+    "IPsum filtered by min score to keep Wazuh lists usable."
+  ]
+}
