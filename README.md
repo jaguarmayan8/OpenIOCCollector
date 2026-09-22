@@ -64,7 +64,7 @@ The daily collector updates the IP list automatically.
 
 ## Future Improvements
 
-- Convert collected IOCs into Wazuh CDB lists[Done]
+- Convert collected IOCs into Wazuh CDB lists [Done]
 - Add basic statistics [Done]
 - Improve error handling for empty feeds [Done]
 - Add Docker support
