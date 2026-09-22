@@ -22,6 +22,48 @@ This project collects, organizes, and stores IOCs from multiple open-source thre
 | Feodo Tracker     | Botnet C2 IPs               | TXT/CSV    | Empty     | Currently no active C2s (post-takedowns)   |
 | Top Malicious IPs | Suspicious / Malicious IPs  | CSV/TXT    | Active    | Aggregated malicious IP list               |
 
+
+## Architecture
+
+```mermaid
+flowchart LR
+  subgraph Feeds["Public Threat Feeds"]
+    UH[URLhaus]
+    TF[ThreatFox]
+    SB[SSL Blacklist]
+    IP[IPsum]
+  end
+
+  subgraph Kali["Kali VM - Collector"]
+    CRON["Cron 8:30 AM CT"]
+    SCRIPT["tweetfeed.py"]
+    OUT["Output/YYYY/YYYY-MM/YYYYMMDD"]
+    BUILD["Build CDB lists"]
+    GIT["GitHub push"]
+  end
+
+  subgraph PVE["Proxmox Host"]
+    subgraph Wazuh["Ubuntu - Wazuh Manager"]
+      CDB["CDB lists: IPs / domains / hashes"]
+      RULES["Custom rules 100100 / 100101 / 100110"]
+      DASH["Wazuh Dashboard"]
+    end
+    Kali
+  end
+
+  UH --> SCRIPT
+  TF --> SCRIPT
+  SB --> SCRIPT
+  IP --> SCRIPT
+  CRON --> SCRIPT
+  SCRIPT --> OUT
+  OUT --> BUILD
+  BUILD --> CDB
+  CDB --> RULES
+  RULES --> DASH
+  OUT --> GIT
+
+
 ## Project Structure
 
 ```text
