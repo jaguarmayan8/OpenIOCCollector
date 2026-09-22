@@ -47,10 +47,10 @@ OpenIOCCollector/
 
 ## How to Run
 
-git clone https://github.com/jaguarmayan8/OpenIOCCollector.git
-cd OpenIOCCollector
-sudo apt install -y python3-requests
-python3 tweetfeed.py
+- git clone https://github.com/jaguarmayan8/OpenIOCCollector.git
+- cd OpenIOCCollector
+- sudo apt install -y python3-requests
+- python3 tweetfeed.py
 
 ## Wazuh Integration
 
