@@ -61,6 +61,8 @@ flowchart LR
   CDB --> RULES
   RULES --> DASH
   OUT --> GIT
+```
+
 Daily collector on Kali pulls public threat intelligence feeds, organizes the output, pushes it to GitHub, and updates Wazuh CDB lists used by custom detection rules.
 Project Structure
 textOpenIOCCollector/
