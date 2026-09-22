@@ -32,7 +32,9 @@ flowchart TB
   OUT --> CDB[Wazuh CDB lists]
   CDB --> RULES[Custom rules 100100 / 100101 / 100110]
   RULES --> DASH[Wazuh Dashboard]Daily collector on Kali pulls public threat intelligence feeds, organizes the output, pushes it to GitHub, and updates Wazuh CDB lists used by custom detection rules.
-Project Structure
+```
+
+## Project Structure
 textOpenIOCCollector/
 ├── Output/
 │   └── 2026/
@@ -41,12 +43,15 @@ textOpenIOCCollector/
 ├── run_andpush.sh
 ├── requirements.txt
 └── README.md
-How to Run
-Bashgit clone https://github.com/jaguarmayan8/OpenIOCCollector.git
+
+## How to Run
+
+git clone https://github.com/jaguarmayan8/OpenIOCCollector.git
 cd OpenIOCCollector
 sudo apt install -y python3-requests
 python3 tweetfeed.py
-Wazuh Integration
+
+## Wazuh Integration
 Selected IOCs are converted into Wazuh CDB lists and used by custom rules:
 
 Malicious IPs → rule 100100
@@ -54,7 +59,8 @@ Malicious domains → rules 100101 / 100102
 Malicious hashes → rules 100110 / 100111
 
 The daily collector updates the IP list automatically.
-Future Improvements
+
+## Future Improvements
 
  Convert collected IOCs into Wazuh CDB lists
  Add basic statistics (number of IOCs collected per day)
