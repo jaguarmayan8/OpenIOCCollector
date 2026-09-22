@@ -25,49 +25,15 @@ This project collects, organizes, and stores IOCs from multiple open-source thre
 ## Architecture
 
 ```mermaid
-flowchart LR
-  subgraph Feeds["Public Threat Feeds"]
-    UH[URLhaus]
-    TF[ThreatFox]
-    SB[SSL Blacklist]
-    IP[IPsum]
-  end
-
-  subgraph Kali["Kali VM - Collector"]
-    CRON["Cron 8:30 AM CT"]
-    SCRIPT["tweetfeed.py"]
-    OUT["Output/YYYY/YYYY-MM/YYYYMMDD"]
-    BUILD["Build CDB lists"]
-    GIT["GitHub push"]
-  end
-
-  subgraph PVE["Proxmox Host"]
-    subgraph Wazuh["Ubuntu - Wazuh Manager"]
-      CDB["CDB lists: IPs / domains / hashes"]
-      RULES["Custom rules 100100 / 100101 / 100110"]
-      DASH["Wazuh Dashboard"]
-    end
-    Kali
-  end
-
-  UH --> SCRIPT
-  TF --> SCRIPT
-  SB --> SCRIPT
-  IP --> SCRIPT
-  CRON --> SCRIPT
-  SCRIPT --> OUT
-  OUT --> BUILD
-  BUILD --> CDB
-  CDB --> RULES
-  RULES --> DASH
-  OUT --> GIT
-```
-
-Daily collector on Kali pulls public threat intelligence feeds, organizes the output, pushes it to GitHub, and updates Wazuh CDB lists used by custom detection rules.
-
-## Project Structure 
-
-OpenIOCCollector/
+flowchart TB
+  FEEDS[Public feeds: URLhaus, ThreatFox, SSLBL, IPsum] --> KALI[Kali collector + cron]
+  KALI --> OUT[Daily Output folders]
+  OUT --> GH[GitHub]
+  OUT --> CDB[Wazuh CDB lists]
+  CDB --> RULES[Custom rules 100100 / 100101 / 100110]
+  RULES --> DASH[Wazuh Dashboard]Daily collector on Kali pulls public threat intelligence feeds, organizes the output, pushes it to GitHub, and updates Wazuh CDB lists used by custom detection rules.
+Project Structure
+textOpenIOCCollector/
 ├── Output/
 │   └── 2026/
 │       └── 2026-08/
@@ -75,16 +41,12 @@ OpenIOCCollector/
 ├── run_andpush.sh
 ├── requirements.txt
 └── README.md
-
-## How to Run
-
-git clone https://github.com/jaguarmayan8/OpenIOCCollector.git
+How to Run
+Bashgit clone https://github.com/jaguarmayan8/OpenIOCCollector.git
 cd OpenIOCCollector
 sudo apt install -y python3-requests
 python3 tweetfeed.py
-
-## Wazuh Integration
-
+Wazuh Integration
 Selected IOCs are converted into Wazuh CDB lists and used by custom rules:
 
 Malicious IPs → rule 100100
@@ -92,10 +54,9 @@ Malicious domains → rules 100101 / 100102
 Malicious hashes → rules 100110 / 100111
 
 The daily collector updates the IP list automatically.
+Future Improvements
 
-## Future Improvements
-
-Convert collected IOCs into Wazuh CDB lists
+ Convert collected IOCs into Wazuh CDB lists
  Add basic statistics (number of IOCs collected per day)
  Improve error handling for dead/empty feeds
  Add Docker support
@@ -107,6 +68,3 @@ Jorge Tejada
 Cybersecurity | Detection Engineering | Home Lab
 License
 GPL-3.0
-textThen:
-
-```bash
