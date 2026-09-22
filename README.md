@@ -1,4 +1,4 @@
-# TwitterIoCsfeed
+# OpenIOCCollector
 
 Automated daily collection of Indicators of Compromise (IOCs) from public threat intelligence feeds.
 
@@ -25,7 +25,7 @@ This project collects, organizes, and stores IOCs from multiple open-source thre
 ## Project Structure
 
 ```text
-TwitterIoCsfeed/
+OpenIOCCollector/
 ├── Output/
 │   └── 2026/
 │       └── 2026-08/
@@ -35,8 +35,8 @@ TwitterIoCsfeed/
 
 How to Run
 
-git clone https://github.com/jaguarmayan8/TwitterIoCsfeed.git
-cd TwitterIoCsfeed
+git clone https://github.com/jaguarmayan8/OpenIOCCollector.git
+cd OpenIOCCollector
 pip install -r requirements.txt
 python3 tweetfeed.py
 
