@@ -64,11 +64,11 @@ The daily collector updates the IP list automatically.
 
 ## Future Improvements
 
-- Done: Convert collected IOCs into Wazuh CDB lists
-- Done: Add basic statistics
-- Done: Improve error handling for empty feeds
-- Todo: Add Docker support
-- Todo: Create a simple summary dashboard
+- Convert collected IOCs into Wazuh CDB lists[Done]
+- Add basic statistics [Done]
+- Improve error handling for empty feeds [Done]
+- Add Docker support
+- Create a simple summary dashboard
 
 ## Author
 
