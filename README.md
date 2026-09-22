@@ -67,7 +67,7 @@ Daily collector on Kali pulls public threat intelligence feeds, organizes the ou
 
 ## Project Structure 
 
-textOpenIOCCollector/
+OpenIOCCollector/
 ├── Output/
 │   └── 2026/
 │       └── 2026-08/
