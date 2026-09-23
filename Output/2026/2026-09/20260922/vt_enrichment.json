@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "0e90d4f77f11fefd07b73406fe8770feacae370fec66c0631a1f20792be72d36",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 61,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "978d89575db96b5fab1fcd7dca36cb21",
+    "found": true,
+    "malicious": 43,
+    "suspicious": 0,
+    "undetected": 28,
+    "label": "trojan.nsis/makoob",
+    "threatfox_malware": "GUIDLOADER"
+  },
+  {
+    "hash": "a90b6b91692ba6a20175f122bca4adb17492ce364ed976f3962814267387b493",
+    "found": true,
+    "malicious": 43,
+    "suspicious": 0,
+    "undetected": 28,
+    "label": "trojan.nsis/makoob",
+    "threatfox_malware": "GUIDLOADER"
+  },
+  {
+    "hash": "ab3c29adf6e21f2a73a6e94a6fdf3c74f7dda05c",
+    "found": true,
+    "malicious": 43,
+    "suspicious": 0,
+    "undetected": 28,
+    "label": "trojan.nsis/makoob",
+    "threatfox_malware": "GUIDLOADER"
+  },
+  {
+    "hash": "cd614205e7de293690475e9d3c275ef6ba19ecb4987125e71e22eb13f874bfe3",
+    "found": true,
+    "malicious": 41,
+    "suspicious": 0,
+    "undetected": 29,
+    "label": "trojan.silverfox/yogi",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "43fe0dca87bdc0b45d6e859641b944e656e20b9f",
+    "found": true,
+    "malicious": 41,
+    "suspicious": 0,
+    "undetected": 29,
+    "label": "trojan.silverfox/yogi",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "b22f4529298513597f41a1ca0686d7f9",
+    "found": true,
+    "malicious": 41,
+    "suspicious": 0,
+    "undetected": 29,
+    "label": "trojan.silverfox/yogi",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "32dd7014237b97a5bdff7fa18d8a83168950f8f7",
+    "found": true,
+    "malicious": 36,
+    "suspicious": 0,
+    "undetected": 35,
+    "label": "trojan.yogi/silverfox",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "b27a6bee3b698829ca290fdfa981d3f7",
+    "found": true,
+    "malicious": 36,
+    "suspicious": 0,
+    "undetected": 35,
+    "label": "trojan.yogi/silverfox",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "d5c7f122ab3ec96582540b689aef2f85af19cc6f",
+    "found": true,
+    "malicious": 25,
+    "suspicious": 0,
+    "undetected": 42,
+    "label": "trojan.gencirc/phxbza",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "351eed6919adf842104ec8a51528c795",
+    "found": true,
+    "malicious": 25,
+    "suspicious": 0,
+    "undetected": 42,
+    "label": "trojan.gencirc/phxbza",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "7ab6fdc92626e0f55f4496f1310b75908c2ac3b79db097b4802f514006bc72d2",
+    "found": true,
+    "malicious": 36,
+    "suspicious": 0,
+    "undetected": 35,
+    "label": "trojan.yogi/silverfox",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "e33eb103390fd26191e21366f4bc8e1805847e13",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 26,
+    "label": "trojan.hsdy/misc",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "e7b918320c08c51bf439c7cf7d052968",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 26,
+    "label": "trojan.hsdy/misc",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "beaa56e4a956e2d42d48ce0a156a6e17179b638c990eb577268b26f1e343143b",
+    "found": true,
+    "malicious": 25,
+    "suspicious": 0,
+    "undetected": 42,
+    "label": "trojan.gencirc/phxbza",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "782b0015e50842e695bf8fd33038baf4d01e1a12d95b57555f4bd329349a4cfd",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 26,
+    "label": "trojan.hsdy/misc",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "bcc375092546b5fdcf3bb3f48dd21e91",
+    "found": true,
+    "malicious": 31,
+    "suspicious": 0,
+    "undetected": 39,
+    "label": "hacktool.fleetdeck/filerepmalware",
+    "threatfox_malware": "LeetHozer"
+  },
+  {
+    "hash": "a72ce90402a259277d467c80b06acf64",
+    "found": true,
+    "malicious": 14,
+    "suspicious": 0,
+    "undetected": 56,
+    "label": "hacktool.fleetdeck/abused",
+    "threatfox_malware": "LeetHozer"
+  },
+  {
+    "hash": "1bbc582eb7190bca4948c61eccfd7924e349fc41d1bf34fdfd81a4387cf384b2",
+    "found": true,
+    "malicious": 31,
+    "suspicious": 0,
+    "undetected": 39,
+    "label": "hacktool.fleetdeck/filerepmalware",
+    "threatfox_malware": "LeetHozer"
+  },
+  {
+    "hash": "3f2714c516d8c38135bf4a18d03296ff82f997ed",
+    "found": true,
+    "malicious": 31,
+    "suspicious": 0,
+    "undetected": 39,
+    "label": "hacktool.fleetdeck/filerepmalware",
+    "threatfox_malware": "LeetHozer"
+  }
+]
