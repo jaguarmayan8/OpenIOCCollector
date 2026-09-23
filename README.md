@@ -42,6 +42,7 @@ OpenIOCCollector/
 - Output/
 - tweetfeed.py
 - run_andpush.sh
+- vt_enrich.py
 - requirements.txt
 - README.md
 
