@@ -8,3 +8,4 @@ __pycache__/
 cron.log
 run_andpush.sh.bak
 .venv/
+.vt_api_key
