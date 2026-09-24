@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "b30450f0db56652e2652318b24f9a36fb04786af99c22995584766923bebec1e",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.stealer",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "1907be92bfb56439610fce9fa7be748c0e424b4c07ab1a163704a30d56b94f53",
+    "found": true,
+    "malicious": 5,
+    "suspicious": 0,
+    "undetected": 58,
+    "label": "trojan.stealer",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "52d2fcbdd59d0beae12c03c5ae13adeffc39f50cec436d6071890a3c1b971d5e",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.stealer",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "0c0de3e0ddad3300bb1e3b17fe4ea48e3cfa7e5d0d313f355a6d25e230b796ff",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.stealer",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "bedc5ef2bc2ad17fd0d627b2539a47e6ad55f9b83cfe3febaf8de2ee32e9c9af",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "57fc974927b70736976b88fd369e7547892d8f227e7aa1a322e5b61aa562a93a",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "5b7487d9528a49f6b83d41c772529b4d02d08a363c4501a60a3c8f9a3eeb53fa",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "0a0c931f6a7b4d4d66389dab1c83cb4f7355f627399a040e79ce34ae2ab02957",
+    "found": true,
+    "malicious": 17,
+    "suspicious": 0,
+    "undetected": 45,
+    "label": "downloader.bash/miraib",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "8a4ef80cf6dbce39425c82d90953189e14ff8fc4c69627a6f06d24565c3421ec",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "5d73b00bd37e96853bcb1f2cba845ce806b3c0dd8b83be3aaa58d0f42a235152",
+    "found": true,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 63,
+    "label": "",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "6d85af515457833a879ce9442a4b538b57558e10676c57a098db083722c889e3",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "be4c116c7072b012dca6a5ba971d54800bdcc3bae7131f8aca621268b8527b74",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "88ec1d463f4a7241a6cd5638bd5538efab076ac2553e73437a2b6d0924328423",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "5b66b317f4190b7d5835ee78b02c207ac6ade782564267f75a39cb2cbf46ed9f",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "7667b3e5e69c6203451b915a7c3b8f2227630243dfaa6209b4beff8bcaa520ed",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "4043c95c58dfa8dedb4f485ea59f849b150d5882f4be8ba36cb98ff9dd67fc4e",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "9121ad58f09f380d849ba89071899f8c48c436bac21f7a3aba084ea0861c16cd",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "a3e786a3d2b8baa9c1fda58f2116542606e156bee898a6a2d485fd65790029f3",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 61,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "a18aa476ad595ad3567df4fa98f3a615a3c6b6ac450c8dc3d2e95ce98c7634a7",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "d6df4b637007ff7a81677e739277468e8448d361d3a3321e9175bb433a4c2f6b",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 56,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  }
+]
