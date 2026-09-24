@@ -59,6 +59,9 @@ echo "=== Copying lists to Wazuh Manager ==="
 scp -o StrictHostKeyChecking=no malicious-ips.txt malicious-domains.txt malicious-hashes.txt masterchap@192.168.4.122:~/
 ssh masterchap@192.168.4.122 "sudo /usr/local/bin/update-malicious-ips.sh"
 
+echo "=== Generate dashboard ==="
+/usr/bin/python3 generate_dashboard.py
+
 echo "=== Committing and pushing to GitHub ==="
 git add Output/ malicious-ips.txt malicious-domains.txt malicious-hashes.txt
 git commit -m "Daily IOC update $(date +%Y-%m-%d)" || echo "No changes to commit"

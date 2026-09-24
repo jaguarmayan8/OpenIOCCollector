@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenIOCCollector Dashboard</title>
+<style>
+  :root {
+    --bg:#0b1220; --card:#121a2b; --line:#243049; --text:#e8eefc;
+    --muted:#9aa8c7; --ok:#3ddc97; --bad:#ff6b6b; --accent:#6ea8fe;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; font-family:Verdana, Geneva, sans-serif; background:var(--bg); color:var(--text);
+  }
+  header, main { max-width:1100px; margin:0 auto; padding:24px; }
+  header { padding-top:36px; }
+  h1 { margin:0 0 8px; font-size:28px; }
+  .sub { color:var(--muted); }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin:24px 0; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; }
+  .num { font-size:28px; font-weight:700; }
+  .label { color:var(--muted); margin-top:6px; font-size:13px; }
+  .feeds { display:grid; gap:10px; }
+  .feed { display:flex; justify-content:space-between; gap:12px; background:#0f1726; padding:12px 14px; border-radius:10px; }
+  .ok { border-left:4px solid var(--ok); }
+  .empty { border-left:4px solid var(--bad); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); }
+  th { color:var(--muted); font-weight:600; }
+  .hash { font-family:monospace; }
+  a { color:var(--accent); }
+</style>
+</head>
+<body>
+<header>
+  <h1>OpenIOCCollector</h1>
+  <p class="sub">Home-lab threat intel dashboard · last run 2026-09-23 08:30</p>
+</header>
+<main>
+  <section class="grid">
+    <div class="card"><div class="num">127,507</div><div class="label">Malicious IPs</div></div>
+    <div class="card"><div class="num">541</div><div class="label">Malicious domains</div></div>
+    <div class="card"><div class="num">387</div><div class="label">Malicious hashes</div></div>
+    <div class="card"><div class="num">4/5 feeds with data</div><div class="label">Feeds with data</div></div>
+  </section>
+
+  <section class="card">
+    <h2>Today's feeds</h2>
+    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>794.1 KB | ~10791 entries</span></div>
+<div class="feed ok"><b>urlhaus.csv</b><span>3887.6 KB | ~15915 entries</span></div>
+<div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB)</span></div>
+<div class="feed ok"><b>threatfox_recent.json</b><span>4185.9 KB | ~124490 entries</span></div>
+<div class="feed ok"><b>top_malicious.txt</b><span>2018.9 KB | ~127507 entries</span></div></div>
+    <p class="sub">Approximate total IOCs collected: 278708</p>
+  </section>
+
+  <section class="card" style="margin-top:16px;">
+    <h2>VirusTotal sample</h2>
+    <table>
+      <thead>
+        <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class='hash'>72c0e5dcac59407f…</td><td>True</td><td>6</td><td>0</td><td>trojan.stealer</td><td>AMOS</td></tr>
+<tr><td class='hash'>835f2996734cfc37…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>AMOS</td></tr>
+<tr><td class='hash'>ac4d0608d32b97b8…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>AMOS</td></tr>
+<tr><td class='hash'>a283e242a4b2e911…</td><td>True</td><td>3</td><td>0</td><td>trojan.stealer</td><td>AMOS</td></tr>
+<tr><td class='hash'>e7dd64dbda89025a…</td><td>True</td><td>34</td><td>0</td><td>downloader.bash/miraib</td><td>Mirai</td></tr>
+<tr><td class='hash'>4974aae04758079e…</td><td>True</td><td>34</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>2e6b8b9d47d35eac…</td><td>True</td><td>35</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>ff6956bbbaee8c07…</td><td>True</td><td>32</td><td>0</td><td>trojan.mirai/abbackdoor</td><td>Mirai</td></tr>
+<tr><td class='hash'>acda41b419e1644f…</td><td>True</td><td>34</td><td>0</td><td>trojan.mirai/usblgk26</td><td>Mirai</td></tr>
+<tr><td class='hash'>021e597cb405fb3c…</td><td>True</td><td>34</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>ffab0457940304f6…</td><td>True</td><td>33</td><td>0</td><td>trojan.gafgyt/mirai</td><td>Mirai</td></tr>
+<tr><td class='hash'>c06555ff0ae9016a…</td><td>True</td><td>32</td><td>0</td><td>trojan.gafgyt/mirai</td><td>Mirai</td></tr>
+<tr><td class='hash'>f47e314988c14a89…</td><td>True</td><td>30</td><td>0</td><td>trojan.gafgyt/mirai</td><td>Mirai</td></tr>
+<tr><td class='hash'>2e11b9370f7907dc…</td><td>True</td><td>35</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>200925c71852eec0…</td><td>True</td><td>38</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>e955fe28d83b763d…</td><td>True</td><td>30</td><td>0</td><td>trojan.mirai/abtrojan</td><td>Mirai</td></tr>
+<tr><td class='hash'>14af37d9144376e6…</td><td>True</td><td>16</td><td>0</td><td>trojan.shell/gen2</td><td>Mirai</td></tr>
+<tr><td class='hash'>62b5398fe5aec960…</td><td>True</td><td>35</td><td>0</td><td>trojan.mirai/possible</td><td>Mirai</td></tr>
+<tr><td class='hash'>7486fef819f0896e…</td><td>True</td><td>32</td><td>0</td><td>trojan.mirai/possible</td><td>Mirai</td></tr>
+<tr><td class='hash'>385b0e85bdb9dc59…</td><td>True</td><td>33</td><td>0</td><td>trojan.mirai/possible</td><td>Mirai</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <p style="margin-top:24px;">
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/tree/main/Output/2026/2026-09/20260923">Today's raw output</a>
+  </p>
+</main>
+</body>
+</html>
