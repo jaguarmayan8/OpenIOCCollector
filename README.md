@@ -73,7 +73,6 @@ The daily collector updates the IP, domain, and hash lists automatically.
 - Improve error handling for empty feeds [Done]
 - Create a simple summary dashboard [Done]
 - Add Docker support
-- Create a simple summary dashboard
 
 ## Dashboard
 
