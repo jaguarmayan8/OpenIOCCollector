@@ -8,7 +8,14 @@ BASE = Path("/home/chap/OpenIOCCollector")
 OUT_HTML = BASE / "docs" / "index.html"
 REPO = "https://github.com/jaguarmayan8/OpenIOCCollector"
 
+
 def latest_day_dir():
+    today = datetime.now().strftime("%Y%m%d")
+    year = datetime.now().strftime("%Y")
+    year_month = datetime.now().strftime("%Y-%m")
+    today_dir = BASE / "Output" / year / year_month / today
+    if today_dir.exists():
+        return today_dir
     days = sorted(BASE.glob("Output/*/*/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]"))
     if not days:
         raise SystemExit("No daily output folders found")
