@@ -28,10 +28,12 @@ This project collects, organizes, and stores IOCs from multiple open-source thre
 flowchart TB
   FEEDS[Public feeds] --> KALI[Kali collector and cron]
   KALI --> OUT[Daily Output folders]
-  OUT --> GH[GitHub]
+  OUT --> VT[VirusTotal sample enrichment]
   OUT --> CDB[Wazuh CDB lists]
+  VT --> PAGE[GitHub Pages dashboard]
+  OUT --> PAGE
   CDB --> RULES[Custom detection rules]
-  RULES --> DASH[Wazuh Dashboard]
+  PAGE --> WEB[jaguarmayan8.github.io]
 ```
 
 Daily collector on Kali pulls public threat intelligence feeds, organizes the output, pushes it to GitHub, and updates Wazuh CDB lists used by custom detection rules.
