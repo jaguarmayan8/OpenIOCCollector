@@ -43,6 +43,7 @@ OpenIOCCollector/
 - tweetfeed.py
 - run_andpush.sh
 - vt_enrich.py
+- generate_dashboard.py
 - requirements.txt
 - README.md
 
@@ -61,15 +62,22 @@ Selected IOCs are converted into Wazuh CDB lists and used by custom rules:
 - Malicious domains: rules 100101 / 100102
 - Malicious hashes: rules 100110 / 100111
 
-The daily collector updates the IP list automatically.
+The daily collector updates the IP, domain, and hash lists automatically.
 
 ## Future Improvements
 
 - Convert collected IOCs into Wazuh CDB lists [Done]
 - Add basic statistics [Done]
 - Improve error handling for empty feeds [Done]
+- Create a simple summary dashboard [Done]
 - Add Docker support
 - Create a simple summary dashboard
+
+## Dashboard
+
+Live dashboard: https://jaguarmayan8.github.io/OpenIOCCollector/
+
+The daily job generates `docs/index.html` from the latest IOC collection, feed status, CDB list counts, and VirusTotal sample.
 
 ## Author
 
