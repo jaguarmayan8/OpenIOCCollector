@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "40809d1e43d3c5b1973c6c6577d166be0adfe814bfa8c911a02b527702456aa2",
+    "found": true,
+    "malicious": 3,
+    "suspicious": 0,
+    "undetected": 59,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "d70183a3214c07c3f4235404afeddeba8db9783bc73e8e6f813c7d8e7ce1bdc1",
+    "found": true,
+    "malicious": 2,
+    "suspicious": 0,
+    "undetected": 61,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "4ff5fe4e66d8f65cdfc2a3b16720cdbd3f7908fc7d861b8810293703aa61c0be",
+    "found": true,
+    "malicious": 47,
+    "suspicious": 0,
+    "undetected": 23,
+    "label": "trojan.vidar/egairtigado",
+    "threatfox_malware": "Vidar"
+  },
+  {
+    "hash": "6cc550f8e136e736ea7222dc3e0ea410b31815a65ce7ba1f42230c1ccbd13b17",
+    "found": true,
+    "malicious": 53,
+    "suspicious": 0,
+    "undetected": 17,
+    "label": "trojan.dacic/valleyrat",
+    "threatfox_malware": "Vidar"
+  },
+  {
+    "hash": "0017821181723261801e24abb9d33c739f382889d46dbf46d320c87ac62e5ca6",
+    "found": true,
+    "malicious": 52,
+    "suspicious": 0,
+    "undetected": 17,
+    "label": "trojan.dacic/tasker",
+    "threatfox_malware": "Vidar"
+  },
+  {
+    "hash": "39d8110c08a16e6e51b2fd7d732638e1dbc06d017ab8ac6b604470d7e7ea244e",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 24,
+    "label": "trojan.posprefer/vmprotect",
+    "threatfox_malware": "Coinminer"
+  },
+  {
+    "hash": "3db29da487bfe83452a4f875bddbd6a4f0a196a088d2247d2ba36e3f1d75b86b",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 19,
+    "label": "trojan.mirai/ddos",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "aabb72da5f64a911dabda790fa46b35c0d8747ed56c9ae99d152010119f32532",
+    "found": true,
+    "malicious": 7,
+    "suspicious": 0,
+    "undetected": 54,
+    "label": "trojan.stealer",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "969c61a682310cfd072bf83562aea45223b0687b92d7a0aab0ab0a773116bb14",
+    "found": true,
+    "malicious": 46,
+    "suspicious": 0,
+    "undetected": 25,
+    "label": "trojan.rozena/mikey",
+    "threatfox_malware": "VShell"
+  },
+  {
+    "hash": "a987661c3c4e496dbdea5c28cbc7d412ec26123d0ccdbabcf2668e908b481892",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 26,
+    "label": "trojan.rozena/loader",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "a97cea864850a09706d2fce9fcf3dbb4118f586ee5a6df1141130d750927019f",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 19,
+    "label": "trojan.mirai/ddos",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "b02966b9e8ff5a039babcc1192642ae6ef1d160e76a92420265815abd9b324c5",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 17,
+    "label": "trojan.mirai/ddos",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "ab163943a962cb6bb8b55808a0d1d45863a36b65ebddf32b330b42600d8b77be",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 19,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "00b4137aface054733925e229ff5db79413cf1d5972046303d99d18b6a67f658",
+    "found": true,
+    "malicious": 13,
+    "suspicious": 0,
+    "undetected": 35,
+    "label": "trojan.dirtydecrypt/zapchast",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "63c81266b35a301a139d007ef5b0b19d9dcdbecbefedf2a25ba033729c39448c",
+    "found": true,
+    "malicious": 3,
+    "suspicious": 0,
+    "undetected": 60,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "b525d6ec4aa2dc897e1f61ce1dc56a03918a313fb0339e28418f69d2d01055d6",
+    "found": true,
+    "malicious": 28,
+    "suspicious": 0,
+    "undetected": 35,
+    "label": "trojan.stealer/amos",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "41e24d66f8bb13b08c6a41c4b4a2cbd52056edd2a17bec6f30fe3838db6d1f2d",
+    "found": true,
+    "malicious": 21,
+    "suspicious": 0,
+    "undetected": 39,
+    "label": "trojan.",
+    "threatfox_malware": "AsyncRAT"
+  },
+  {
+    "hash": "41e312466f1373ef6c505a9663ded5243884f1031993a68f5cb188c713b3aeff",
+    "found": true,
+    "malicious": 36,
+    "suspicious": 0,
+    "undetected": 36,
+    "label": "trojan.asyncrat/msil",
+    "threatfox_malware": "AsyncRAT"
+  },
+  {
+    "hash": "41eb6115196af3892e27dba0a38c0376900f7d96b0e5721e4383b5e75d7379e7",
+    "found": true,
+    "malicious": 34,
+    "suspicious": 0,
+    "undetected": 28,
+    "label": "trojan.adbb/dwnldr",
+    "threatfox_malware": "AsyncRAT"
+  },
+  {
+    "hash": "41f464b145af2ecb017f8c20e00bf2ac8946e4e16e271007394bf3dd7124400f",
+    "found": true,
+    "malicious": 50,
+    "suspicious": 0,
+    "undetected": 16,
+    "label": "trojan.msil/taskun",
+    "threatfox_malware": "AsyncRAT"
+  }
+]
