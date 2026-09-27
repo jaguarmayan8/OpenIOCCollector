@@ -3,6 +3,7 @@
 14-0-204-188.static.pccw-hkt.com:
 1717.1000uc.com:
 178.248.3.202.ll.sta.mana.pf:
+179.248.3.202.ll.sta.mana.pf:
 198348.gl:
 198-macros.com:
 198macros.org:
@@ -17,7 +18,6 @@
 99194034-96-20180108171507.webstarterz.com:
 acc.jiangsujiaxue.com:
 acms.saleseos.com:
-acrilicoporto.pt:
 activegrp.co.za:
 acusense.ae:
 adcentral.com.mx:
@@ -51,16 +51,15 @@ blogs.sokun.jp:
 bmdcompany.com:
 bnet-api.playm8ru.win:
 bnet.playm8ru.win:
-booking.captcha-message-extranet.com:
 book.rollingvideogames.com:
 breezeclient.com:
 breezeclient.org:
 bridgeroad.maverickpreviews.com:
 brightworks.cz:
 bserail.com:
+bucket-cf-weur-a.uploadnow.io:
 bundle.kpzip.com:
 c0e5b87c.solaraweb-alj.pages.dev:
-c2.mc-live.online:
 c3436037.salamanderprocessing.pages.dev:
 cambodiatouristservice.com:
 casasmediterraneas.com:
@@ -70,7 +69,7 @@ cat.xiaojiji.nl:
 cat.xiaoshabi.nl:
 cdaonline.com.ar:
 cdn-10049480.file.myqcloud.com:
-cdn.file6.goodid.com:
+cdn.discordapp.com:
 cdn.gomlab.com:
 cdn.novoline.top:
 cdn.pixelbin.io:
@@ -88,10 +87,8 @@ cheetoclient.com:
 chiroartist.com:
 chuguadventures.co.tz:
 cid.gov.so:
-ck-bt.s3.us-east-2.amazonaws.com:
 class1004.dothome.co.kr:
 cliffg.me:
-cloud.pearlpeel.com:
 cl.ssouy.com:
 clubdetiroelpicarcho.com:
 Cn.devglobal.biz:
@@ -105,7 +102,6 @@ cpc188.day:
 crazypianoswebshop.nl:
 crystalpvp.ru:
 cs.go.kg:
-ctsfactory.com:
 d.14yaa.com:
 d2314eac.solaraweb-alj.pages.dev:
 d3cciiowg5l3jx.cloudfront.net:
@@ -150,7 +146,6 @@ download.pdf00.cn:
 download.pdf00.com:
 down.pcclear.com:
 down.qqfarmer.com.cn:
-down.ruanmei.com:
 drive.google.com:
 dubapkg.cmcmcdn.com:
 duct-master.com:
@@ -166,6 +161,7 @@ en.taichuan.com:
 envs.sh:
 epanpano.com:
 epsinf.com:
+ertdyfiabwggujakd.duckdns.org:
 escrowbank.co:
 euob.youstarsbuilding.com:
 f005.backblazeb2.com:
@@ -183,6 +179,7 @@ file.blackint3.com:
 filerit.com:
 files.constantcontact.com:
 files.pythonhosted.org:
+file.uhsea.com:
 fileupdates.blob.core.windows.net:
 firebasestorage.googleapis.com:
 first-security-verden.de:
@@ -205,8 +202,8 @@ geoxsecurity.ro:
 gestroom.it:
 gist.githubusercontent.com:
 github.com:
-glbeletronica.com.br:
 globalbank.us:
+gobiotechpestcontrol.com:
 goto.stnts.com:
 greenf.alexion.rs:
 grupomcperu.com:
@@ -239,6 +236,7 @@ imagefiles-backup.oss-ap-southeast-7.aliyuncs.com:
 images2.imgbox.com:
 img1.wsimg.com:
 impectorinternational.com:
+indonesias.me:
 iniciaonline.com:
 invmove.com:
 ircftp.net:
@@ -249,8 +247,8 @@ jawaratekno.com:
 jenniferloeffler.com:
 jessespridecharters.com:
 jlwz.cn:
+kabarberita.eu.cc:
 kavacanada.ca:
-kbskitchen1.screenconnect.com:
 kenwillzltd.com:
 khavar.com:
 kimyen.net:
@@ -303,7 +301,6 @@ noamaddons.com:
 noithaticon.vn:
 nossl.segfault.net:
 nova-client.com:
-nusatoyota.co.id:
 n.vs108.com:
 ny.lshdw.cc:
 obearo.com:
@@ -319,8 +316,6 @@ old.bullydog.com:
 onfiltre.com.tr:
 opalcraftsmp.com:
 opsecmod.st:
-ossapp.suning.com:
-out-agent.duckdns.org:
 outpost.co.ke:
 p3.zbjimg.com:
 paccbet.pages.dev:
@@ -339,10 +334,8 @@ plain-wnam-prod-public.komododecks.com:
 planetariumobil.ro:
 polarclient.net:
 polinexclient.org:
-portal.onepansol.site:
 posicionamientonatural.es:
 postelnini.mk:
-power.belyxhost.in:
 practisingcertificateprotection.com:
 preciosasjoyitas.com.mx:
 prepstarcenter.com:
@@ -375,6 +368,7 @@ reauthenticator.com:
 records.dennisign.se:
 redeamazoniaazul.org:
 reifenquick.de:
+release-assets.githubusercontent.com:
 reservphotoinstaynow.shop:
 reservphotoinstay.one:
 reutilizemais.co.mz:
@@ -418,11 +412,11 @@ softbank126023203236.bbtec.net:
 softdl2.360tpcdn.com:
 softdl.360tpcdn.com:
 softdl4.360.cn:
-soft.wsyhn.com:
 spgint.com:
 srsorvete.com.br:
 static.3001.net:
 static.ilclock.com:
+static.topxgun.com:
 static.youdm.cn:
 static.zongheng.com:
 stdown.dinju.com:
@@ -430,7 +424,6 @@ streammobs.com:
 support.clz.kr:
 sutterpoint.com:
 svirtual.sanviatorperu.edu.pe:
-swiftfusion.tech:
 synergyconsulting.us:
 talkandtypeapp.com:
 tangentwaves.com:
@@ -445,7 +438,6 @@ tenis-team-km.com:
 test.peperoncinochepassione.it:
 thankful-cliff-01dfec010.7.azurestaticapps.net:
 the.earth.li:
-thehaider.com:
 theholidayroads.com:
 themaintechnician.us:
 thementordirectory.com:
@@ -456,10 +448,11 @@ tiwanlinm.duckdns.org:
 tobecation.github.io:
 toolshare.com.tr:
 top8onlinegame.com:
+tpp.om-stock.com:
+traderhype.com:
 transparenciacanaa.com.br:
 trtmyanmar.com:
 tweakz-dream-launcher.lovable.app:
-twu-hwt.org:
 union.macoms.la:
 upaicdn.xinmei365.com:
 upchemicals.co.in:
@@ -477,13 +470,13 @@ web.archive.org:
 website.mypetapp.co.za:
 weco2.oss-me-east-1.aliyuncs.com:
 wegrowcoaching.com:
+wemqmewkqewq.work.gd:
 widexenmexico.com.mx:
 wielixclient.com:
 wielixclient.net:
 windomstatetheater.com:
 win.down.55kantu.com:
 windowsdiagnostics.st:
-windriversfiles.imeitools.com:
 wittenhorst.eu:
 www.150.co.il:
 www2.0zz0.com:
@@ -510,7 +503,6 @@ www.hcsnet.com.br:
 www.hostingcloud.science:
 www.hqsblog.com:
 www.hseda.com:
-www.hwgeneralins.com:
 www.intelligradeeducation.vicentecisnerospub.com:
 www.jozefinskiatelje.si:
 www.kenwillzltd.com:
@@ -521,6 +513,7 @@ www.myvcart.com:
 www.namuvpn.com:
 www.newkey.co.kr:
 www.notbak.com:
+www.ojang.pe.kr:
 www.okhan.net:
 www.pointtohealth.com:
 www.reifenquick.de:
