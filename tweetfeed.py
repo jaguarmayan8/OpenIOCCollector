@@ -2,6 +2,7 @@ from datetime import datetime
 from pathlib import Path
 import sys
 import requests
+import json
 
 print("=== IOC Collector Started ===")
 
@@ -62,16 +63,53 @@ for filename, url in feeds:
         print(f"[!] Error downloading {filename}: {e}")
         summary.append(f"- **{filename}**: Error - {e}")
 
+
+# MalwareBazaar recent samples (hashes + metadata, no binaries)
+print("[*] Querying MalwareBazaar get_recent...")
+mb_name = "malwarebazaar_recent.json"
+mb_path = OUTPUT_DIR / mb_name
+try:
+    key_file = Path(".abusech_auth_key")
+    auth_key = key_file.read_text(encoding="utf-8").strip() if key_file.exists() else ""
+    if not auth_key:
+        raise RuntimeError("missing .abusech_auth_key")
+    r = requests.post(
+        "https://mb-api.abuse.ch/api/v1/",
+        headers={"Auth-Key": auth_key},
+        data={"query": "get_recent", "selector": "100"},
+        timeout=45,
+    )
+    r.raise_for_status()
+    payload = r.json()
+    mb_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    rows = payload.get("data") or []
+    ioc_count = len(rows) if payload.get("query_status") == "ok" else 0
+    size_kb = mb_path.stat().st_size / 1024
+    total_iocs += ioc_count
+    if ioc_count:
+        success_count += 1
+        print(f"[+] Saved {mb_name} ({size_kb:.1f} KB) - ~{ioc_count} entries")
+        summary.append(f"- **{mb_name}**: {size_kb:.1f} KB | ~{ioc_count} entries")
+    else:
+        print(f"[!] {mb_name}: no samples ({payload.get('query_status')})")
+        summary.append(f"- **{mb_name}**: Empty ({payload.get('query_status')})")
+except Exception as e:
+    print(f"[!] Error querying MalwareBazaar: {e}")
+    summary.append(f"- **{mb_name}**: Error - {e}")
+
+
+
 # Write summary report
 report_path = OUTPUT_DIR / "daily_summary.md"
+feed_total = len(feeds) + 1
 with open(report_path, "w") as f:
     f.write("\n".join(summary))
-    f.write(f"\n\n**Success rate:** {success_count}/{len(feeds)} feeds with data")
+    f.write(f"\n\n**Success rate:** {success_count}/{feed_total} feeds with data")
     f.write(f"\n**Approximate total IOCs collected:** {total_iocs}")
 
 print(f"\n[+] Files saved to: {OUTPUT_DIR}")
 print(f"[+] Summary report saved: {report_path.name}")
-print(f"[+] Successfully downloaded {success_count}/{len(feeds)} feeds with data")
+print(f"[+] Successfully downloaded {success_count}/{feed_total} feeds with data")
 print("=== IOC Collector Finished ===")
 
 if success_count < 2:

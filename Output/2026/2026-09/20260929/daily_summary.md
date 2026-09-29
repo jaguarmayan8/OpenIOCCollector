@@ -1,10 +1,11 @@
-# Daily IOC Report - 2026-09-29 08:30
+# Daily IOC Report - 2026-09-29 14:44
 
-- **ssl_blacklist.csv**: 797.7 KB | ~10841 entries
-- **urlhaus.csv**: 3180.7 KB | ~13252 entries
+- **ssl_blacklist.csv**: 797.9 KB | ~10843 entries
+- **urlhaus.csv**: 3172.4 KB | ~13205 entries
 - **feodo_tracker.txt**: Empty (0.6 KB)
-- **threatfox_recent.json**: 4917.5 KB | ~143408 entries
+- **threatfox_recent.json**: 4775.7 KB | ~139142 entries
 - **top_malicious.txt**: 1926.7 KB | ~121838 entries
+- **malwarebazaar_recent.json**: 127.1 KB | ~100 entries
 
-**Success rate:** 4/5 feeds with data
-**Approximate total IOCs collected:** 289344
+**Success rate:** 5/6 feeds with data
+**Approximate total IOCs collected:** 285133
