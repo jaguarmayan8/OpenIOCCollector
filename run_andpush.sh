@@ -63,7 +63,7 @@ echo "=== Generate dashboard ==="
 /usr/bin/python3 generate_dashboard.py
 
 echo "=== Committing and pushing to GitHub ==="
-git add Output/ malicious-ips.txt malicious-domains.txt malicious-hashes.txt
+git add Output/ malicious-ips.txt malicious-domains.txt malicious-hashes.txt docs/index.html
 git commit -m "Daily IOC update $(date +%Y-%m-%d)" || echo "No changes to commit"
 git push
 
