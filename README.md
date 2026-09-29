@@ -14,13 +14,14 @@ This project collects, organizes, and stores IOCs from multiple open-source thre
 
 ## Feeds Currently Collected
 
-| Feed | Type | Format | Status | Notes |
-| --- | --- | --- | --- | --- |
-| URLhaus | Malware Distribution URLs | CSV | Active | abuse.ch recently observed malware URLs |
-| ThreatFox | Malware IOCs | JSON | Active | abuse.ch high confidence malware IOCs |
-| SSL Blacklist | Malicious SSL Certificates | CSV | Active | abuse.ch SHA1 fingerprints of bad certs |
-| Feodo Tracker | Botnet C2 IPs | TXT/CSV | Empty | Currently no active C2s |
-| Top Malicious IPs | Suspicious / Malicious IPs | CSV/TXT | Active | Aggregated malicious IP list |
+| Feed              | Type                       | Format  | Status | Notes                                   |
+| ----------------- | -------------------------- | ------- | ------ | --------------------------------------- |
+| URLhaus           | Malware Distribution URLs  | CSV     | Active | abuse.ch recently observed malware URLs |
+| ThreatFox         | Malware IOCs               | JSON    | Active | abuse.ch high confidence malware IOCs   |
+| SSL Blacklist     | Malicious SSL Certificates | CSV     | Active | abuse.ch SHA1 fingerprints of bad certs |
+| Feodo Tracker     | Botnet C2 IPs              | TXT/CSV | Empty  | Currently no active C2s                 |
+| Top Malicious IPs | Suspicious / Malicious IPs | CSV/TXT | Active | Aggregated malicious IP list            |
+| MalwareBazaar     | Confirmed malware samples  | JSON    | Active | abuse.ch recent sample hashes (API `get_recent`, last 100) |
 
 ## Architecture
 
