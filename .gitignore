@@ -9,3 +9,4 @@ cron.log
 run_andpush.sh.bak
 .venv/
 .vt_api_key
+.abusech_auth_key
