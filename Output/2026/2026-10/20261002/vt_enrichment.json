@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "08cb98c815d6cd6114f4353a905ee96ee450ee212a425b3beeab5a5211d072c3",
+    "found": true,
+    "malicious": 48,
+    "suspicious": 0,
+    "undetected": 23,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "148649970ff9237136b4456bf729afe4c8986a6e705f99752d2a8081dc05c27b",
+    "found": true,
+    "malicious": 37,
+    "suspicious": 0,
+    "undetected": 19,
+    "label": "trojan.rozena/loader",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "7bc5a428392326f138fd7e0d94bf36b51609362a92989ebd99079fbf9b1727ad",
+    "found": true,
+    "malicious": 3,
+    "suspicious": 0,
+    "undetected": 60,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "d514c7de802c7d0ff9b747700e0bebb9e0967b6b7ba667536bf726e848f646d3",
+    "found": true,
+    "malicious": 2,
+    "suspicious": 0,
+    "undetected": 60,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "9514a4a4a35e00d4b4fc5d137dd09abce68788b36547ae7124f3ce55ac26c0d6",
+    "found": true,
+    "malicious": 44,
+    "suspicious": 0,
+    "undetected": 26,
+    "label": "trojan.rozena/loader",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "dc45540bdad7a5ffc99dbe071dd8803aebb8b85c59b14871e33e58f9096d235d",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 26,
+    "label": "trojan.rozena/loader",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "dc17c133c5d7087e6fa11a41cbaabf7cd870b2cf982f02b2df398eb78e408229",
+    "found": true,
+    "malicious": 46,
+    "suspicious": 0,
+    "undetected": 25,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "448bb7bd702777e61ee298cc5b366813dccb872748afdf7f8d462ccd80030f85",
+    "found": true,
+    "malicious": 46,
+    "suspicious": 0,
+    "undetected": 23,
+    "label": "trojan.rozena/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "64ecb45d56f1126d982609f4c9679e3a7db4fea47b90726e28aed6c1555e9331",
+    "found": true,
+    "malicious": 48,
+    "suspicious": 0,
+    "undetected": 22,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "14adbc5ababc074a0a890804138c8ac4c9be11a70a38456bc11ab625c2194622",
+    "found": true,
+    "malicious": 48,
+    "suspicious": 0,
+    "undetected": 22,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "4e351a3b911e9e80fbb8dbebe88128a4930ce1037d390e9bee88611499d85666",
+    "found": true,
+    "malicious": 42,
+    "suspicious": 0,
+    "undetected": 24,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "ddb3a8c2556961f8549dea60181e57081e10a017c4afb93f485fee017b3cf578",
+    "found": true,
+    "malicious": 46,
+    "suspicious": 0,
+    "undetected": 25,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "58c753e3a755b079f284207f99cc27ce4a5a382d82eabebedd006d41c1538738",
+    "found": true,
+    "malicious": 46,
+    "suspicious": 0,
+    "undetected": 25,
+    "label": "trojan.rozena/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "566a760102b83a6b2adffded839d6bf1d02164295617fbe097f2071ae84f65de",
+    "found": true,
+    "malicious": 47,
+    "suspicious": 0,
+    "undetected": 24,
+    "label": "trojan.rozena/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "b3dd0c64f1ac41808087fb0caa11818e0cd2b88a595fbb27a2e89b35c1ac472c",
+    "found": true,
+    "malicious": 48,
+    "suspicious": 0,
+    "undetected": 21,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "5ec36b2d19ce3ac66f9f664d3b9b9ca21b38ecdf683cc21d76e7b1fa4e58e0ed",
+    "found": true,
+    "malicious": 50,
+    "suspicious": 0,
+    "undetected": 21,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "86a88534fd8eeafa587baee15d29a58cc290dcd4ccd43d87c3903c3ebd1c1bcb",
+    "found": true,
+    "malicious": 39,
+    "suspicious": 0,
+    "undetected": 21,
+    "label": "trojan.rozena/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "feb434b0754a004e6080c1d427a149165bc460edf918ce749f3ae413c6a45b20",
+    "found": true,
+    "malicious": 41,
+    "suspicious": 0,
+    "undetected": 15,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "666f328c34980f0b43c0181c078a909bbdfe7e8cc1efa6c2acf2b1c0778e661d",
+    "found": true,
+    "malicious": 42,
+    "suspicious": 0,
+    "undetected": 23,
+    "label": "trojan.rozena/mikey",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "411cdaa8949f4f77502d5ffb28c5ecd854b27b10ac73c2e1009a0a81b08a33c9",
+    "found": true,
+    "malicious": 46,
+    "suspicious": 0,
+    "undetected": 24,
+    "label": "trojan.jaik/mikey",
+    "threatfox_malware": "Unknown Loader"
+  }
+]
