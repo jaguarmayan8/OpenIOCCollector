@@ -15,7 +15,6 @@
 99194034-96-20180108171507.webstarterz.com:
 acc.jiangsujiaxue.com:
 acms.saleseos.com:
-acrilicoporto.pt:
 acusense.ae:
 adcentral.com.mx:
 adclick.g.doubleclick.net:
@@ -37,7 +36,6 @@ attach.66rpg.com:
 attach.mail.daum.net:
 audicontadores.com:
 autoflotte-vergabe.de:
-awarenessexhibition.com:
 baainbw-vergabe.de:
 backupso.com:
 balanced-red-emhnkdfj-dp7g2kvqxx8n.edgeone.dev:
@@ -49,7 +47,6 @@ best.obs.cn-sz1.ctyun.cn:
 betwotech.com:
 bj5y6-0f-9h4-9fgg4-1324992141.cos.ap-bangkok.myqcloud.com:
 blankeyeo.com:
-blaxllantas.com:
 blessdayservices.org:
 blogs.sokun.jp:
 bmdcompany.com:
@@ -59,6 +56,7 @@ bserail.com:
 bumcoinc.site:
 bundle.kpzip.com:
 c0e5b87c.solaraweb-alj.pages.dev:
+c2.teamzeroday.net:
 c3436037.salamanderprocessing.pages.dev:
 cambodiatouristservice.com:
 casasmediterraneas.com:
@@ -68,7 +66,6 @@ cat.xiaojiji.nl:
 cat.xiaoshabi.nl:
 cdaonline.com.ar:
 cdn-10049480.file.myqcloud.com:
-cdn.discordapp.com:
 cdn.file6.goodid.com:
 cdn.gomlab.com:
 cdn.novoline.top:
@@ -87,7 +84,6 @@ chuguadventures.co.tz:
 cid.gov.so:
 class1004.dothome.co.kr:
 cliffg.me:
-clownguard.us:
 cl.ssouy.com:
 clubdetiroelpicarcho.com:
 Cn.devglobal.biz:
@@ -98,6 +94,7 @@ continentalgroup.net.in:
 coolairesgroup.com:
 coralasargetia.ro:
 cpc188.day:
+cpofficial.com:
 crazypianoswebshop.nl:
 crystalpvp.ru:
 cs.go.kg:
@@ -116,22 +113,27 @@ delta-canvas.com:
 dezcom.com:
 dinamikakargo.com:
 disk.accord1key.cn:
+d.kpzip.com:
 dl.1003b.56a.com:
 dl.2345.com:
 dl.360safe.com:
 dl.dzqzd.com:
 dlied6.bytes.tcdnos.com:
 dlied6.yz.tcdnos.com:
+dl.ijinshan.com:
 dl.natgo.cn:
 doc.e-statements.app:
 docs.google.com:
 dongyu.us:
 donkeytourscroatia.com:
+donutsmpclient.com:
+donutsmp-mod.github.io:
 down10d.zol.com.cn:
 down.54nb.com:
 downali.game.uc.cn:
 down.ftp21.cc:
 down.fwqlt.com:
+download2.huduntech.com:
 download.bt.cn:
 download.caihong.com:
 download.doumaibiji.cn:
@@ -139,7 +141,6 @@ download-files.wixmp.com:
 download.haozip.com:
 download.kaobeitu.com:
 download.kbcard.com:
-download.pdf00.cn:
 download.pdf00.com:
 down.pcclear.com:
 down.qqfarmer.com.cn:
@@ -157,7 +158,6 @@ empty-violet-63e1.maskify.workers.dev:
 emwqkekwqmekwq.work.gd:
 endpoint.project0.cc:
 en.taichuan.com:
-envs.sh:
 epanpano.com:
 epsinf.com:
 escrowbank.co:
@@ -175,7 +175,6 @@ file.blackint3.com:
 filerit.com:
 files.constantcontact.com:
 files.pythonhosted.org:
-file.uhsea.com:
 fileupdates.blob.core.windows.net:
 firebasestorage.googleapis.com:
 first-security-verden.de:
@@ -189,7 +188,6 @@ fujeigroup.com:
 fukt.link:
 fullstacknir.com:
 fussionmd.com:
-fz.tiansys.cn:
 galeri3.arkitera.com:
 galerisenimutiara.com:
 gaode11223.oss-ap-southeast-7.aliyuncs.com:
@@ -226,6 +224,7 @@ hoteljune2026.blogspot.com:
 hotelsep.blogspot.com:
 hponline.run.place:
 hseda.com:
+htdentshop.com:
 hzxcaq-github-io.pages.dev:
 icoffeecloud.com:
 ignetwork.us:
@@ -259,6 +258,7 @@ landonirwin.com:
 lawfirm.paperbirdtech.com:
 lcportal.kbinsure.co.kr:
 leindisncieamrocea-1341831283.cos.sa-saopaulo.myqcloud.com:
+likedrink.beer:
 lindnerelektroanlagen.de:
 local-update.com:
 lomejordesalamanca.es:
@@ -271,9 +271,11 @@ maidforyou1985.com:
 makemewin.club:
 maple30.com:
 matthewsigmondv5.pages.dev:
+maverick174.org:
 media.githubusercontent.com:
 mersped.mycpanel.rs:
 meteorclients.com:
+meteorrejects.net:
 metrics.gocloudmaps.com:
 mibd.org:
 miner.pages.dev:
@@ -285,6 +287,7 @@ mkconstructions.net:
 m.meta-dm.com:
 mnurlogistics.az:
 mogimall.com:
+moneylord.org:
 moniquejhingon.com:
 mrsweaterltd.com:
 msoftdatastore.z22.web.core.windows.net:
@@ -307,6 +310,7 @@ odinclient.com:
 odinclient.st:
 od.lk:
 ofice365.github.io:
+oim.doganltd.com.tr:
 ojang.pe.kr:
 okhan.net:
 oknoplastik.sk:
@@ -314,7 +318,6 @@ old.bullydog.com:
 onfiltre.com.tr:
 opsecmod.st:
 ossapp.suning.com:
-out-agent.duckdns.org:
 outpost.co.ke:
 p3.zbjimg.com:
 paccbet.pages.dev:
@@ -346,6 +349,7 @@ prestige-client.live:
 prestigeclient.st:
 profitable-pink-0y9btnew-dpk6vqe6eheo.edgeone.dev:
 programandojuntos.us.tempcloudsite.com:
+project0.cc:
 pub-0216fa08b2b94e129cb9e002cf7cb1f4.r2.dev:
 pub-0478b308b8cf46709a73d0eed5afd633.r2.dev:
 pub-1614932a526c40d79fe5bf23e71e3ff7.r2.dev:
@@ -377,12 +381,10 @@ reauthenticator.com:
 records.dennisign.se:
 redeamazoniaazul.org:
 reifenquick.de:
-release-assets.githubusercontent.com:
 reservphotoinstaynow.shop:
 reservphotoinstay.one:
 reutilizemais.co.mz:
 rheddh.com:
-riderspin.com:
 robertrowe.com:
 romeopirlanta.com:
 royalcuts.co.uk:
@@ -397,6 +399,7 @@ scanbot.me:
 scoala1gherla.ro:
 screenconnect.pro:
 scrroeder.com:
+sdufkghdfshds.cfd:
 sec.dashabi.in:
 sec.xiaojiji.nl:
 sec.xiaoshabi.nl:
@@ -418,6 +421,7 @@ softbank126023203236.bbtec.net:
 softdl2.360tpcdn.com:
 softdl.360tpcdn.com:
 softdl4.360.cn:
+sogo-download.oss-cn-hongkong.aliyuncs.com:
 spgint.com:
 sqpengg.com:
 srsorvete.com.br:
@@ -426,7 +430,6 @@ static.3001.net:
 static.ilclock.com:
 static.topxgun.com:
 static.youdm.cn:
-static.zongheng.com:
 stdown.dinju.com:
 streammobs.com:
 support.clz.kr:
@@ -465,7 +468,6 @@ tpp.om-stock.com:
 tradingengineers.in:
 transparenciacanaa.com.br:
 trtmyanmar.com:
-truswallet.foundation:
 tweakz-dream-launcher.lovable.app:
 twitch.tj:
 twu-hwt.org:
@@ -473,6 +475,7 @@ union.macoms.la:
 upaicdn.xinmei365.com:
 upchemicals.co.in:
 update.cg100iii.com:
+upload.filehost.lol:
 urbanpro.mycpanel.rs:
 users.atw.hu:
 vaamsmgfreocmroe-1342087530.cos.sa-saopaulo.myqcloud.com:
@@ -486,6 +489,7 @@ website.mypetapp.co.za:
 weco2.oss-me-east-1.aliyuncs.com:
 wegrowcoaching.com:
 wemqmewkqewq.work.gd:
+wicresetconnect.com:
 widexenmexico.com.mx:
 wielixclient.com:
 wielixclient.net:
@@ -515,12 +519,12 @@ www.drgenov.com:
 www.dropbox.com:
 www.duelvalenza.it:
 www.first-security-verden.de:
-www.gestroom.it:
 www.hcsnet.com.br:
 www.hostingcloud.science:
 www.hqsblog.com:
 www.hseda.com:
 www.hwgeneralins.com:
+wwwiiisss.oss-ap-northeast-1.aliyuncs.com:
 www.intelligradeeducation.vicentecisnerospub.com:
 www.jozefinskiatelje.si:
 www.kenwillzltd.com:
@@ -554,7 +558,6 @@ www.zamilgroups.com:
 www.zhikey.com:
 xenonclient.com:
 xenon.studio:
-xiangduck.sld.tw:
 xn--h6qpop2cq9nl9c.pages.dev:
 xn--yh4bx88a.com:
 xshop.com.tr:
