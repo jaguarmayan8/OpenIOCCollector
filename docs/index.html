@@ -35,25 +35,25 @@
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · last run 2026-10-06 08:30</p>
+  <p class="sub">Home-lab threat intel dashboard · last run 2026-10-07 08:30</p>
 </header>
 <main>
   <section class="grid">
-    <div class="card"><div class="num">112,522</div><div class="label">Malicious IPs</div></div>
-    <div class="card"><div class="num">569</div><div class="label">Malicious domains</div></div>
-    <div class="card"><div class="num">3,218</div><div class="label">Malicious hashes</div></div>
-    <div class="card"><div class="num">5/6 feeds with data</div><div class="label">Feeds with data</div></div>
+    <div class="card"><div class="num">116,038</div><div class="label">Malicious IPs</div></div>
+    <div class="card"><div class="num">0</div><div class="label">Malicious domains</div></div>
+    <div class="card"><div class="num">1,353</div><div class="label">Malicious hashes</div></div>
+    <div class="card"><div class="num">4/6 feeds with data</div><div class="label">Feeds with data</div></div>
   </section>
 
   <section class="card">
     <h2>Today's feeds</h2>
-    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>803.0 KB | ~10912 entries</span></div>
-<div class="feed ok"><b>urlhaus.csv</b><span>7168.3 KB | ~27439 entries</span></div>
+    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>803.1 KB | ~10913 entries</span></div>
+<div class="feed ok"><b>urlhaus.csv</b><span>Error - 503 Server Error: Service Unavailable for url: https://urlhaus.abuse.ch/downloads/csv_online/</span></div>
 <div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB)</span></div>
-<div class="feed ok"><b>threatfox_recent.json</b><span>5282.3 KB | ~153344 entries</span></div>
-<div class="feed ok"><b>top_malicious.txt</b><span>1777.8 KB | ~112522 entries</span></div>
-<div class="feed ok"><b>malwarebazaar_recent.json</b><span>130.7 KB | ~100 entries</span></div></div>
-    <p class="sub">Approximate total IOCs collected: 304322</p>
+<div class="feed ok"><b>threatfox_recent.json</b><span>5192.2 KB | ~153524 entries</span></div>
+<div class="feed ok"><b>top_malicious.txt</b><span>1835.2 KB | ~116038 entries</span></div>
+<div class="feed ok"><b>malwarebazaar_recent.json</b><span>139.6 KB | ~100 entries</span></div></div>
+    <p class="sub">Approximate total IOCs collected: 280580</p>
   </section>
 
   <section class="card" style="margin-top:16px;">
@@ -63,33 +63,33 @@
         <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
       </thead>
       <tbody>
-        <tr><td class='hash'>6d77fa3925af744c…</td><td>True</td><td>6</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
-<tr><td class='hash'>5a84a21b93ac5a23…</td><td>True</td><td>11</td><td>0</td><td>trojan.stealer/infostl</td><td>AMOS</td></tr>
-<tr><td class='hash'>b43a80bca1951805…</td><td>True</td><td>6</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
-<tr><td class='hash'>ca4717d84adc33c4…</td><td>False</td><td>0</td><td>0</td><td></td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>8e0300cf9eccdc12…</td><td>True</td><td>23</td><td>0</td><td>trojan.yogi/hviq</td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>9132737ba8ee70e3…</td><td>False</td><td>0</td><td>0</td><td></td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>729f917a016df231…</td><td>True</td><td>0</td><td>0</td><td></td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>b2d7e7a3dfa43d8d…</td><td>True</td><td>9</td><td>0</td><td>trojan.bevz/emmenhtal</td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>8a46e1e661819552…</td><td>True</td><td>5</td><td>0</td><td>trojan.emmenhtal/malcode</td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>a826b9cc584bd8c9…</td><td>True</td><td>1</td><td>0</td><td>trojan.amsibypass</td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>d2ba1eca6546f7f2…</td><td>True</td><td>6</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
-<tr><td class='hash'>26cade4c23eb0b3b…</td><td>True</td><td>10</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
-<tr><td class='hash'>9672cec466c2949a…</td><td>True</td><td>3</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>e6da96801cff38a0…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>c683cb8425529c0e…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>75daf220ab3f592b…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>118c416a0859733b…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>647a652b3bcfe180…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>2e216bdb002fd0f4…</td><td>True</td><td>3</td><td>0</td><td>trojan.sliver</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>dd6728339551ead0…</td><td>True</td><td>6</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+        <tr><td class='hash'>b0a61e0d2b769b06…</td><td>True</td><td>10</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>6111a10b82cc1bf6…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>49f19199c3849949…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>88c6129b8ce9772b…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>1b2691d894ade206…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>58d838576a8a6d03…</td><td>True</td><td>10</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>9d9a2f7efc1c1254…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>285216ad44f6cf4c…</td><td>True</td><td>6</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>97a7cb9173bcef71…</td><td>True</td><td>15</td><td>0</td><td>trojan.infostl/hkjl</td><td>AMOS</td></tr>
+<tr><td class='hash'>db528a6c9b4eea0d…</td><td>True</td><td>12</td><td>0</td><td>trojan.wingo/huvo</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>dd11fdaa68ac849e…</td><td>True</td><td>8</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>1d9fd698ccfcc4cd…</td><td>True</td><td>8</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>746e37c45296c42d…</td><td>True</td><td>9</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>1ebbe1479d2be9b5…</td><td>True</td><td>5</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>cc85c7eff50e4df1…</td><td>True</td><td>9</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>23f6b48ec53b6490…</td><td>True</td><td>8</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>c05a49f1183b9657…</td><td>True</td><td>45</td><td>0</td><td>trojan.gorat/flooder</td><td>GovRAT</td></tr>
+<tr><td class='hash'>3a602d1bad61ffce…</td><td>True</td><td>45</td><td>0</td><td>trojan.gorat/flooder</td><td>GovRAT</td></tr>
+<tr><td class='hash'>891b4554e82840c4…</td><td>True</td><td>45</td><td>0</td><td>trojan.gorat/flooder</td><td>GovRAT</td></tr>
+<tr><td class='hash'>fb7fc0a4b77adfe1…</td><td>True</td><td>41</td><td>0</td><td>trojan.silverfox/abtrojan</td><td>Sliver</td></tr>
       </tbody>
     </table>
   </section>
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
-    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/tree/main/Output/2026/2026-10/20261006">Today's raw output</a>
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/tree/main/Output/2026/2026-10/20261007">Today's raw output</a>
   </p>
 </main>
 </body>
