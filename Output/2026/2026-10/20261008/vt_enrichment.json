@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "f73b74f41b4c98d6a7acfdaecfdf82253c8437270fb74c8588e8c49983b667b7",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "b5d0ed395d85559af488341a32f7337996abd0e9f6cf557ba2531f5f717172e1",
+    "found": true,
+    "malicious": 25,
+    "suspicious": 0,
+    "undetected": 35,
+    "label": "trojan.bash/dplw",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "a7de1484a6be2e1c918268eb2f794f383b357ef3d663aa46b0bf47ccf8cf3371",
+    "found": true,
+    "malicious": 31,
+    "suspicious": 0,
+    "undetected": 32,
+    "label": "trojan.mirai/abapplication",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "8e707060ba2def8a9b6865ed9429789dbd84ba4b6058f0dd5aefe462989fe4b8",
+    "found": true,
+    "malicious": 27,
+    "suspicious": 0,
+    "undetected": 26,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "f19b0fd9c9f768b0859754a8ff5edfbb6f73793f0006309d4be6feb55bd6a2fd",
+    "found": true,
+    "malicious": 23,
+    "suspicious": 0,
+    "undetected": 39,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "250f842af70d1d8ff251f94e3dc44c5ddb4397f673f6bd1df2430921926a0e59",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "0fad00ddec16b67f3131aa4efffbe32d78fca178407895920b7549667d7bbfbf",
+    "found": true,
+    "malicious": 34,
+    "suspicious": 0,
+    "undetected": 27,
+    "label": "downloader.shell/bash",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "fb0bf040d7a643ebb9a032f71d12db43b5c82141dc4f4fdd084445398f54b3d7",
+    "found": true,
+    "malicious": 8,
+    "suspicious": 0,
+    "undetected": 48,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "272c5ecaa163fd157cdaec53804da3021a5d27a01df499be0ba976e54d27d32b",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "c0a8657812d38d49f796266003043b604826dbfb358b9167e520fb0949762be1",
+    "found": true,
+    "malicious": 10,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "f05eea5f3134477c4b892677aea0600255b3351e9b69211f023f3d366b0b12f6",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "1b564478966dea1b542c33b6076f7b1c14eed16c558e8b25e3d9f3b84286a4ec",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "b789adce70c028a6d17be45ec34667aa95586350ee0c4057e75b138b1ad35061",
+    "found": true,
+    "malicious": 44,
+    "suspicious": 0,
+    "undetected": 27,
+    "label": "trojan.capdoor/zusy",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "c3cc91ff61e4da3977a5de3336ddfe4ba737f951a354c5a987c9ef2491915bb0",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "199694033b66e4b868e19e1b17c10e7e402ffb58bf3c989e91ff45e6d65c7956",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "c984e75c6510b5b3b89824a4817b7094c1a51990e5b6fc7e2d20d4ca3cdcc39d",
+    "found": true,
+    "malicious": 10,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "eb692b8b90ec35472cadafa1444f311b1d2e24fce84d40a1c5b43c7ea1b75812",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "3b29e7696318a7d1b1a9cbea7a65575ef9c3e833849c95eab7ad4f071a840bf3",
+    "found": true,
+    "malicious": 10,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "a8dd58cca69cff0ca3d6786686ece74e67804e4ea1ce961aab37ee9520fe2998",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "9d4da288496157ce8e49f4bd99ddeddd10fcdccea2239d0e7a06ea55ba3dabbf",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  }
+]
