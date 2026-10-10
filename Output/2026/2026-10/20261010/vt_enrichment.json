@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "76c3ad51a52899878a89cb49cbfc034aa810f837d893a8bff63dfa6af788f4ef",
+    "found": true,
+    "malicious": 36,
+    "suspicious": 0,
+    "undetected": 25,
+    "label": "trojan.mirai/smlbo20",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "43157db11bdb316ec68ec0127a26f3d48aea27b2d216261f2e71240307dd927c",
+    "found": true,
+    "malicious": 19,
+    "suspicious": 0,
+    "undetected": 45,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "e3254bbae3cee001b0998d17002b61eadafc80cbb237cdb356f7bde956782fc2",
+    "found": true,
+    "malicious": 19,
+    "suspicious": 0,
+    "undetected": 45,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "8536ba331695b95d2d590ef3c6bf878210ad9b8d69ec4b21e44e7bd21c06ad05",
+    "found": true,
+    "malicious": 21,
+    "suspicious": 0,
+    "undetected": 43,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "0b4f59dcc4ba74918a9a093d9d56bb388cb48f586ebc51641383ecbf63a13211",
+    "found": true,
+    "malicious": 18,
+    "suspicious": 0,
+    "undetected": 46,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "15ed3dbc8d91259c9afd897e7d21009123e7d715025198c26488c8e22db76c5c",
+    "found": true,
+    "malicious": 16,
+    "suspicious": 0,
+    "undetected": 48,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "70fb96203061d20fde5c81e512a5177efacdf9922ab01d4ea8b23cc66a610a5e",
+    "found": true,
+    "malicious": 18,
+    "suspicious": 0,
+    "undetected": 45,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "a14cbabe19c12b812b126f32573db3ae439cf0bb4a06e2b97119509bba264a36",
+    "found": true,
+    "malicious": 19,
+    "suspicious": 0,
+    "undetected": 45,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "d61b49afa8bed6abcc3adea608d925777b640c6cc1c5659bf83503edcc76cb77",
+    "found": true,
+    "malicious": 20,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "6ea903e0ed2f2077e954335f247883cd0ff5343bcdccf1bb5bfb48b40b9c224a",
+    "found": true,
+    "malicious": 16,
+    "suspicious": 0,
+    "undetected": 48,
+    "label": "trojan.dirtyfrag/mirai",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "9a961874a9f871e6c494280a85d710cd5d374f33efbeba58c738a82eb61f4d3d",
+    "found": true,
+    "malicious": 20,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "f87a3f6bd5b29ccef54d8d32847993288c60289effe935519593aff5038eef0f",
+    "found": true,
+    "malicious": 44,
+    "suspicious": 0,
+    "undetected": 20,
+    "label": "trojan.mirai/ddos",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "1445f010323973c629ba695ba6778cc92bbd3ceaaf58fd9679c321ba5303181d",
+    "found": true,
+    "malicious": 18,
+    "suspicious": 0,
+    "undetected": 46,
+    "label": "trojan.mirai/dirtyfrag",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "8288bdeec418d3a1cfdcb726beb42751361b8ff55a458e03a1b27d7a6c9da522",
+    "found": true,
+    "malicious": 40,
+    "suspicious": 0,
+    "undetected": 22,
+    "label": "trojan.mirai/ddos",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "849d618e1c224d58cd269a06ded13047ab971ff611b254da4de414644069977b",
+    "found": true,
+    "malicious": 40,
+    "suspicious": 0,
+    "undetected": 23,
+    "label": "trojan.mirai/ddos",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "909c91bbe018d96d60c6b9a3b7cb29bd0a5bb733f9f72846b8edcb8a332d4b7f",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 20,
+    "label": "trojan.r002c0dcc26/runner",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "76bd92cf89676f5ce2a48c5956c158382c9ee4a545261ce113f79ecde05ab5f7",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "6c0372b4924412776f036fed3946528ab7619c7001358d3d83700f3b88a3dc2d",
+    "found": true,
+    "malicious": 39,
+    "suspicious": 0,
+    "undetected": 23,
+    "label": "trojan.mirai/possible",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "dd5af3cc7fd1a458953940f8df0155f125c4814eadcf8770491634680a28a91e",
+    "found": true,
+    "malicious": 38,
+    "suspicious": 0,
+    "undetected": 24,
+    "label": "trojan.mirai/possible",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "e820bd6b1c285945dbd17b68ee9e2cbe063bed78578b8993e822b94ddb4a8597",
+    "found": true,
+    "malicious": 42,
+    "suspicious": 0,
+    "undetected": 22,
+    "label": "trojan.mirai/ddos",
+    "threatfox_malware": "Mirai"
+  }
+]
