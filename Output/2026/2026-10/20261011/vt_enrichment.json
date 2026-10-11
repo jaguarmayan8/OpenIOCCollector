@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "7d70e6d7d4fa8d888bd46680aa604dd9f56285dc78c429ac8ab8e4d88266651f",
+    "found": true,
+    "malicious": 35,
+    "suspicious": 0,
+    "undetected": 28,
+    "label": "trojan.smartloader/drodzp",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "3a2f83a62307345bbf273a4292f190636e09110162c7f12a51cb98018c17f27a",
+    "found": true,
+    "malicious": 42,
+    "suspicious": 0,
+    "undetected": 27,
+    "label": "trojan.smartloader/drodzp",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "18017f5ee428d795bc3761c106a5014b8eb51e48087d3357fabeb0c461e8115f",
+    "found": true,
+    "malicious": 40,
+    "suspicious": 0,
+    "undetected": 29,
+    "label": "trojan.smartloader/drodzp",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "03aec7e0a63fca7ad548fa22dedfe3ba15dafc7c2cb816a2349d74e002051c0c",
+    "found": true,
+    "malicious": 34,
+    "suspicious": 0,
+    "undetected": 33,
+    "label": "trojan.luajit/drodzp",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "5cbf7acce6e1a18aeab14a2209cf60ecb744b0beedc41585f562846e1fc3e212",
+    "found": true,
+    "malicious": 40,
+    "suspicious": 0,
+    "undetected": 28,
+    "label": "trojan.smartloader/drodzp",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "6c75d9c69a97d1bee2c6802c9dd7bb652e76e58a8e01a4fec25120a5c78c2845",
+    "found": true,
+    "malicious": 28,
+    "suspicious": 0,
+    "undetected": 34,
+    "label": "trojan.powershell/alien",
+    "threatfox_malware": "MASS Logger"
+  },
+  {
+    "hash": "49565c6e04fbffadc9138c1203b18a88bf3bf497167df4a5c6a00cf7f5f4188d",
+    "found": true,
+    "malicious": 26,
+    "suspicious": 0,
+    "undetected": 36,
+    "label": "trojan.powershell/alien",
+    "threatfox_malware": "Agent Tesla"
+  },
+  {
+    "hash": "78be24965e3c95bcc64de28e51e9ddf7ad91ce920a05a483a8cdf7e1be80294d",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.powershell/gen48",
+    "threatfox_malware": "Agent Tesla"
+  },
+  {
+    "hash": "916d8062e6c56c7a4ade3e95db1ba11e9e55733db7e67eaa5f793ff881deaef7",
+    "found": true,
+    "malicious": 29,
+    "suspicious": 0,
+    "undetected": 33,
+    "label": "trojan.powershell/alien",
+    "threatfox_malware": "MASS Logger"
+  },
+  {
+    "hash": "57d5c2569a10c07529ed7fb18699095a53d9be342f612b8230e39a48312a6281",
+    "found": true,
+    "malicious": 40,
+    "suspicious": 0,
+    "undetected": 28,
+    "label": "trojan.smartloader/drodzp",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "5ce83f99eff295ab626b8f6dacc18a34708a30ac9a95fd23067d71b820283a71",
+    "found": true,
+    "malicious": 37,
+    "suspicious": 0,
+    "undetected": 29,
+    "label": "trojan.smartloader/runner",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "d069c2eae59a5c7ad0c5de361220ff91ff228137812ed5cfd465df1a120ac3ea",
+    "found": true,
+    "malicious": 40,
+    "suspicious": 0,
+    "undetected": 23,
+    "label": "trojan.alevaul/abtrojan",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "3ab5ae6e34d35977cf218c785b184425851f94202092d1bcfb1a2cc44a30bfe5",
+    "found": true,
+    "malicious": 36,
+    "suspicious": 0,
+    "undetected": 33,
+    "label": "trojan.luajit/drodzp",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "365d1b01cd5e605f6e7d39b192aaf56040176f2bce6eaec0fc11584850793a83",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 20,
+    "label": "trojan.runner/gelesz",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "2def5f3586564612e03fa8b57bf3e8f2c4aede6f3be47001890c472b87ff79ee",
+    "found": true,
+    "malicious": 49,
+    "suspicious": 0,
+    "undetected": 19,
+    "label": "trojan.runner/alevaul",
+    "threatfox_malware": "SmartLoader"
+  },
+  {
+    "hash": "001f34fdf19d5182498c502703a0bb832d2db88122cf9942eb07f1103fa4e065",
+    "found": true,
+    "malicious": 4,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.hack",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "80163426481ee9c85839da927aa861ff55021680a7e836653054bd1092463072",
+    "found": true,
+    "malicious": 32,
+    "suspicious": 0,
+    "undetected": 32,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "b821afb910005d067ad8ec2708ddb10727db728ccc28958a18f6a240e594af51",
+    "found": true,
+    "malicious": 34,
+    "suspicious": 0,
+    "undetected": 29,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "d674e3bba48c3f07da03f2f16acecaaf07299922f17ac3c50ed4708bc7c99260",
+    "found": true,
+    "malicious": 39,
+    "suspicious": 0,
+    "undetected": 25,
+    "label": "trojan.mirai/usbljb26",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "690e5586023270cbdf3bbef3a2206d3fb3bce08c5950c81969ab55056f0324bc",
+    "found": true,
+    "malicious": 31,
+    "suspicious": 0,
+    "undetected": 33,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  }
+]
