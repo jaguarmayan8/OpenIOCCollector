@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "aeab2a46685337814afd5c7c3a1b95697de2ea63438099d6c397b83011b5001a",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "63c973360d81debdfae4dbbe551f23bd1263e63da056aa0f6b0f373984112e5a",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "956b3514f38e62f398f2b62fb7f6a11199e127ed5a1517211285056e62d2e3a6",
+    "found": true,
+    "malicious": 12,
+    "suspicious": 0,
+    "undetected": 51,
+    "label": "trojan.infostl/fkjl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "384d494911d5e63e2deb58bedd63d4cefd10b71558937f32af75e6aa5202b098",
+    "found": true,
+    "malicious": 54,
+    "suspicious": 0,
+    "undetected": 16,
+    "label": "trojan.waldek/xmrig",
+    "threatfox_malware": "Unknown Stealer"
+  },
+  {
+    "hash": "c93f414ee04534f38c556c64eb79a18c7449f7845860eadd7fb71062b6b97bdf",
+    "found": true,
+    "malicious": 22,
+    "suspicious": 0,
+    "undetected": 42,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "934e41b60af233c1060226a741e678072142aceb942aa796837f0f70e9e60009",
+    "found": true,
+    "malicious": 10,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "52bde62f5577811e0dd845c072a6ecae39f18e396bfd709fe1beb7b14b545408",
+    "found": true,
+    "malicious": 10,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "3eaa7cfb6d86231c6fd8a913254213373b438cbd2dc69972bea341c226ea8901",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "bbab66169a3718001fba30bb464bf48571bd82205b0e10c32ad1e78a92890838",
+    "found": true,
+    "malicious": 9,
+    "suspicious": 0,
+    "undetected": 47,
+    "label": "trojan.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "0056cc09cf81211b753d79839e3399935a2aa6dd0217232a294f3953b9a7fc26",
+    "found": true,
+    "malicious": 5,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.ddos/abrisk",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "00d21a53eb286b90ed853b7a8c1da493905aa2318686c9c3f3f3af6175832177",
+    "found": true,
+    "malicious": 30,
+    "suspicious": 0,
+    "undetected": 33,
+    "label": "trojan.mirai/genericrxib",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "107a9bfb3d0bb71a33ae17a9eac844a7a7562270a09b5ccce608a78316df0222",
+    "found": true,
+    "malicious": 16,
+    "suspicious": 0,
+    "undetected": 47,
+    "label": "trojan.ddos/ddosagent",
+    "threatfox_malware": "Unknown malware"
+  },
+  {
+    "hash": "eb4f1565c5c9c53bceeec57dcfb91384d8d53d6a696a32de774a47f59cd25dcf",
+    "found": true,
+    "malicious": 9,
+    "suspicious": 0,
+    "undetected": 50,
+    "label": "trojan.infostl/cwnw",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "b9cc60047e896f844e0fb901c51586c90107df9e83b6f5b6e300ba91ed9f8218",
+    "found": true,
+    "malicious": 9,
+    "suspicious": 0,
+    "undetected": 50,
+    "label": "trojan.infostl/hplw",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "3267f01be506f81885881ac048702223ddfca3e17cf5cb4257e816fa76f05477",
+    "found": true,
+    "malicious": 12,
+    "suspicious": 0,
+    "undetected": 49,
+    "label": "trojan.infostl/adhl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "8b5eba6961642074384f1fbaa1f936cfbc3a5426df129ca85354243bfde048bb",
+    "found": true,
+    "malicious": 45,
+    "suspicious": 0,
+    "undetected": 24,
+    "label": "trojan.python/stealer",
+    "threatfox_malware": "BlankGrabber"
+  },
+  {
+    "hash": "19243ff9a0b3bf2480e70060d8e965dfb7bef64304e7e81ba17070fc06cfa8b4",
+    "found": true,
+    "malicious": 7,
+    "suspicious": 0,
+    "undetected": 55,
+    "label": "downloader.mirai/miraidownloader",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "7a534b6f952b592b65863cc37d134090dcd5dc77e778521494794ab280325469",
+    "found": true,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 61,
+    "label": "",
+    "threatfox_malware": "Unknown RAT"
+  },
+  {
+    "hash": "7a6b3c9b79d6a05b05e2990a4ada3ec3351ab3292e56c008da8d73fd721ff624",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 64,
+    "label": "downloader.nemucod",
+    "threatfox_malware": "Unknown RAT"
+  },
+  {
+    "hash": "beab42f5ee6afa72fa0dcac076e48523fb0cc6b20692cf4eec2aa1429abad165",
+    "found": true,
+    "malicious": 26,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.rugmi/usblja26",
+    "threatfox_malware": "Unknown Loader"
+  }
+]

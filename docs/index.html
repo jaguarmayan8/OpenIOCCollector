@@ -35,25 +35,25 @@
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · last run 2026-10-13 08:30</p>
+  <p class="sub">Home-lab threat intel dashboard · last run 2026-10-14 08:30</p>
 </header>
 <main>
   <section class="grid">
-    <div class="card"><div class="num">121,578</div><div class="label">Malicious IPs</div></div>
-    <div class="card"><div class="num">587</div><div class="label">Malicious domains</div></div>
-    <div class="card"><div class="num">751</div><div class="label">Malicious hashes</div></div>
+    <div class="card"><div class="num">126,930</div><div class="label">Malicious IPs</div></div>
+    <div class="card"><div class="num">590</div><div class="label">Malicious domains</div></div>
+    <div class="card"><div class="num">871</div><div class="label">Malicious hashes</div></div>
     <div class="card"><div class="num">5/6 feeds with data</div><div class="label">Feeds with data</div></div>
   </section>
 
   <section class="card">
     <h2>Today's feeds</h2>
-    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>807.1 KB | ~10968 entries</span></div>
-<div class="feed ok"><b>urlhaus.csv</b><span>7434.2 KB | ~28479 entries</span></div>
+    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>807.3 KB | ~10970 entries</span></div>
+<div class="feed ok"><b>urlhaus.csv</b><span>7317.2 KB | ~27974 entries</span></div>
 <div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB)</span></div>
-<div class="feed ok"><b>threatfox_recent.json</b><span>4152.1 KB | ~121844 entries</span></div>
-<div class="feed ok"><b>top_malicious.txt</b><span>1921.9 KB | ~121578 entries</span></div>
-<div class="feed ok"><b>malwarebazaar_recent.json</b><span>141.5 KB | ~100 entries</span></div></div>
-    <p class="sub">Approximate total IOCs collected: 282974</p>
+<div class="feed ok"><b>threatfox_recent.json</b><span>5056.7 KB | ~148736 entries</span></div>
+<div class="feed ok"><b>top_malicious.txt</b><span>2006.6 KB | ~126930 entries</span></div>
+<div class="feed ok"><b>malwarebazaar_recent.json</b><span>138.9 KB | ~100 entries</span></div></div>
+    <p class="sub">Approximate total IOCs collected: 314715</p>
   </section>
 
   <section class="card" style="margin-top:16px;">
@@ -63,33 +63,33 @@
         <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
       </thead>
       <tbody>
-        <tr><td class='hash'>034aa4ebbf1d5cd1…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
-<tr><td class='hash'>d68359ba7d9321f9…</td><td>True</td><td>1</td><td>0</td><td></td><td>Unknown Loader</td></tr>
-<tr><td class='hash'>8e9293d68f4c72bd…</td><td>True</td><td>1</td><td>0</td><td></td><td>Unknown Loader</td></tr>
-<tr><td class='hash'>7a52a3a8b6bbaf04…</td><td>True</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>ae4469691c9bbda9…</td><td>True</td><td>19</td><td>0</td><td>trojan.msil/pe04caf</td><td>Unknown Loader</td></tr>
-<tr><td class='hash'>82a2811f1f9e1ef4…</td><td>True</td><td>32</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>95d3e0ea55317387…</td><td>True</td><td>35</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
-<tr><td class='hash'>d20c95069437a387…</td><td>True</td><td>29</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>5e4076c8a0eda16a…</td><td>True</td><td>26</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>23d45ef61ee74a9a…</td><td>True</td><td>33</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>25152d6aee6a3796…</td><td>True</td><td>27</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>3eaae1026c2565d4…</td><td>True</td><td>33</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>104b13a1b6cbfdf1…</td><td>True</td><td>26</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>7f8d7a8856ebbf8a…</td><td>True</td><td>33</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>a619b8d647b82784…</td><td>True</td><td>31</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>5f3703def0bbc37b…</td><td>True</td><td>38</td><td>0</td><td>trojan.mirai/fecl</td><td>Mirai</td></tr>
-<tr><td class='hash'>a422a9c5832406a4…</td><td>True</td><td>33</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
-<tr><td class='hash'>db9581bf719943bb…</td><td>True</td><td>14</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>b7559979c0cb8288…</td><td>True</td><td>29</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
-<tr><td class='hash'>bf12863f3c3477f7…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown RAT</td></tr>
+        <tr><td class='hash'>aeab2a4668533781…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>63c973360d81debd…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>956b3514f38e62f3…</td><td>True</td><td>12</td><td>0</td><td>trojan.infostl/fkjl</td><td>AMOS</td></tr>
+<tr><td class='hash'>384d494911d5e63e…</td><td>True</td><td>54</td><td>0</td><td>trojan.waldek/xmrig</td><td>Unknown Stealer</td></tr>
+<tr><td class='hash'>c93f414ee04534f3…</td><td>True</td><td>22</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>934e41b60af233c1…</td><td>True</td><td>10</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>52bde62f5577811e…</td><td>True</td><td>10</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>3eaa7cfb6d86231c…</td><td>True</td><td>11</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>bbab66169a371800…</td><td>True</td><td>9</td><td>0</td><td>trojan.infostl</td><td>AMOS</td></tr>
+<tr><td class='hash'>0056cc09cf81211b…</td><td>True</td><td>5</td><td>0</td><td>trojan.ddos/abrisk</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>00d21a53eb286b90…</td><td>True</td><td>30</td><td>0</td><td>trojan.mirai/genericrxib</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>107a9bfb3d0bb71a…</td><td>True</td><td>16</td><td>0</td><td>trojan.ddos/ddosagent</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>eb4f1565c5c9c53b…</td><td>True</td><td>9</td><td>0</td><td>trojan.infostl/cwnw</td><td>AMOS</td></tr>
+<tr><td class='hash'>b9cc60047e896f84…</td><td>True</td><td>9</td><td>0</td><td>trojan.infostl/hplw</td><td>AMOS</td></tr>
+<tr><td class='hash'>3267f01be506f818…</td><td>True</td><td>12</td><td>0</td><td>trojan.infostl/adhl</td><td>AMOS</td></tr>
+<tr><td class='hash'>8b5eba6961642074…</td><td>True</td><td>45</td><td>0</td><td>trojan.python/stealer</td><td>BlankGrabber</td></tr>
+<tr><td class='hash'>19243ff9a0b3bf24…</td><td>True</td><td>7</td><td>0</td><td>downloader.mirai/miraidownloader</td><td>Mirai</td></tr>
+<tr><td class='hash'>7a534b6f952b592b…</td><td>True</td><td>0</td><td>0</td><td></td><td>Unknown RAT</td></tr>
+<tr><td class='hash'>7a6b3c9b79d6a05b…</td><td>True</td><td>1</td><td>0</td><td>downloader.nemucod</td><td>Unknown RAT</td></tr>
+<tr><td class='hash'>beab42f5ee6afa72…</td><td>True</td><td>26</td><td>0</td><td>trojan.rugmi/usblja26</td><td>Unknown Loader</td></tr>
       </tbody>
     </table>
   </section>
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
-    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/tree/main/Output/2026/2026-10/20261013">Today's raw output</a>
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/tree/main/Output/2026/2026-10/20261014">Today's raw output</a>
   </p>
 </main>
 </body>
