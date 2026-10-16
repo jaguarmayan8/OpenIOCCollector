@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "bea41ca1327ec0015306cdc058e7c3806803e5447266c84d347aca3732f59982",
+    "found": true,
+    "malicious": 4,
+    "suspicious": 0,
+    "undetected": 61,
+    "label": "trojan.java",
+    "threatfox_malware": "Unknown Stealer"
+  },
+  {
+    "hash": "b4a2106375c183c4c88d831e5e836096958458c0a2c8831ed5f6d61ffb9b3790",
+    "found": true,
+    "malicious": 19,
+    "suspicious": 0,
+    "undetected": 45,
+    "label": "trojan.java/abminer",
+    "threatfox_malware": "Coinminer"
+  },
+  {
+    "hash": "a1992528ac616877af05934903af2f4afa145f38f9398d48ce941f1a84fbafd5",
+    "found": true,
+    "malicious": 5,
+    "suspicious": 0,
+    "undetected": 58,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "27d0b4fd73264be99950d3ce1e2473f2761451b3f437a9f731ade5ec0ceb1d15",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "9324269741c054dcea939f6ec560651b572ded4dd014a0eac753d4ccc49bfd59",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "926999f8a5281e22179dea84c71b2ac108be185a6d954c573786308e457df8c2",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "d9e3ff787455c70efc46e53f1ca51614ebb7c69fe66a314e41dca9c256c96794",
+    "found": true,
+    "malicious": 9,
+    "suspicious": 0,
+    "undetected": 46,
+    "label": "downloader.infostl",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "7bcc530e31cc46fb9fc0acabd938d2c848c8de69c0e37d6b7d9263cfd4a18977",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "c3b8375f092798ac851bfacdb94310ccabfebcbe106f6e7324764a0e4fd4ea57",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 55,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "3f8f34747f212b978db927ca45365ab2a416b8149ff93ba625436ece55f92ac2",
+    "found": true,
+    "malicious": 3,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "a3358d45d9b172ccb27fd5b1ec076347e3226025e20ded26c319c5804171be51",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 51,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "a208b24088153fa3ae18314706dabcf2a87bf9fc3beb1f365e1e12e4e456cfdf",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 55,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "faf572c1c989ca17101d5003bceb8b4796e709b93bf014f642b2a2c4b7b77fb4",
+    "found": true,
+    "malicious": 4,
+    "suspicious": 0,
+    "undetected": 48,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "d75ef1c616343bfd99cd2b6597b2102d96797117e40ed8c57b23f52a3ab4dd7e",
+    "found": true,
+    "malicious": 38,
+    "suspicious": 0,
+    "undetected": 33,
+    "label": "trojan.ulise/silverfox",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "3e90e6e4400f7796d08a4ab88b93f9ad0430c7ae",
+    "found": true,
+    "malicious": 38,
+    "suspicious": 0,
+    "undetected": 33,
+    "label": "trojan.ulise/silverfox",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "9b32572ea80935ca6944cffc999dd466",
+    "found": true,
+    "malicious": 38,
+    "suspicious": 0,
+    "undetected": 33,
+    "label": "trojan.ulise/silverfox",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "387bef108ad9b3b52851c9d4073a4ad4",
+    "found": true,
+    "malicious": 34,
+    "suspicious": 0,
+    "undetected": 37,
+    "label": "trojan.yogi/abtrojan",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "e71149d889cc558e6328ea7ce3498cd858c26ab282cda9410ccc51f6275f7da6",
+    "found": true,
+    "malicious": 13,
+    "suspicious": 0,
+    "undetected": 58,
+    "label": "trojan.unwantedx/bdhl",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "8572ff9dd34619ea1aade47d28d5881f82a22d4c",
+    "found": true,
+    "malicious": 13,
+    "suspicious": 0,
+    "undetected": 58,
+    "label": "trojan.unwantedx/bdhl",
+    "threatfox_malware": "ValleyRAT"
+  },
+  {
+    "hash": "33e354278dfb54d874ea209803d11c1f",
+    "found": true,
+    "malicious": 13,
+    "suspicious": 0,
+    "undetected": 58,
+    "label": "trojan.unwantedx/bdhl",
+    "threatfox_malware": "ValleyRAT"
+  }
+]
