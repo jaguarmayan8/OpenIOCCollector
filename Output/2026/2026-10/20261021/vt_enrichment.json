@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "e55abaf0401637d610ba4fdc769d3211630916857027f0ffcbd2a9c3226a6989",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "9d4cb16e7cac37c07d980b4c9f77e37bd149d3e3e1f88e0d6498192816dd0e10",
+    "found": true,
+    "malicious": 19,
+    "suspicious": 0,
+    "undetected": 45,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "1fcf6489f59dc37ee33fe8d772b95a8cb55051295b24f237b0aa9ebd05647b51",
+    "found": true,
+    "malicious": 14,
+    "suspicious": 0,
+    "undetected": 49,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "e0e2345d7814f964fe4e13570a41308263d9ed94fd1ebcddae122abd4653e804",
+    "found": false,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 0,
+    "label": "",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "0a1327d4807c606bdbbb54b1bf56d82ee289a1e1dd41848a8d72fcfdf97a24bc",
+    "found": true,
+    "malicious": 19,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "a01b0d7f1eb245aa77675984691e1d015cbbe0928b00ec6d521657a596c8b6a4",
+    "found": true,
+    "malicious": 16,
+    "suspicious": 0,
+    "undetected": 47,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "bcace72a031f60220ec6458c37813f156d81435a1aecf56eb743c31738aaccbb",
+    "found": true,
+    "malicious": 20,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.catstorm/mirai",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "d1047f11c8de333f7a22aac42b3f3c4d566f8114bc8c008961eda70e1c53fca8",
+    "found": true,
+    "malicious": 3,
+    "suspicious": 0,
+    "undetected": 59,
+    "label": "trojan.powershell/alien",
+    "threatfox_malware": "Agent Tesla"
+  },
+  {
+    "hash": "a38be60dd7d73ae87c2ef820b3cb752bbafe1d6d35d4a83f7983da2d5adbd62b",
+    "found": true,
+    "malicious": 7,
+    "suspicious": 0,
+    "undetected": 55,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "7a231740d8361d302ff1b3991f23844e83ca8e344750701650ef7f84e73cbb78",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 56,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "4ac83d57beea52283ce42318ab935b92dcde57fb105689afe9413fa0435ca071",
+    "found": true,
+    "malicious": 7,
+    "suspicious": 0,
+    "undetected": 55,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "bc4f3f020f9e362195c7c1d55ae3a5bde09f60abe7d1e56f8b5cd9621db6fa04",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "3e0773af5ccb3c201b3acb64b56d55282d95421441874e3d14695e51adb98719",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "d91ab9708e5c414402d0b742518847e6a9e6ccad281154b59ca597cb7ced9497",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "3aeae0c7102ced8c24183c77e4252da66e1c4118c10527bfdb1e14bb291f0c7f",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "9eabfb31f281ed61b993abe535472ef490a7ac5b94a78e9e229beae92b80b2cf",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 55,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "33264236f81c910ca6a2331813134f7da8f2eba0ffd5a7b95127274dbaa0d44d",
+    "found": true,
+    "malicious": 40,
+    "suspicious": 0,
+    "undetected": 29,
+    "label": "trojan.tofsee/abtrojan",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "5d9e7b2c6e21e0d75a7f2aa8c7738ec8b7b2db3fa6567d8434403585a5053047",
+    "found": true,
+    "malicious": 19,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "da307a62fad47ac3889c3c3233da87083dfc6e0aa7f16d3b34172dde015711f6",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  },
+  {
+    "hash": "a00047d22c9a977584daf29232df06c34d86003a5717c0efb9b68c5a72f02ce1",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 57,
+    "label": "trojan.",
+    "threatfox_malware": "AMOS"
+  }
+]
