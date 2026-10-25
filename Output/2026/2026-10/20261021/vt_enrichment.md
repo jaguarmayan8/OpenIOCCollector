@@ -1,4 +1,4 @@
-# VirusTotal Enrichment - 2026-10-24 08:35
+# VirusTotal Enrichment - 2026-10-25 08:35
 
 Sample size: 20 hashes from ThreatFox
 
@@ -21,6 +21,6 @@ Sample size: 20 hashes from ThreatFox
 | `3aeae0c7102ced8c24183c77e4252da66e1c4118c10527bfdb1e14bb291f0c7f` | True | 27 | 0 | trojan.amos/infostl | AMOS |
 | `9eabfb31f281ed61b993abe535472ef490a7ac5b94a78e9e229beae92b80b2cf` | True | 18 | 0 | trojan.infostl/abtrojan | AMOS |
 | `33264236f81c910ca6a2331813134f7da8f2eba0ffd5a7b95127274dbaa0d44d` | True | 40 | 0 | trojan.tofsee/abtrojan | Unknown Loader |
-| `5d9e7b2c6e21e0d75a7f2aa8c7738ec8b7b2db3fa6567d8434403585a5053047` | True | 26 | 0 | trojan.mirai/gafgyt | Mirai |
+| `5d9e7b2c6e21e0d75a7f2aa8c7738ec8b7b2db3fa6567d8434403585a5053047` | True | 18 | 0 | trojan.mirai/ddos | Mirai |
 | `da307a62fad47ac3889c3c3233da87083dfc6e0aa7f16d3b34172dde015711f6` | True | 25 | 0 | trojan.infostl/amos | AMOS |
 | `a00047d22c9a977584daf29232df06c34d86003a5717c0efb9b68c5a72f02ce1` | True | 26 | 0 | trojan.amos/infostl | AMOS |

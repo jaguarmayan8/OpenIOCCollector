@@ -155,10 +155,10 @@
   {
     "hash": "5d9e7b2c6e21e0d75a7f2aa8c7738ec8b7b2db3fa6567d8434403585a5053047",
     "found": true,
-    "malicious": 26,
+    "malicious": 18,
     "suspicious": 0,
-    "undetected": 32,
-    "label": "trojan.mirai/gafgyt",
+    "undetected": 18,
+    "label": "trojan.mirai/ddos",
     "threatfox_malware": "Mirai"
   },
   {
