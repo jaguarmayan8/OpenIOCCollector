@@ -2,27 +2,27 @@
   {
     "hash": "e55abaf0401637d610ba4fdc769d3211630916857027f0ffcbd2a9c3226a6989",
     "found": true,
-    "malicious": 22,
+    "malicious": 28,
     "suspicious": 0,
-    "undetected": 41,
-    "label": "trojan.amos/class",
+    "undetected": 35,
+    "label": "trojan.amos/macho",
     "threatfox_malware": "AMOS"
   },
   {
     "hash": "9d4cb16e7cac37c07d980b4c9f77e37bd149d3e3e1f88e0d6498192816dd0e10",
     "found": true,
-    "malicious": 29,
+    "malicious": 31,
     "suspicious": 0,
-    "undetected": 35,
+    "undetected": 33,
     "label": "trojan.mirai/gafgyt",
     "threatfox_malware": "Mirai"
   },
   {
     "hash": "1fcf6489f59dc37ee33fe8d772b95a8cb55051295b24f237b0aa9ebd05647b51",
     "found": true,
-    "malicious": 28,
+    "malicious": 32,
     "suspicious": 0,
-    "undetected": 34,
+    "undetected": 31,
     "label": "trojan.mirai/gafgyt",
     "threatfox_malware": "Mirai"
   },
@@ -38,18 +38,18 @@
   {
     "hash": "0a1327d4807c606bdbbb54b1bf56d82ee289a1e1dd41848a8d72fcfdf97a24bc",
     "found": true,
-    "malicious": 30,
+    "malicious": 31,
     "suspicious": 0,
-    "undetected": 33,
+    "undetected": 31,
     "label": "trojan.mirai/gafgyt",
     "threatfox_malware": "Mirai"
   },
   {
     "hash": "a01b0d7f1eb245aa77675984691e1d015cbbe0928b00ec6d521657a596c8b6a4",
     "found": true,
-    "malicious": 28,
+    "malicious": 31,
     "suspicious": 0,
-    "undetected": 35,
+    "undetected": 32,
     "label": "trojan.mirai/gafgyt",
     "threatfox_malware": "Mirai"
   },
@@ -83,10 +83,10 @@
   {
     "hash": "7a231740d8361d302ff1b3991f23844e83ca8e344750701650ef7f84e73cbb78",
     "found": true,
-    "malicious": 20,
+    "malicious": 27,
     "suspicious": 0,
-    "undetected": 36,
-    "label": "trojan.amos/class",
+    "undetected": 35,
+    "label": "trojan.amos/macho",
     "threatfox_malware": "AMOS"
   },
   {
@@ -109,12 +109,7 @@
   },
   {
     "hash": "3e0773af5ccb3c201b3acb64b56d55282d95421441874e3d14695e51adb98719",
-    "found": true,
-    "malicious": 25,
-    "suspicious": 0,
-    "undetected": 37,
-    "label": "trojan.amos/abtrojan",
-    "threatfox_malware": "AMOS"
+    "error": "HTTPSConnectionPool(host='www.virustotal.com', port=443): Read timed out. (read timeout=30)"
   },
   {
     "hash": "d91ab9708e5c414402d0b742518847e6a9e6ccad281154b59ca597cb7ced9497",
@@ -155,7 +150,7 @@
   {
     "hash": "5d9e7b2c6e21e0d75a7f2aa8c7738ec8b7b2db3fa6567d8434403585a5053047",
     "found": true,
-    "malicious": 30,
+    "malicious": 33,
     "suspicious": 0,
     "undetected": 30,
     "label": "trojan.mirai/gafgyt",
