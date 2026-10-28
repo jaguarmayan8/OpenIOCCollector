@@ -109,7 +109,12 @@
   },
   {
     "hash": "3e0773af5ccb3c201b3acb64b56d55282d95421441874e3d14695e51adb98719",
-    "error": "HTTPSConnectionPool(host='www.virustotal.com', port=443): Read timed out. (read timeout=30)"
+    "found": true,
+    "malicious": 25,
+    "suspicious": 0,
+    "undetected": 37,
+    "label": "trojan.amos/abtrojan",
+    "threatfox_malware": "AMOS"
   },
   {
     "hash": "d91ab9708e5c414402d0b742518847e6a9e6ccad281154b59ca597cb7ced9497",
@@ -141,7 +146,7 @@
   {
     "hash": "33264236f81c910ca6a2331813134f7da8f2eba0ffd5a7b95127274dbaa0d44d",
     "found": true,
-    "malicious": 40,
+    "malicious": 41,
     "suspicious": 0,
     "undetected": 29,
     "label": "trojan.tofsee/abtrojan",
