@@ -94,7 +94,7 @@
     "found": true,
     "malicious": 25,
     "suspicious": 0,
-    "undetected": 34,
+    "undetected": 36,
     "label": "trojan.amos/infostl",
     "threatfox_malware": "AMOS"
   },
