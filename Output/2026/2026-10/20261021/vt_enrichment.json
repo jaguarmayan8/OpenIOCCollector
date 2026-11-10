@@ -2,10 +2,10 @@
   {
     "hash": "e55abaf0401637d610ba4fdc769d3211630916857027f0ffcbd2a9c3226a6989",
     "found": true,
-    "malicious": 28,
+    "malicious": 31,
     "suspicious": 0,
-    "undetected": 35,
-    "label": "trojan.amos/macho",
+    "undetected": 32,
+    "label": "trojan.amos/infostl",
     "threatfox_malware": "AMOS"
   },
   {
@@ -83,46 +83,46 @@
   {
     "hash": "7a231740d8361d302ff1b3991f23844e83ca8e344750701650ef7f84e73cbb78",
     "found": true,
-    "malicious": 27,
+    "malicious": 31,
     "suspicious": 0,
-    "undetected": 35,
-    "label": "trojan.amos/macho",
+    "undetected": 32,
+    "label": "trojan.amos/infostl",
     "threatfox_malware": "AMOS"
   },
   {
     "hash": "4ac83d57beea52283ce42318ab935b92dcde57fb105689afe9413fa0435ca071",
     "found": true,
-    "malicious": 25,
+    "malicious": 29,
     "suspicious": 0,
-    "undetected": 36,
+    "undetected": 31,
     "label": "trojan.amos/infostl",
     "threatfox_malware": "AMOS"
   },
   {
     "hash": "bc4f3f020f9e362195c7c1d55ae3a5bde09f60abe7d1e56f8b5cd9621db6fa04",
     "found": true,
-    "malicious": 24,
+    "malicious": 26,
     "suspicious": 0,
-    "undetected": 38,
-    "label": "trojan.amos/abtrojan",
+    "undetected": 31,
+    "label": "trojan.infostl/macho",
     "threatfox_malware": "AMOS"
   },
   {
     "hash": "3e0773af5ccb3c201b3acb64b56d55282d95421441874e3d14695e51adb98719",
     "found": true,
-    "malicious": 25,
+    "malicious": 31,
     "suspicious": 0,
-    "undetected": 37,
-    "label": "trojan.amos/abtrojan",
+    "undetected": 32,
+    "label": "trojan.amos/infostl",
     "threatfox_malware": "AMOS"
   },
   {
     "hash": "d91ab9708e5c414402d0b742518847e6a9e6ccad281154b59ca597cb7ced9497",
     "found": true,
-    "malicious": 24,
+    "malicious": 30,
     "suspicious": 0,
-    "undetected": 37,
-    "label": "trojan.amos/abtrojan",
+    "undetected": 33,
+    "label": "trojan.amos/infostl",
     "threatfox_malware": "AMOS"
   },
   {
@@ -164,18 +164,18 @@
   {
     "hash": "da307a62fad47ac3889c3c3233da87083dfc6e0aa7f16d3b34172dde015711f6",
     "found": true,
-    "malicious": 26,
+    "malicious": 31,
     "suspicious": 0,
-    "undetected": 36,
+    "undetected": 32,
     "label": "trojan.amos/infostl",
     "threatfox_malware": "AMOS"
   },
   {
     "hash": "a00047d22c9a977584daf29232df06c34d86003a5717c0efb9b68c5a72f02ce1",
     "found": true,
-    "malicious": 23,
+    "malicious": 29,
     "suspicious": 0,
-    "undetected": 34,
+    "undetected": 32,
     "label": "trojan.amos/infostl",
     "threatfox_malware": "AMOS"
   }
