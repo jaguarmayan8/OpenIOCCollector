@@ -1,11 +1,11 @@
-# Daily IOC Report - 2026-11-12 08:30
+# Daily IOC Report - 2026-11-12 15:24
 
 - **ssl_blacklist.csv**: 827.5 KB | ~11243 entries
-- **urlhaus.csv**: Error - 410 Client Error: Gone for url: https://urlhaus.abuse.ch/downloads/csv_online/
-- **feodo_tracker.txt**: Empty (0.6 KB)
-- **threatfox_recent.json**: Error - 410 Client Error: Gone for url: https://threatfox.abuse.ch/export/json/recent/
+- **feodo_tracker.txt**: Empty (0.6 KB) - this may be expected
 - **top_malicious.txt**: 2110.7 KB | ~133241 entries
-- **malwarebazaar_recent.json**: 144.0 KB | ~100 entries
+- **urlhaus.csv**: 29089.0 KB | ~114139 entries
+- **threatfox_recent.json**: 7093.1 KB | ~9243 entries
+- **malwarebazaar_recent.json**: 137.5 KB | ~100 entries
 
-**Success rate:** 3/6 feeds with data
-**Approximate total IOCs collected:** 144589
+**Success rate:** 5/6 feeds with data
+**Approximate total IOCs collected:** 267966
