@@ -35,13 +35,13 @@
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · last run 2026-11-12 15:24</p>
+  <p class="sub">Home-lab threat intel dashboard · last run 2026-11-12 15:29</p>
 </header>
 <main>
   <section class="grid">
     <div class="card"><div class="num">133,241</div><div class="label">Malicious IPs</div></div>
     <div class="card"><div class="num">754</div><div class="label">Malicious domains</div></div>
-    <div class="card"><div class="num">0</div><div class="label">Malicious hashes</div></div>
+    <div class="card"><div class="num">4,894</div><div class="label">Malicious hashes</div></div>
     <div class="card"><div class="num">5/6 feeds with data</div><div class="label">Feeds with data</div></div>
   </section>
 
@@ -51,9 +51,9 @@
 <div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected</span></div>
 <div class="feed ok"><b>top_malicious.txt</b><span>2110.7 KB | ~133241 entries</span></div>
 <div class="feed ok"><b>urlhaus.csv</b><span>29089.0 KB | ~114139 entries</span></div>
-<div class="feed ok"><b>threatfox_recent.json</b><span>7093.1 KB | ~9243 entries</span></div>
+<div class="feed ok"><b>threatfox_recent.json</b><span>7092.3 KB | ~9242 entries</span></div>
 <div class="feed ok"><b>malwarebazaar_recent.json</b><span>137.5 KB | ~100 entries</span></div></div>
-    <p class="sub">Approximate total IOCs collected: 267966</p>
+    <p class="sub">Approximate total IOCs collected: 267965</p>
   </section>
 
   <section class="card" style="margin-top:16px;">
@@ -63,7 +63,26 @@
         <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
       </thead>
       <tbody>
-        <tr><td colspan='6'>No VirusTotal sample yet.</td></tr>
+        <tr><td class='hash'>1d80331fddf9f2b1…</td><td>True</td><td>41</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
+<tr><td class='hash'>7792f7d53bb9bd65…</td><td>True</td><td>36</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
+<tr><td class='hash'>0af65ff826401fa4…</td><td>True</td><td>29</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>408adad587225367…</td><td>True</td><td>27</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
+<tr><td class='hash'>d2a996d2ba69227b…</td><td>True</td><td>28</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>1a7d4b5bc83af4c3…</td><td>True</td><td>18</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>1d2c04c5757040ec…</td><td>True</td><td>6</td><td>0</td><td>downloader.shell/maloader</td><td>Mirai</td></tr>
+<tr><td class='hash'>3544ffefb2a38bf4…</td><td>True</td><td>44</td><td>0</td><td>trojan.deceptor/wirevpn</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>c21eb14ba63e943d…</td><td>True</td><td>3</td><td>0</td><td>projextor/ywj8n9</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>4ce5e5768d2f9f71…</td><td>True</td><td>2</td><td>0</td><td>projextor/lqil</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>fc10ff87b6fe2dcb…</td><td>True</td><td>37</td><td>0</td><td>trojan.tedy/wirevpn</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>e7291095de784840…</td><td>True</td><td>46</td><td>0</td><td>trojan.deceptor/wirevpn</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>b7a7013b951c3cea…</td><td>True</td><td>44</td><td>0</td><td>trojan.deceptor/wirevpn</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>a799417bd79060d6…</td><td>True</td><td>37</td><td>0</td><td>trojan.artiligna/convagent</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>71656539cc644513…</td><td>True</td><td>41</td><td>0</td><td>trojan.gencbl/projextor</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>e7bc36c7345b3894…</td><td>True</td><td>43</td><td>0</td><td>trojan.artiligna/convagent</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>3c1dbc3f56e91cc7…</td><td>True</td><td>44</td><td>0</td><td>trojan.artiligna/gencbl</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>2613489dd5d8b31a…</td><td>True</td><td>34</td><td>0</td><td>trojan.zusy/gen3</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>07311efd018bf940…</td><td>True</td><td>32</td><td>0</td><td>trojan.lazy/msil</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>25bb78acb7bb070a…</td><td>True</td><td>33</td><td>0</td><td>trojan.lazy/msil</td><td>Unknown malware</td></tr>
       </tbody>
     </table>
   </section>
