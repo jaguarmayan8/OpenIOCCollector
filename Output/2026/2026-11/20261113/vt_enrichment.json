@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "4832ee7225ed1d49af4604e39ca41465f6fed524642349c4cafcfa1eb03bb609",
+    "found": true,
+    "malicious": 13,
+    "suspicious": 0,
+    "undetected": 50,
+    "label": "trojan.mirai",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "15f97ac71c17d65347c01e5c3e0bc5590e67812e313749c65858f70e2d6b7e5f",
+    "found": false,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 0,
+    "label": "",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "a7763a0a0cc4c90039e16b8151ea5edf2f8b86d45fdaed75af0d2d3872dad830",
+    "found": true,
+    "malicious": 10,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.mirai",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "ab7a7a88a90d3c26df5be69a41d7bb9251defae4a057cf2d23bb9dbc22ec4c62",
+    "found": true,
+    "malicious": 24,
+    "suspicious": 0,
+    "undetected": 39,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "2ca14ca257abab463641f49b757c8fdf322d32930d3acecfa2e3fb681b19ec3c",
+    "found": true,
+    "malicious": 26,
+    "suspicious": 0,
+    "undetected": 32,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "209fe78ebeb4e1d2a437c4833c455fe9e69c628ffc5b144ff93606afbec6b8c2",
+    "found": true,
+    "malicious": 5,
+    "suspicious": 0,
+    "undetected": 55,
+    "label": "trojan.powershell",
+    "threatfox_malware": "Agent Tesla"
+  },
+  {
+    "hash": "e28e82012636099db0c190d96663f29dab77d08ce5139d811bb65f0c102032be",
+    "found": true,
+    "malicious": 7,
+    "suspicious": 0,
+    "undetected": 55,
+    "label": "trojan.powershell/alien",
+    "threatfox_malware": "Formbook"
+  },
+  {
+    "hash": "27b2c6c95efb702a690b65863e149e1b621b724d69021dd2cae9619374e73153",
+    "found": true,
+    "malicious": 21,
+    "suspicious": 0,
+    "undetected": 43,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "b0ee9e2f31c63a5bb42017b0babace7b82f2f34fee519c05d182a258e718ade4",
+    "found": true,
+    "malicious": 29,
+    "suspicious": 0,
+    "undetected": 35,
+    "label": "trojan.mirai/gafgyt",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "48fd47c6778dfd00330dd7993260528dfb17fd8bef2a58735ee4d5c1cdc4240e",
+    "found": true,
+    "malicious": 9,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.powershell/alien",
+    "threatfox_malware": "Formbook"
+  },
+  {
+    "hash": "04e6f503542e4bcf0e8dc51bc97c9698f2c212c664549ebed225ca92e497dc1a",
+    "found": true,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "",
+    "threatfox_malware": "vo1d"
+  },
+  {
+    "hash": "5bc0839e87e68f192f90c6f2923bea7f739690a412b4b054118107c331119581",
+    "found": true,
+    "malicious": 1,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.linkdoor",
+    "threatfox_malware": "vo1d"
+  },
+  {
+    "hash": "85759826f998c687135fc8b6e728b2828d54df0d249fd994d54838394c0ba1a1",
+    "found": true,
+    "malicious": 12,
+    "suspicious": 0,
+    "undetected": 49,
+    "label": "hacktool.linpeas/agentbat",
+    "threatfox_malware": "Unknown Loader"
+  },
+  {
+    "hash": "28f8fdc502d94b3d3aae6b61e14782ae6e94aa655731a40328452b1ccd30dbeb",
+    "found": true,
+    "malicious": 12,
+    "suspicious": 0,
+    "undetected": 46,
+    "label": "trojan.powershell/abmrisk",
+    "threatfox_malware": "Agent Tesla"
+  },
+  {
+    "hash": "41b554713f3a157b45e81d3196fdc766478369481cb243e0960aa228e75900f2",
+    "found": true,
+    "malicious": 9,
+    "suspicious": 0,
+    "undetected": 53,
+    "label": "trojan.powershell/alien",
+    "threatfox_malware": "Agent Tesla"
+  },
+  {
+    "hash": "b85965fd05837835f8f36d825cb07eb4c83a492fbc642d6a28baa006fd100d0b",
+    "found": true,
+    "malicious": 15,
+    "suspicious": 0,
+    "undetected": 47,
+    "label": "trojan.powershell/agenttesla",
+    "threatfox_malware": "Agent Tesla"
+  },
+  {
+    "hash": "97c1b2309fb08cb03805404014de498926bdbad6304b13ac226d2defd9321b3e",
+    "found": true,
+    "malicious": 8,
+    "suspicious": 0,
+    "undetected": 54,
+    "label": "trojan.alien/netloader",
+    "threatfox_malware": "Agent Tesla"
+  },
+  {
+    "hash": "0dccb865fd6ea565761ae3407f7e67dedc44acb59ec2568c1d26e002c8dd1e5c",
+    "found": true,
+    "malicious": 35,
+    "suspicious": 0,
+    "undetected": 35,
+    "label": "trojan.mint/zard",
+    "threatfox_malware": "SolarisLoader"
+  },
+  {
+    "hash": "7fdb1968e2250e20e0d073d905c7dd52614a9c26924e76d641e4030ed7e57637",
+    "found": true,
+    "malicious": 14,
+    "suspicious": 0,
+    "undetected": 47,
+    "label": "trojan.clipbanker/stealer",
+    "threatfox_malware": "ClipBanker"
+  },
+  {
+    "hash": "16e62857cdd57ec1c8ce6c581c13dbd1dcca1362c61bda8b96be83b352fad20a",
+    "found": true,
+    "malicious": 5,
+    "suspicious": 0,
+    "undetected": 62,
+    "label": "trojan.fakesfx/mediaarena",
+    "threatfox_malware": "Unknown malware"
+  }
+]
