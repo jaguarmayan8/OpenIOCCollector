@@ -1,0 +1,52 @@
+name: Daily IOC collection
+
+on:
+  schedule:
+    # Daily at 04:30 UTC. GitHub schedule cron is UTC and can drift by
+    # 15+ minutes - do not chain anything tightly to this exact minute.
+    - cron: "30 4 * * *"
+  workflow_dispatch: {}   # manual "Run workflow" button for testing
+
+permissions:
+  contents: write         # needed to commit Output/ and the CDB lists back
+
+concurrency:
+  group: ioc-collector
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      # Secrets come from repo settings - no key files on any runner.
+      # collector.py exits 1 if fewer than 2 feeds returned data, which
+      # fails the workflow BEFORE anything broken is committed.
+      - name: Run collector
+        env:
+          ABUSECH_AUTH_KEY: ${{ secrets.ABUSECH_AUTH_KEY }}
+          VT_API_KEY: ${{ secrets.VT_API_KEY }}
+        run: python3 collector.py
+
+      - name: Build CDB lists, guard, VT enrichment, dashboard, prune
+        env:
+          VT_API_KEY: ${{ secrets.VT_API_KEY }}
+        run: bash build_lists.sh
+
+      - name: Commit and push
+        run: |
+          git config user.name "ioc-collector[bot]"
+          git config user.email "ioc-collector[bot]@users.noreply.github.com"
+          git add Output/ docs/index.html checksums.sha256 malicious-ips.txt malicious-domains.txt malicious-hashes.txt
+          git add malicious-ips.txt.prev malicious-domains.txt.prev malicious-hashes.txt.prev 2>/dev/null || true
+          git commit -m "Daily IOC update $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+          git push
