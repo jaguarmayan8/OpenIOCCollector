@@ -23,7 +23,8 @@ def extract_hashes(path):
     for entries in data.values():
         for item in entries:
             ioc_type = item.get("ioc_type", "")
-            value = (item.get("ioc_value") or "").lower()
+            # new API: "ioc"; legacy export: "ioc_value"
+            value = (item.get("ioc") or item.get("ioc_value") or "").lower()
             if ioc_type in ("md5_hash", "sha1_hash", "sha256_hash") and value and value not in seen:
                 seen.add(value)
                 hashes.append({
@@ -95,3 +96,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

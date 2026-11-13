@@ -43,8 +43,8 @@ Daily collector on Kali pulls public threat intelligence feeds, organizes the ou
 
 OpenIOCCollector/
 - Output/
-- tweetfeed.py
-- run_andpush.sh
+- collector.py
+- run_and_push.sh
 - vt_enrich.py
 - generate_dashboard.py
 - requirements.txt
@@ -55,7 +55,7 @@ OpenIOCCollector/
 - git clone https://github.com/jaguarmayan8/OpenIOCCollector.git
 - cd OpenIOCCollector
 - sudo apt install -y python3-requests
-- python3 tweetfeed.py
+- python3 collector.py
 
 ## Wazuh Integration
 
