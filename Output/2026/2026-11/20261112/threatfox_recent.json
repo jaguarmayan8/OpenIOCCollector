@@ -1,6 +1,144 @@
 {
   "iocs": [
     {
+      "id": "2026843",
+      "ioc": "relay.newmansamba.icu",
+      "threat_type": "botnet_cc",
+      "threat_type_desc": "Indicator that identifies a botnet command&control server (C&C)",
+      "ioc_type": "domain",
+      "ioc_type_desc": "Domain that is used for botnet Command&control (C&C)",
+      "malware": "unknown_rat",
+      "malware_printable": "Unknown RAT",
+      "malware_alias": null,
+      "malware_malpedia": "https://malpedia.caad.fkie.fraunhofer.de/details/unknown_rat",
+      "confidence_level": 90,
+      "is_compromised": false,
+      "first_seen": "2026-11-13 01:39:41 UTC",
+      "last_seen": null,
+      "reference": null,
+      "reporter": "byzantineisfire",
+      "tags": [
+        "ConnectWise",
+        "rmm",
+        "ScreenConnect"
+      ]
+    },
+    {
+      "id": "2026842",
+      "ioc": "creativebackup.website",
+      "threat_type": "botnet_cc",
+      "threat_type_desc": "Indicator that identifies a botnet command&control server (C&C)",
+      "ioc_type": "domain",
+      "ioc_type_desc": "Domain that is used for botnet Command&control (C&C)",
+      "malware": "unknown_rat",
+      "malware_printable": "Unknown RAT",
+      "malware_alias": null,
+      "malware_malpedia": "https://malpedia.caad.fkie.fraunhofer.de/details/unknown_rat",
+      "confidence_level": 90,
+      "is_compromised": false,
+      "first_seen": "2026-11-13 01:39:41 UTC",
+      "last_seen": null,
+      "reference": null,
+      "reporter": "byzantineisfire",
+      "tags": [
+        "ConnectWise",
+        "rmm",
+        "ScreenConnect"
+      ]
+    },
+    {
+      "id": "2026841",
+      "ioc": "creativemind.website",
+      "threat_type": "botnet_cc",
+      "threat_type_desc": "Indicator that identifies a botnet command&control server (C&C)",
+      "ioc_type": "domain",
+      "ioc_type_desc": "Domain that is used for botnet Command&control (C&C)",
+      "malware": "unknown_rat",
+      "malware_printable": "Unknown RAT",
+      "malware_alias": null,
+      "malware_malpedia": "https://malpedia.caad.fkie.fraunhofer.de/details/unknown_rat",
+      "confidence_level": 90,
+      "is_compromised": false,
+      "first_seen": "2026-11-13 01:39:41 UTC",
+      "last_seen": null,
+      "reference": null,
+      "reporter": "byzantineisfire",
+      "tags": [
+        "ConnectWise",
+        "rmm",
+        "ScreenConnect"
+      ]
+    },
+    {
+      "id": "2026840",
+      "ioc": "188.253.107.199:8041",
+      "threat_type": "botnet_cc",
+      "threat_type_desc": "Indicator that identifies a botnet command&control server (C&C)",
+      "ioc_type": "ip:port",
+      "ioc_type_desc": "ip:port combination that is used for botnet Command&control (C&C)",
+      "malware": "unknown_rat",
+      "malware_printable": "Unknown RAT",
+      "malware_alias": null,
+      "malware_malpedia": "https://malpedia.caad.fkie.fraunhofer.de/details/unknown_rat",
+      "confidence_level": 90,
+      "is_compromised": false,
+      "first_seen": "2026-11-13 01:39:41 UTC",
+      "last_seen": null,
+      "reference": null,
+      "reporter": "byzantineisfire",
+      "tags": [
+        "ConnectWise",
+        "rmm",
+        "ScreenConnect"
+      ]
+    },
+    {
+      "id": "2026839",
+      "ioc": "170.39.213.151:8041",
+      "threat_type": "botnet_cc",
+      "threat_type_desc": "Indicator that identifies a botnet command&control server (C&C)",
+      "ioc_type": "ip:port",
+      "ioc_type_desc": "ip:port combination that is used for botnet Command&control (C&C)",
+      "malware": "unknown_rat",
+      "malware_printable": "Unknown RAT",
+      "malware_alias": null,
+      "malware_malpedia": "https://malpedia.caad.fkie.fraunhofer.de/details/unknown_rat",
+      "confidence_level": 90,
+      "is_compromised": false,
+      "first_seen": "2026-11-13 01:39:41 UTC",
+      "last_seen": null,
+      "reference": null,
+      "reporter": "byzantineisfire",
+      "tags": [
+        "ConnectWise",
+        "rmm",
+        "ScreenConnect"
+      ]
+    },
+    {
+      "id": "2026838",
+      "ioc": "108.186.112.183:8041",
+      "threat_type": "botnet_cc",
+      "threat_type_desc": "Indicator that identifies a botnet command&control server (C&C)",
+      "ioc_type": "ip:port",
+      "ioc_type_desc": "ip:port combination that is used for botnet Command&control (C&C)",
+      "malware": "unknown_rat",
+      "malware_printable": "Unknown RAT",
+      "malware_alias": null,
+      "malware_malpedia": "https://malpedia.caad.fkie.fraunhofer.de/details/unknown_rat",
+      "confidence_level": 90,
+      "is_compromised": false,
+      "first_seen": "2026-11-13 01:39:41 UTC",
+      "last_seen": null,
+      "reference": null,
+      "reporter": "byzantineisfire",
+      "tags": [
+        "ConnectWise",
+        "rmm",
+        "ScreenConnect"
+      ]
+    },
+    {
       "id": "2026837",
       "ioc": "https://nexguard.pro/ae8ouxb9gx/d956316373920945",
       "threat_type": "payload_delivery",
@@ -35,7 +173,7 @@
       "confidence_level": 100,
       "is_compromised": true,
       "first_seen": "2026-11-13 01:05:34 UTC",
-      "last_seen": "2026-11-13 01:25:34 UTC",
+      "last_seen": "2026-11-13 01:40:34 UTC",
       "reference": null,
       "reporter": "crep1x",
       "tags": [
@@ -35205,7 +35343,7 @@
       "confidence_level": 100,
       "is_compromised": false,
       "first_seen": "2026-11-12 01:38:29 UTC",
-      "last_seen": null,
+      "last_seen": "2026-11-13 01:38:11 UTC",
       "reference": "https://github.com/deepfield/public-research/tree/main/jackskid",
       "reporter": "deepfield",
       "tags": [
@@ -35230,7 +35368,7 @@
       "confidence_level": 100,
       "is_compromised": false,
       "first_seen": "2026-11-12 01:38:29 UTC",
-      "last_seen": null,
+      "last_seen": "2026-11-13 01:38:11 UTC",
       "reference": "https://github.com/deepfield/public-research/tree/main/jackskid",
       "reporter": "deepfield",
       "tags": [
@@ -35255,7 +35393,7 @@
       "confidence_level": 100,
       "is_compromised": false,
       "first_seen": "2026-11-12 01:31:08 UTC",
-      "last_seen": null,
+      "last_seen": "2026-11-13 01:38:11 UTC",
       "reference": "https://github.com/deepfield/public-research/tree/main/jackskid",
       "reporter": "deepfield",
       "tags": [
@@ -35280,7 +35418,7 @@
       "confidence_level": 100,
       "is_compromised": false,
       "first_seen": "2026-11-12 01:31:08 UTC",
-      "last_seen": null,
+      "last_seen": "2026-11-13 01:38:11 UTC",
       "reference": "https://github.com/deepfield/public-research/tree/main/jackskid",
       "reporter": "deepfield",
       "tags": [
@@ -35305,7 +35443,7 @@
       "confidence_level": 100,
       "is_compromised": false,
       "first_seen": "2026-11-12 01:31:08 UTC",
-      "last_seen": null,
+      "last_seen": "2026-11-13 01:38:11 UTC",
       "reference": "https://github.com/deepfield/public-research/tree/main/jackskid",
       "reporter": "deepfield",
       "tags": [
@@ -36655,7 +36793,7 @@
       "confidence_level": 50,
       "is_compromised": false,
       "first_seen": "2026-11-12 00:00:04 UTC",
-      "last_seen": "2026-11-13 01:24:02 UTC",
+      "last_seen": "2026-11-13 01:36:02 UTC",
       "reference": "https://tracker.viriback.com/index.php?q=157.245.82.98",
       "reporter": "abuse_ch",
       "tags": [
@@ -46051,7 +46189,7 @@
       "confidence_level": 100,
       "is_compromised": false,
       "first_seen": "2026-11-11 16:23:48 UTC",
-      "last_seen": "2026-11-13 01:26:13 UTC",
+      "last_seen": "2026-11-13 01:41:23 UTC",
       "reference": "https://github.com/deepfield/public-research/tree/main/aisuru",
       "reporter": "deepfield",
       "tags": [
@@ -46076,7 +46214,7 @@
       "confidence_level": 100,
       "is_compromised": false,
       "first_seen": "2026-11-11 16:23:48 UTC",
-      "last_seen": "2026-11-13 01:26:13 UTC",
+      "last_seen": "2026-11-13 01:41:23 UTC",
       "reference": "https://github.com/deepfield/public-research/tree/main/aisuru",
       "reporter": "deepfield",
       "tags": [
@@ -210449,52 +210587,6 @@
       "reporter": "threatcat_ch",
       "tags": [
         "StrelaStealer"
-      ]
-    },
-    {
-      "id": "2016549",
-      "ioc": "radiopetrecaretzu.ro",
-      "threat_type": "payload_delivery",
-      "threat_type_desc": "Indicator that identifies a malware distribution server (payload delivery)",
-      "ioc_type": "domain",
-      "ioc_type_desc": "Domain name that delivers a malware payload",
-      "malware": "win.strelastealer",
-      "malware_printable": "StrelaStealer",
-      "malware_alias": null,
-      "malware_malpedia": "https://malpedia.caad.fkie.fraunhofer.de/details/win.strelastealer",
-      "confidence_level": 100,
-      "is_compromised": true,
-      "first_seen": "2026-11-06 01:43:43 UTC",
-      "last_seen": "2026-11-12 11:18:25 UTC",
-      "reference": null,
-      "reporter": "threatcat_ch",
-      "tags": [
-        "StrelaStealer"
-      ]
-    },
-    {
-      "id": "2016548",
-      "ioc": "15065ed944bf20045fb4e94905c90a25cb268dabf04fbfa7fd412704ef808cd4",
-      "threat_type": "payload",
-      "threat_type_desc": "Indicator that identifies a malware sample (payload)",
-      "ioc_type": "sha256_hash",
-      "ioc_type_desc": "SHA256 hash of a malware sample (payload)",
-      "malware": "osx.amos",
-      "malware_printable": "AMOS",
-      "malware_alias": "Atomic macOS Stealer",
-      "malware_malpedia": "https://malpedia.caad.fkie.fraunhofer.de/details/osx.amos",
-      "confidence_level": 100,
-      "is_compromised": false,
-      "first_seen": "2026-11-06 01:32:27 UTC",
-      "last_seen": null,
-      "reference": "https://bazaar.abuse.ch/sample/e9cb61e9651a22037783e7d4f3e44b0e122d918730c2cb685e949c8a32e9a593/",
-      "reporter": "c4ffeine",
-      "tags": [
-        "Amos",
-        "ClickFix",
-        "Foxveil",
-        "macOS",
-        "quill"
       ]
     }
   ]
