@@ -4,7 +4,7 @@ from datetime import datetime
 import json
 import re
 
-BASE = Path("/home/chap/OpenIOCCollector")
+BASE = Path(__file__).resolve().parent
 OUT_HTML = BASE / "docs" / "index.html"
 REPO = "https://github.com/jaguarmayan8/OpenIOCCollector"
 
