@@ -1,182 +1,182 @@
 [
   {
-    "hash": "28b1b1ad79b5bdb766c52ca9096092c83e414a84be0a39b773e1fc00b230ff73",
-    "found": true,
-    "malicious": 11,
+    "hash": "e29ef19d248de934e68924e8c9ca6921784a25288958d1b8dc454995d0da9a23",
+    "found": false,
+    "malicious": 0,
     "suspicious": 0,
-    "undetected": 51,
-    "label": "trojan.flooder/ddos",
+    "undetected": 0,
+    "label": "",
+    "threatfox_malware": "RevStealer"
+  },
+  {
+    "hash": "3959072e282de745109dee2de460d343b7e44a2aed477311d3d840ac95a08e17",
+    "found": false,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 0,
+    "label": "",
+    "threatfox_malware": "RevStealer"
+  },
+  {
+    "hash": "dc2a9160f2a3ed305e1512bf139c42b391423fd982764124f523931e988bf31b",
+    "found": true,
+    "malicious": 12,
+    "suspicious": 0,
+    "undetected": 49,
+    "label": "trojan.mirai/gafgyt",
     "threatfox_malware": "Mirai"
   },
   {
-    "hash": "9ec052588962dad04eafa34c48b0eb9e2a74f62452c5dde9984540469b08513b",
+    "hash": "9c9b13435910c1db025ca3f062ebe7375901f9736276972437bdf322d6be20e5",
     "found": true,
     "malicious": 30,
     "suspicious": 0,
-    "undetected": 32,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
-  },
-  {
-    "hash": "6ffd306632ee7157942998c9229f9b24807ed4c4b915e7a10aa0d2dfe391b894",
-    "found": true,
-    "malicious": 32,
-    "suspicious": 0,
     "undetected": 31,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
+    "label": "trojan.gen1/iacgm",
+    "threatfox_malware": "Agent Tesla"
   },
   {
-    "hash": "e4172bb4bb0f81464fa40cb7e8939889fbe39fce6911835836af9bf64fd21522",
+    "hash": "84e73de48f6eed056a574fdfcf9b1f006a761df1639553167aa155b279eeb94d",
     "found": true,
-    "malicious": 36,
+    "malicious": 5,
     "suspicious": 0,
-    "undetected": 26,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
+    "undetected": 56,
+    "label": "trojan.gen446/paph",
+    "threatfox_malware": "WARDENStealer"
   },
   {
-    "hash": "55879eff1f6f1f5345207db1ec94e31054832e03c8dfd75e881c6a2740251bce",
+    "hash": "c78d9355b8b1a4bd64ca09b56e24998c",
     "found": true,
-    "malicious": 29,
+    "malicious": 49,
     "suspicious": 0,
-    "undetected": 34,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
+    "undetected": 19,
+    "label": "trojan.agentb/malgent",
+    "threatfox_malware": "Coinminer"
   },
   {
-    "hash": "a56bf88e1ab920d85bb9ef5bc63f2310daf60b46806f5400476225f639a329b4",
+    "hash": "bba6c3a04e6938f5028e0fa8686e7f033fd05142",
     "found": true,
-    "malicious": 30,
+    "malicious": 49,
     "suspicious": 0,
-    "undetected": 33,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
+    "undetected": 19,
+    "label": "trojan.agentb/malgent",
+    "threatfox_malware": "Coinminer"
   },
   {
-    "hash": "5c868a889bc09e9dccf261c4955c695523153112fe43833f6357742e5b329910",
+    "hash": "439cd9a053509a47c340df134f88b0a2",
     "found": true,
-    "malicious": 31,
+    "malicious": 60,
     "suspicious": 0,
-    "undetected": 31,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
+    "undetected": 11,
+    "label": "trojan.wanna/wannacry",
+    "threatfox_malware": "WannaCryptor"
   },
   {
-    "hash": "be17bf4a5cb53ed4601882cf97af6c39ccd53b231e7aaae0ad32cc3731e9a8c5",
+    "hash": "c5c01876e0f49233c3979d7371d61f55b095ffa3",
     "found": true,
-    "malicious": 32,
+    "malicious": 60,
     "suspicious": 0,
-    "undetected": 31,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
+    "undetected": 11,
+    "label": "trojan.wanna/wannacry",
+    "threatfox_malware": "WannaCryptor"
   },
   {
-    "hash": "092c63baffd654fa3da6364e535a3a426d701677a171be5663e31c4db37e1272",
+    "hash": "742aa247d5a8a4766fd7daedc8b8b281f6321fe425f19a2e311a53fdc9e7dd12",
     "found": true,
-    "malicious": 33,
+    "malicious": 60,
+    "suspicious": 0,
+    "undetected": 11,
+    "label": "trojan.wanna/wannacry",
+    "threatfox_malware": "WannaCryptor"
+  },
+  {
+    "hash": "b2c7385fdef634c89a6531a7450f3711",
+    "found": true,
+    "malicious": 54,
+    "suspicious": 0,
+    "undetected": 11,
+    "label": "trojan.wanna/wannacry",
+    "threatfox_malware": "WannaCryptor"
+  },
+  {
+    "hash": "7a79726f7ec9d1f77f04238b46c08f1193987e02",
+    "found": true,
+    "malicious": 54,
+    "suspicious": 0,
+    "undetected": 11,
+    "label": "trojan.wanna/wannacry",
+    "threatfox_malware": "WannaCryptor"
+  },
+  {
+    "hash": "7c47f9d4b9496f75a37f5faae7c182da88c486de1025f2ad19ffe0fa6a61d8b3",
+    "found": true,
+    "malicious": 54,
+    "suspicious": 0,
+    "undetected": 11,
+    "label": "trojan.wanna/wannacry",
+    "threatfox_malware": "WannaCryptor"
+  },
+  {
+    "hash": "303290c2aa61f554ecee564826ef52c7",
+    "found": true,
+    "malicious": 27,
+    "suspicious": 0,
+    "undetected": 38,
+    "label": "trojan.infostealer/khqy",
+    "threatfox_malware": "Raven Stealer"
+  },
+  {
+    "hash": "0f2aaffcf9e1aa28d14f9de76e4e65e5717fbd9f",
+    "found": true,
+    "malicious": 27,
+    "suspicious": 0,
+    "undetected": 38,
+    "label": "trojan.infostealer/khqy",
+    "threatfox_malware": "Raven Stealer"
+  },
+  {
+    "hash": "34d80d781c26ab65851cd81d7f154ac6f4cd3fd52828d150704c0a606a08cf27",
+    "found": true,
+    "malicious": 27,
+    "suspicious": 0,
+    "undetected": 38,
+    "label": "trojan.infostealer/khqy",
+    "threatfox_malware": "Raven Stealer"
+  },
+  {
+    "hash": "0c68b0e9ae5b0a180e1d7a4439ecb925",
+    "found": true,
+    "malicious": 58,
+    "suspicious": 0,
+    "undetected": 11,
+    "label": "",
+    "threatfox_malware": "WannaCryptor"
+  },
+  {
+    "hash": "8fb057d965f89a34b785a21a1d379e320f1b30d0",
+    "found": true,
+    "malicious": 58,
+    "suspicious": 0,
+    "undetected": 11,
+    "label": "",
+    "threatfox_malware": "WannaCryptor"
+  },
+  {
+    "hash": "aa1405a9371c9101b37b4e334ebb3fb226ded2374d18c6bebe9fe26cd9a73cc2",
+    "found": true,
+    "malicious": 58,
+    "suspicious": 0,
+    "undetected": 11,
+    "label": "",
+    "threatfox_malware": "WannaCryptor"
+  },
+  {
+    "hash": "34868347aa7293e8230c98330f7b84ae",
+    "found": true,
+    "malicious": 42,
     "suspicious": 0,
     "undetected": 29,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
-  },
-  {
-    "hash": "48a6ed74b65d5229892170be2b155df66976e618424b43f2a9acddf24b3d39f9",
-    "found": true,
-    "malicious": 30,
-    "suspicious": 0,
-    "undetected": 31,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
-  },
-  {
-    "hash": "02766b58243e998764e8652e7477dc7b407d1b7e4640bbde03e20dd7ca045775",
-    "found": true,
-    "malicious": 32,
-    "suspicious": 0,
-    "undetected": 30,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
-  },
-  {
-    "hash": "9eb791149c9d5a47dd8230c0f3bfe0a4c0ac42614df6234f9a4c18c91372d524",
-    "found": true,
-    "malicious": 34,
-    "suspicious": 0,
-    "undetected": 28,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
-  },
-  {
-    "hash": "fc6926cdc544f183e18b2704377dd6071d810739bd7247f53e0b163c704b06a0",
-    "found": true,
-    "malicious": 30,
-    "suspicious": 0,
-    "undetected": 33,
-    "label": "trojan.mirai/gafgyt",
-    "threatfox_malware": "Mirai"
-  },
-  {
-    "hash": "15231b65ca8ece687009ce1eaf16ebece175c5c55d7f26fe8bd6bbc0e7283e78",
-    "found": true,
-    "malicious": 22,
-    "suspicious": 0,
-    "undetected": 41,
-    "label": "trojan.mirai/miraidownloader",
-    "threatfox_malware": "Unknown malware"
-  },
-  {
-    "hash": "a22dd39e20e1226acc135cb3f099fe2f5fee117b739029cae1e431fa4fe7bf8d",
-    "found": true,
-    "malicious": 40,
-    "suspicious": 0,
-    "undetected": 21,
-    "label": "trojan.perl/shellbot",
-    "threatfox_malware": "PerlBot"
-  },
-  {
-    "hash": "1d89c9edfb5e82ad0a7837f62379984d516242eb97353cac0fa5492bc64e60cd",
-    "found": true,
-    "malicious": 3,
-    "suspicious": 0,
-    "undetected": 58,
-    "label": "trojan.perl/siggen",
-    "threatfox_malware": "Unknown malware"
-  },
-  {
-    "hash": "4bd6aacf6260288f259223cc6396e89fead821f60da3b816575a59af0aa23aeb",
-    "found": true,
-    "malicious": 3,
-    "suspicious": 0,
-    "undetected": 55,
-    "label": "trojan.perl/siggen",
-    "threatfox_malware": "Unknown malware"
-  },
-  {
-    "hash": "a6a1db442e108a8d5037f27f45a69b3f4a5cab87ea64630e451966dbb8bc3ead",
-    "found": true,
-    "malicious": 41,
-    "suspicious": 0,
-    "undetected": 20,
-    "label": "trojan.perl/shellbot",
-    "threatfox_malware": "PerlBot"
-  },
-  {
-    "hash": "5118c9241a7bb225bf4fbeb245aeb535c3fbe8f3b7a26e9e19cb728f9672e259",
-    "found": true,
-    "malicious": 46,
-    "suspicious": 0,
-    "undetected": 14,
-    "label": "trojan.perl/shellbot",
-    "threatfox_malware": "PerlBot"
-  },
-  {
-    "hash": "86596837702874930e1b45d91982b730ba7b075041fe98d79da3293225fd0ca7",
-    "found": true,
-    "malicious": 1,
-    "suspicious": 0,
-    "undetected": 61,
-    "label": "trojan.",
-    "threatfox_malware": "Unknown malware"
+    "label": "trojan.disco/misc",
+    "threatfox_malware": "Elevator"
   }
 ]
