@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import json
+import os
 import time
 from datetime import datetime
 from pathlib import Path
 import requests
 
-BASE = Path("/home/chap/OpenIOCCollector")
+# Script-relative so this runs unchanged on Kali AND on GitHub Actions.
+BASE = Path(__file__).resolve().parent
 KEY_FILE = BASE / ".vt_api_key"
 MAX_HASHES = 20
 SLEEP_SECONDS = 16  # free API: 4 requests/minute
@@ -56,7 +58,10 @@ def vt_lookup(api_key, file_hash):
     }
 
 def main():
-    api_key = KEY_FILE.read_text(encoding="utf-8").strip()
+    # Environment variable wins (GitHub Actions); file fallback (Kali cron).
+    api_key = os.environ.get("VT_API_KEY", "").strip()
+    if not api_key:
+        api_key = KEY_FILE.read_text(encoding="utf-8").strip()
     tf_path = latest_threatfox()
     items = extract_hashes(tf_path)
     print(f"Enriching {len(items)} hashes from {tf_path}")
@@ -96,4 +101,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

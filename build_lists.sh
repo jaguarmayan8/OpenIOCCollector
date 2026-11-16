@@ -18,13 +18,24 @@ fi
 echo "Using directory: $LATEST_DIR"
 
 echo "=== Building CDB lists ==="
+# A missing/empty feed file must NOT abort the whole build: the collector
+# tolerates partial failures on purpose, and the staleness guard below will
+# refuse to push a list that shrank or went empty. So: if a feed file is
+# missing, skip that extraction and KEEP THE PREVIOUS LIST (it is in the
+# working tree from the last run/commit) - the guard then sees an unchanged
+# count and passes it through.
 
 # IPs
-grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$LATEST_DIR/top_malicious.txt" | awk '{print $1":"}' > malicious-ips.txt
+if [ -s "$LATEST_DIR/top_malicious.txt" ]; then
+  grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$LATEST_DIR/top_malicious.txt" | awk '{print $1":"}' > malicious-ips.txt
+else
+  echo "[!] top_malicious.txt missing/empty - keeping previous malicious-ips.txt"
+fi
 
 # Domains from URLhaus - parsed with csv.DictReader so quoted commas and
 # column reordering (the authenticated export differs from the old keyless
 # one) can't silently break the extraction.
+if [ -s "$LATEST_DIR/urlhaus.csv" ]; then
 python3 - "$LATEST_DIR/urlhaus.csv" << 'PY'
 import csv, re, sys
 host_re = re.compile(r"(?<=://)[^/:]+")
@@ -44,9 +55,13 @@ with open("malicious-domains.txt", "w") as f:
         f.write(d + ":\n")
 print(f"Extracted {len(domains)} domains")
 PY
+else
+  echo "[!] urlhaus.csv missing/empty - keeping previous malicious-domains.txt"
+fi
 
 # Hashes from ThreatFox (new API: value field is "ioc"; old export was
 # "ioc_value"; also pulls hashes attached via malware_samples)
+if [ -s "$LATEST_DIR/threatfox_recent.json" ]; then
 python3 - "$LATEST_DIR/threatfox_recent.json" << 'PY'
 import json, sys
 path = sys.argv[1]
@@ -69,6 +84,9 @@ with open("malicious-hashes.txt", "w") as f:
         f.write(h + ":\n")
 print(f"Extracted {len(hashes)} hashes")
 PY
+else
+  echo "[!] threatfox_recent.json missing/empty - keeping previous malicious-hashes.txt"
+fi
 
 echo "IPs: $(wc -l < malicious-ips.txt)"
 echo "Domains: $(wc -l < malicious-domains.txt)"

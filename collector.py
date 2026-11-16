@@ -23,6 +23,7 @@ version so run_andpush.sh, vt_enrich.py and generate_dashboard.py keep working.
 import csv
 import json
 import logging
+import os
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -65,7 +66,12 @@ MIN_SUCCESSFUL_FEEDS = 2
 
 
 def load_auth_key() -> str:
-    """Read the abuse.ch Auth-Key. Same key works for URLhaus/ThreatFox/MalwareBazaar."""
+    """Read the abuse.ch Auth-Key. Same key works for URLhaus/ThreatFox/MalwareBazaar.
+    Environment variable ABUSECH_AUTH_KEY wins (used by GitHub Actions);
+    falls back to the .abusech_auth_key file (Kali cron)."""
+    key = os.environ.get("ABUSECH_AUTH_KEY", "").strip()
+    if key:
+        return key
     if not ABUSECH_KEY_FILE.exists():
         log.error(
             "Missing %s - abuse.ch exports now REQUIRE an Auth-Key. "
