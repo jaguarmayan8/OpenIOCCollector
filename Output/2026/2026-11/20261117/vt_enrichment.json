@@ -1,0 +1,182 @@
+[
+  {
+    "hash": "84a59ad7dc91c05f7b3c82bec13c85fe633cbf075d5ccca57eef113b22b3795f",
+    "found": true,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 61,
+    "label": "",
+    "threatfox_malware": "Coruna"
+  },
+  {
+    "hash": "9039ebbdd6abe36ad8ac48097dae6813d4a49315e1403c9ae7ebab539601cde6",
+    "found": true,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 60,
+    "label": "",
+    "threatfox_malware": "Coruna"
+  },
+  {
+    "hash": "617df364120adc47fb4f55dcc0c69a9b6c9e108a92c60bc2b64a266254ab02f3",
+    "found": true,
+    "malicious": 2,
+    "suspicious": 0,
+    "undetected": 58,
+    "label": "trojan.casdet",
+    "threatfox_malware": "Coruna"
+  },
+  {
+    "hash": "f7b84b9a94f749f8ced3f0112d0a66894e8bbc3b4aa5592021d1b8976a9bad40",
+    "found": true,
+    "malicious": 10,
+    "suspicious": 0,
+    "undetected": 51,
+    "label": "trojan.stealer/inforstealer",
+    "threatfox_malware": "Coruna"
+  },
+  {
+    "hash": "0c0342c4f3d1a976e3344d2f1508ea298fc8e7c65a513d080b17eca76f3315ef",
+    "found": true,
+    "malicious": 14,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.mirai/bdhl",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "f230087b20c623ccfb1894d995e7e9f442eb30c614f67395f41b8ca09efaaba6",
+    "found": false,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 0,
+    "label": "",
+    "threatfox_malware": "RevStealer"
+  },
+  {
+    "hash": "e29ef19d248de934e68924e8c9ca6921784a25288958d1b8dc454995d0da9a23",
+    "found": false,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 0,
+    "label": "",
+    "threatfox_malware": "RevStealer"
+  },
+  {
+    "hash": "3959072e282de745109dee2de460d343b7e44a2aed477311d3d840ac95a08e17",
+    "found": false,
+    "malicious": 0,
+    "suspicious": 0,
+    "undetected": 0,
+    "label": "",
+    "threatfox_malware": "RevStealer"
+  },
+  {
+    "hash": "961cadcff0b1afcb310b03c6776ba5dab3ff5a14bb8d6bed6b9014cca2520279",
+    "found": true,
+    "malicious": 27,
+    "suspicious": 0,
+    "undetected": 44,
+    "label": "trojan.yogi/coins",
+    "threatfox_malware": "ACR Stealer"
+  },
+  {
+    "hash": "61e9538410e4db34ef8e7c4621c728c1ad9c3566605a1c06c193075a341f0c6f",
+    "found": true,
+    "malicious": 12,
+    "suspicious": 0,
+    "undetected": 59,
+    "label": "trojan.misc/drne7gdurg2hxeh24nfeq",
+    "threatfox_malware": "ACR Stealer"
+  },
+  {
+    "hash": "d53e8b26daa17b7323fc8fe7696889ca11e92255235d52523652d5f49ade913f",
+    "found": true,
+    "malicious": 24,
+    "suspicious": 0,
+    "undetected": 46,
+    "label": "trojan.graftor/r805551",
+    "threatfox_malware": "ACR Stealer"
+  },
+  {
+    "hash": "290a541fd083448b585d5b881fb922436c89d5cec418b6751b66d7d655856ebd",
+    "found": true,
+    "malicious": 12,
+    "suspicious": 0,
+    "undetected": 48,
+    "label": "trojan.jovialsnatcher/python",
+    "threatfox_malware": "ACR Stealer"
+  },
+  {
+    "hash": "da10faedff30caf7196bbd6cd879963437c48f3719f813cdad556c9d554595fa",
+    "found": true,
+    "malicious": 13,
+    "suspicious": 0,
+    "undetected": 49,
+    "label": "trojan.mirai/agentlinux",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "da604139df0b04644cb0abfdd282c3cd94075ddd8b314c2d1c8d70ec3e501e7e",
+    "found": true,
+    "malicious": 12,
+    "suspicious": 0,
+    "undetected": 50,
+    "label": "trojan.mirai/agentlinux",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "e768f1d3e6388eb82f4d7387850d0b07900c695d8b2ed8d05c42a275ef786c47",
+    "found": true,
+    "malicious": 6,
+    "suspicious": 0,
+    "undetected": 54,
+    "label": "downloader.powershell/abmrisk",
+    "threatfox_malware": "WARDENStealer"
+  },
+  {
+    "hash": "a273bf60739c53c5af2a961843e4e7865793435f6618f90a74be75bcce77dd9e",
+    "found": true,
+    "malicious": 20,
+    "suspicious": 0,
+    "undetected": 41,
+    "label": "trojan.mirai/eake",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "9913f0a46a0b295cb1f1e5bf4f728374b11e575e2c99b5d1d053ea0b9634f272",
+    "found": true,
+    "malicious": 25,
+    "suspicious": 0,
+    "undetected": 38,
+    "label": "trojan.powershell/defenderdisabler",
+    "threatfox_malware": "Havoc"
+  },
+  {
+    "hash": "917c56a0a76606565a9bd3d13a64cca1a1e8b53a721ac0439a383408f15898a5",
+    "found": true,
+    "malicious": 11,
+    "suspicious": 0,
+    "undetected": 52,
+    "label": "trojan.mirai/agentlinux",
+    "threatfox_malware": "Mirai"
+  },
+  {
+    "hash": "d7a27896b2627f734785676e64db072ef156687c8fb610556ad33783e80dcfe3",
+    "found": true,
+    "malicious": 38,
+    "suspicious": 0,
+    "undetected": 23,
+    "label": "trojan.vshell/downloade",
+    "threatfox_malware": "SNOWLIGHT"
+  },
+  {
+    "hash": "b7444db17b2496a25103d312b6a3c95aa6a6e22c45a80b54a3589723445edbdb",
+    "found": true,
+    "malicious": 34,
+    "suspicious": 0,
+    "undetected": 24,
+    "label": "trojan.downloade/fcsm",
+    "threatfox_malware": "SNOWLIGHT"
+  }
+]
