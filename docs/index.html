@@ -35,25 +35,25 @@
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · last run 2026-11-17 13:42</p>
+  <p class="sub">Home-lab threat intel dashboard · last run 2026-11-18 13:16</p>
 </header>
 <main>
   <section class="grid">
-    <div class="card"><div class="num">135,530</div><div class="label">Malicious IPs</div></div>
-    <div class="card"><div class="num">787</div><div class="label">Malicious domains</div></div>
-    <div class="card"><div class="num">3,330</div><div class="label">Malicious hashes</div></div>
+    <div class="card"><div class="num">138,872</div><div class="label">Malicious IPs</div></div>
+    <div class="card"><div class="num">809</div><div class="label">Malicious domains</div></div>
+    <div class="card"><div class="num">2,857</div><div class="label">Malicious hashes</div></div>
     <div class="card"><div class="num">5/6 feeds with data</div><div class="label">Feeds with data</div></div>
   </section>
 
   <section class="card">
     <h2>Today's feeds</h2>
-    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>831.2 KB | ~11293 entries</span></div>
+    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>831.8 KB | ~11300 entries</span></div>
 <div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected</span></div>
-<div class="feed ok"><b>top_malicious.txt</b><span>2143.8 KB | ~135530 entries</span></div>
-<div class="feed ok"><b>urlhaus.csv</b><span>29318.0 KB | ~115171 entries</span></div>
-<div class="feed ok"><b>threatfox_recent.json</b><span>7332.0 KB | ~9747 entries</span></div>
-<div class="feed ok"><b>malwarebazaar_recent.json</b><span>138.4 KB | ~100 entries</span></div></div>
-    <p class="sub">Approximate total IOCs collected: 271841</p>
+<div class="feed ok"><b>top_malicious.txt</b><span>2196.6 KB | ~138872 entries</span></div>
+<div class="feed ok"><b>urlhaus.csv</b><span>29469.4 KB | ~115774 entries</span></div>
+<div class="feed ok"><b>threatfox_recent.json</b><span>7146.1 KB | ~9477 entries</span></div>
+<div class="feed ok"><b>malwarebazaar_recent.json</b><span>131.6 KB | ~100 entries</span></div></div>
+    <p class="sub">Approximate total IOCs collected: 275523</p>
   </section>
 
   <section class="card" style="margin-top:16px;">
@@ -63,33 +63,33 @@
         <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
       </thead>
       <tbody>
-        <tr><td class='hash'>84a59ad7dc91c05f…</td><td>True</td><td>0</td><td>0</td><td></td><td>Coruna</td></tr>
-<tr><td class='hash'>9039ebbdd6abe36a…</td><td>True</td><td>0</td><td>0</td><td></td><td>Coruna</td></tr>
-<tr><td class='hash'>617df364120adc47…</td><td>True</td><td>2</td><td>0</td><td>trojan.casdet</td><td>Coruna</td></tr>
-<tr><td class='hash'>f7b84b9a94f749f8…</td><td>True</td><td>10</td><td>0</td><td>trojan.stealer/inforstealer</td><td>Coruna</td></tr>
-<tr><td class='hash'>0c0342c4f3d1a976…</td><td>True</td><td>14</td><td>0</td><td>trojan.mirai/bdhl</td><td>Mirai</td></tr>
-<tr><td class='hash'>f230087b20c623cc…</td><td>False</td><td>0</td><td>0</td><td></td><td>RevStealer</td></tr>
-<tr><td class='hash'>e29ef19d248de934…</td><td>False</td><td>0</td><td>0</td><td></td><td>RevStealer</td></tr>
-<tr><td class='hash'>3959072e282de745…</td><td>False</td><td>0</td><td>0</td><td></td><td>RevStealer</td></tr>
-<tr><td class='hash'>961cadcff0b1afcb…</td><td>True</td><td>27</td><td>0</td><td>trojan.yogi/coins</td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>61e9538410e4db34…</td><td>True</td><td>12</td><td>0</td><td>trojan.misc/drne7gdurg2hxeh24nfeq</td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>d53e8b26daa17b73…</td><td>True</td><td>24</td><td>0</td><td>trojan.graftor/r805551</td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>290a541fd083448b…</td><td>True</td><td>12</td><td>0</td><td>trojan.jovialsnatcher/python</td><td>ACR Stealer</td></tr>
-<tr><td class='hash'>da10faedff30caf7…</td><td>True</td><td>13</td><td>0</td><td>trojan.mirai/agentlinux</td><td>Mirai</td></tr>
-<tr><td class='hash'>da604139df0b0464…</td><td>True</td><td>12</td><td>0</td><td>trojan.mirai/agentlinux</td><td>Mirai</td></tr>
-<tr><td class='hash'>e768f1d3e6388eb8…</td><td>True</td><td>6</td><td>0</td><td>downloader.powershell/abmrisk</td><td>WARDENStealer</td></tr>
-<tr><td class='hash'>a273bf60739c53c5…</td><td>True</td><td>20</td><td>0</td><td>trojan.mirai/eake</td><td>Mirai</td></tr>
-<tr><td class='hash'>9913f0a46a0b295c…</td><td>True</td><td>25</td><td>0</td><td>trojan.powershell/defenderdisabler</td><td>Havoc</td></tr>
-<tr><td class='hash'>917c56a0a7660656…</td><td>True</td><td>11</td><td>0</td><td>trojan.mirai/agentlinux</td><td>Mirai</td></tr>
-<tr><td class='hash'>d7a27896b2627f73…</td><td>True</td><td>38</td><td>0</td><td>trojan.vshell/downloade</td><td>SNOWLIGHT</td></tr>
-<tr><td class='hash'>b7444db17b2496a2…</td><td>True</td><td>34</td><td>0</td><td>trojan.downloade/fcsm</td><td>SNOWLIGHT</td></tr>
+        <tr><td class='hash'>4ab97ad29c6869eb…</td><td>True</td><td>29</td><td>0</td><td>trojan.downloade/abdownloader</td><td>Unknown Loader</td></tr>
+<tr><td class='hash'>efe6e5613e0cc059…</td><td>True</td><td>16</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>d1ee38c186981170…</td><td>True</td><td>24</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>272614fd09723ffa…</td><td>True</td><td>25</td><td>0</td><td>trojan.downloade/multiverze</td><td>Unknown Loader</td></tr>
+<tr><td class='hash'>51b32c91938a3eb2…</td><td>True</td><td>30</td><td>0</td><td>trojan.downloade/multiverze</td><td>Unknown Loader</td></tr>
+<tr><td class='hash'>2159a1f3f052d536…</td><td>True</td><td>39</td><td>0</td><td>downloader.medusa/shell</td><td>Mirai</td></tr>
+<tr><td class='hash'>641c73f07f42839a…</td><td>True</td><td>35</td><td>0</td><td>trojan.mirai/botnet</td><td>Mirai</td></tr>
+<tr><td class='hash'>3963d08f543b3b4b…</td><td>True</td><td>14</td><td>0</td><td>trojan.mirai/agentlinux</td><td>Mirai</td></tr>
+<tr><td class='hash'>f9bc8847c6fca49b…</td><td>True</td><td>22</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>98925f2d1761ffbf…</td><td>True</td><td>30</td><td>0</td><td>trojan.mirai/ddos</td><td>Mirai</td></tr>
+<tr><td class='hash'>1b9b97943c718b8a…</td><td>True</td><td>34</td><td>0</td><td>trojan.sagnt/downloade</td><td>Unknown Loader</td></tr>
+<tr><td class='hash'>9426f0a696becbcd…</td><td>True</td><td>37</td><td>0</td><td>trojan.sagnt/downloade</td><td>Unknown Loader</td></tr>
+<tr><td class='hash'>c93e31ecf1e7ebc4…</td><td>True</td><td>28</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>7006f1de4a2c355c…</td><td>True</td><td>12</td><td>0</td><td>trojan.gen1/iacgm</td><td>Agent Tesla</td></tr>
+<tr><td class='hash'>9de665b04b141c1b…</td><td>True</td><td>28</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>3621cb74083b7ddf…</td><td>True</td><td>28</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>821809a5e0eee247…</td><td>True</td><td>28</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>a6b47c1acfc42c2d…</td><td>True</td><td>29</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>af4367ff0b9f02ba…</td><td>True</td><td>28</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+<tr><td class='hash'>0398e5768958dc15…</td><td>True</td><td>23</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
       </tbody>
     </table>
   </section>
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
-    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/tree/main/Output/2026/2026-11/20261117">Today's raw output</a>
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/tree/main/Output/2026/2026-11/20261118">Today's raw output</a>
   </p>
 </main>
 </body>
