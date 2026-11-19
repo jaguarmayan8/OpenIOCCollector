@@ -29,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import json
 import re
 import sys
 from collections import Counter, defaultdict
@@ -271,6 +272,130 @@ def cmd_check(args):
     return 0
 
 
+
+# ---------------------------------------------------------------------------
+# ThreatFox
+# ---------------------------------------------------------------------------
+
+IPV4_PORT_RE = re.compile(r"^(?P<ip>\d{1,3}(?:\.\d{1,3}){3})(?::(?P<port>\d{1,5}))?$")
+
+
+def read_threatfox(path, min_confidence=75, rules=None):
+    """Extract domains and IPs from a ThreatFox get_iocs payload.
+
+    Returns a dict: domains(set), ips(set), stats(Counter), skipped(Counter).
+
+    ThreatFox labels every IOC with a confidence_level. The default cut is 75:
+    on 2026-11-19 that keeps 8,489 of 9,486 IOCs and discards 997 low-confidence
+    entries (993 at 50, 4 at 70), which is where the false-positive risk sits.
+
+    `ip:port` is split - the port is not part of a CDB IP entry, and a port is
+    not an indicator on its own for these rule sets.
+    """
+    rules = rules or InfraRules(set(), set())
+    data = json.loads(open(path, encoding="utf-8").read())
+    iocs = data.get("iocs") if isinstance(data, dict) else data
+    if not isinstance(iocs, list):
+        iocs = []
+
+    domains, ips = set(), set()
+    stats, skipped = Counter(), Counter()
+
+    for item in iocs:
+        if not isinstance(item, dict):
+            continue
+        ioc_type = (item.get("ioc_type") or "").lower()
+        value = (item.get("ioc") or item.get("ioc_value") or "").strip().lower()
+        if not value:
+            skipped["empty"] += 1
+            continue
+        conf = item.get("confidence_level")
+        try:
+            conf = int(conf) if conf is not None else 0
+        except (TypeError, ValueError):
+            conf = 0
+        if conf < min_confidence:
+            skipped["low_confidence"] += 1
+            continue
+
+        if ioc_type == "domain":
+            reason, _entry = rules.classify(value)
+            if reason:
+                skipped["infra:" + reason] += 1
+                continue
+            domains.add(value)
+            stats["domain"] += 1
+        elif ioc_type in ("ip:port", "ip"):
+            m = IPV4_PORT_RE.match(value)
+            if not m:
+                skipped["unparsable_ip"] += 1
+                continue
+            ips.add(m.group("ip"))
+            stats["ip"] += 1
+        elif ioc_type == "url":
+            host = extract_host(value)
+            if not host:
+                skipped["unparsable_url"] += 1
+                continue
+            if IPV4_RE.match(host):
+                ips.add(host)
+                stats["url->ip"] += 1
+            else:
+                reason, _entry = rules.classify(host)
+                if reason:
+                    skipped["infra:" + reason] += 1
+                    continue
+                domains.add(host)
+                stats["url->domain"] += 1
+        else:
+            skipped[ioc_type or "unknown"] += 1
+
+    return {"domains": domains, "ips": ips, "stats": stats, "skipped": skipped}
+
+
+def cmd_lists(args):
+    """Full build: URLhaus + ThreatFox -> domain and IP CDB lists."""
+    rules = InfraRules.load(args.allow)
+
+    RULES_HOLDER["rules"] = rules
+    uh = read_urlhaus(args.urlhaus) if args.urlhaus else None
+    tf = (
+        read_threatfox(args.threatfox, min_confidence=args.min_confidence, rules=rules)
+        if args.threatfox
+        else {"domains": set(), "ips": set(), "stats": Counter(), "skipped": Counter()}
+    )
+
+    urlhaus_domains = uh["domains"] if uh else set()
+    tf_domains = tf["domains"]
+    all_domains = urlhaus_domains | tf_domains
+
+    # IPs: the ipsum feed is already handled by the collector as
+    # top_malicious.txt. ThreatFox only contributes IPs it observed as C2,
+    # which is a different and more specific signal.
+    all_ips = set(tf["ips"])
+
+    n_dom = write_cdb(all_domains, args.domains_out)
+    n_ip = write_cdb(all_ips, args.ips_out)
+
+    print("URLhaus domains (filtered):  %d" % len(urlhaus_domains))
+    print("ThreatFox domains (conf>=%d): %d" % (args.min_confidence, len(tf_domains)))
+    print("  new from ThreatFox only:   %d" % len(tf_domains - urlhaus_domains))
+    print("Domain list written:         %d" % n_dom)
+    print("ThreatFox IPs (conf>=%d):     %d" % (args.min_confidence, n_ip))
+    print("IP list written:             %d" % n_ip)
+
+    tf_skipped = tf["skipped"]
+    if tf_skipped:
+        print("ThreatFox skipped:           " + ", ".join(
+            "%s=%d" % (k, v) for k, v in tf_skipped.most_common()
+        ))
+
+    if args.report and uh is not None:
+        write_report(args.report, uh)
+        print("Report:                      %s" % args.report)
+    return 0
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(description="Build CDB lists from raw IOC dumps")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -281,6 +406,16 @@ def main(argv=None):
     d.add_argument("--allow", default="infra_allow.txt")
     d.add_argument("--report", default=None)
     d.set_defaults(func=cmd_domains)
+
+    l = sub.add_parser("lists", help="URLhaus + ThreatFox -> domain and IP CDB lists")
+    l.add_argument("--urlhaus", default=None)
+    l.add_argument("--threatfox", default=None)
+    l.add_argument("--allow", default="infra_allow.txt")
+    l.add_argument("--domains-out", default="malicious-domains.txt")
+    l.add_argument("--ips-out", default="malicious-ips.txt")
+    l.add_argument("--min-confidence", type=int, default=75)
+    l.add_argument("--report", default=None)
+    l.set_defaults(func=cmd_lists)
 
     c = sub.add_parser("check", help="validate allowlist, optionally against a CSV")
     c.add_argument("urlhaus", nargs="?", default=None)

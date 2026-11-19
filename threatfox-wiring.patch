@@ -1,0 +1,393 @@
+diff --git a/THREATFOX_WIRING.md b/THREATFOX_WIRING.md
+new file mode 100644
+index 0000000..6649687
+--- /dev/null
++++ b/THREATFOX_WIRING.md
+@@ -0,0 +1,93 @@
++# ThreatFox wiring — the second feed now reaches the CDB lists
++
++## The gap
++
++ThreatFox was collected every day and used only for hashes. Everything else in
++the payload was discarded:
++
++| IOC type | Count (2026-11-19) | Before | After |
++| --- | --- | --- | --- |
++| `domain` | 4,062 | discarded | **3,588** published |
++| `ip:port` | 1,699 | discarded | **1,274** published (port stripped) |
++| `url` | 667 | discarded | reduced to host |
++| `sha256_hash` | 2,057 | published | published (unchanged) |
++| `md5_hash` / `sha1_hash` | 1,001 | published | published (unchanged) |
++
++Worse, URLhaus was the *only* source for the domain list — and URLhaus reports
++**payload URLs**, so its domains skew heavily toward distribution platforms. By
++contrast ThreatFox reports **the C2 itself**, with a `confidence_level`. That
++signal was being collected and thrown away.
++
++## Confidence threshold
++
++ThreatFox confidence distribution on this run:
++
++| Level | IOCs |
++| --- | --- |
++| 100 | 2,322 |
++| 95 | 1,576 |
++| 90 | 1,584 |
++| 85 | 53 |
++| 80 | 193 |
++| 75 | 2,761 |
++| 70 | 4 |
++| 50 | 993 |
++
++Default cut is **75** (`--min-confidence`), keeping 8,489 of 9,486 and dropping
++997 — almost all of them at confidence 50, which is where the false-positive
++risk concentrates. Raise it to 90 for a tighter, smaller list.
++
++## Result on the 2026-11-19 feed
++
++| List | Before | After |
++| --- | --- | --- |
++| `malicious-domains.txt` | 767 (URLhaus, filtered) | **4,307** |
++| `malicious-ips.txt` | 140,106 (IPsum) | **141,314** |
++
++3,540 domains are net-new — they appear in no URLhaus row. The IP list grows by
++1,208 because ThreatFox IPs are **merged into** the IPsum list, not substituted
++for it.
++
++Domain IOCs from ThreatFox still pass through the shared-infrastructure filter,
++so a `github.com` entry in ThreatFox cannot reintroduce what the domain filter
++just removed (20 were suppressed this run).
++
++## Pipeline change
++
++`build_lists.sh` now calls one command instead of two inline heredocs:
++
++```bash
++python3 ioc_extract.py lists \
++    --urlhaus  "$LATEST_DIR/urlhaus.csv" \
++    --threatfox "$LATEST_DIR/threatfox_recent.json" \
++    --allow infra_allow.txt \
++    --domains-out malicious-domains.txt \
++    --ips-out .threatfox-ips.tmp \
++    --report "$LATEST_DIR/infra_suppressed.md"
++```
++
++ThreatFox IPs land in a sidecar and are unioned with the IPsum output
++(`sort -u`), so a missing ThreatFox file degrades to the previous behaviour
++instead of emptying the IP list.
++
++## Verifying
++
++```bash
++python3 -m unittest discover -s tests -v     # 20 tests
++python3 ioc_extract.py lists \
++    --urlhaus /tmp/urlhaus.csv \
++    --threatfox /tmp/threatfox_recent.json \
++    --domains-out /tmp/d.txt --ips-out /tmp/i.txt
++grep -c ':80:' /tmp/i.txt       # 0 - ports stripped
++head -3 /tmp/d.txt              # CDB format: value:
++```
++
++The staleness guard is unaffected: both lists grow, so `MIN_FRACTION=50` passes
++without needing an override.
++
++## Not included
++
++`url` IOCs are reduced to their host rather than published as full URLs. A
++domain-level CDB rule cannot match a path, so publishing `http://x/y` would add
++noise without adding detection. Full-URL matching is a separate list for
++web-proxy logs — see `DOMAIN_FILTER.md`.
+diff --git a/build_lists.sh b/build_lists.sh
+index c1fbf98..033d3b8 100755
+--- a/build_lists.sh
++++ b/build_lists.sh
+@@ -29,25 +29,41 @@ echo "=== Building CDB lists ==="
+ # working tree from the last commit) - the guard then sees an unchanged
+ # count and passes it through.
+ 
+-# IPs
++# IPs from IPsum (the aggregated multi-source blocklist).
+ if [ -s "$LATEST_DIR/top_malicious.txt" ]; then
+   grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$LATEST_DIR/top_malicious.txt" | awk '{print $1":"}' > malicious-ips.txt
+ else
+   echo "[!] top_malicious.txt missing/empty - keeping previous malicious-ips.txt"
+ fi
+ 
+-# Domains from URLhaus, filtered for shared infrastructure (infra_allow.txt).
+-# A platform domain (github.com, cdn.discordapp.com, pastebin.com) is not an
+-# IOC - blocking it matches the platform instead of the payload, which is what
+-# broke rules 100101/100102. ioc_extract.py also fixes a parser bug: the
+-# URLhaus export has no header row, so the old code silently dropped the first
+-# IOC of every day. Suppressed hosts land in <day>/infra_suppressed.md.
+-if [ -s "$LATEST_DIR/urlhaus.csv" ]; then
+-  python3 ioc_extract.py domains "$LATEST_DIR/urlhaus.csv" malicious-domains.txt \
++# Domains from URLhaus (infra-filtered) PLUS ThreatFox, and C2 IPs from
++# ThreatFox. ThreatFox was previously used only for hashes, so its 4,062
++# domains and 1,699 ip:port entries were collected daily and thrown away -
++# despite carrying a confidence_level that URLhaus does not.
++# ThreatFox IPs are written to a sidecar and merged below so they are added to
++# the ipsum list rather than replacing it.
++if [ -s "$LATEST_DIR/urlhaus.csv" ] || [ -s "$LATEST_DIR/threatfox_recent.json" ]; then
++  UH=""
++  TF=""
++  [ -s "$LATEST_DIR/urlhaus.csv" ] && UH="$LATEST_DIR/urlhaus.csv"
++  [ -s "$LATEST_DIR/threatfox_recent.json" ] && TF="$LATEST_DIR/threatfox_recent.json"
++  python3 ioc_extract.py lists \
++      ${UH:+--urlhaus "$UH"} \
++      ${TF:+--threatfox "$TF"} \
+       --allow infra_allow.txt \
++      --domains-out malicious-domains.txt \
++      --ips-out .threatfox-ips.tmp \
+       --report "$LATEST_DIR/infra_suppressed.md"
++
++  if [ -s .threatfox-ips.tmp ]; then
++    # Union with the ipsum list, keep it sorted and deduplicated.
++    sort -u malicious-ips.txt .threatfox-ips.tmp > .ips.merged
++    mv .ips.merged malicious-ips.txt
++    echo "[+] merged $(wc -l < .threatfox-ips.tmp) ThreatFox C2 IPs into malicious-ips.txt"
++    rm -f .threatfox-ips.tmp
++  fi
+ else
+-  echo "[!] urlhaus.csv missing/empty - keeping previous malicious-domains.txt"
++  echo "[!] no URLhaus/ThreatFox data - keeping previous lists"
+ fi
+ 
+ # Hashes from ThreatFox (new API: value field is "ioc"; old export was
+diff --git a/ioc_extract.py b/ioc_extract.py
+index 14020cb..65617ab 100644
+--- a/ioc_extract.py
++++ b/ioc_extract.py
+@@ -29,6 +29,7 @@ from __future__ import annotations
+ 
+ import argparse
+ import csv
++import json
+ import re
+ import sys
+ from collections import Counter, defaultdict
+@@ -271,6 +272,130 @@ def cmd_check(args):
+     return 0
+ 
+ 
++
++# ---------------------------------------------------------------------------
++# ThreatFox
++# ---------------------------------------------------------------------------
++
++IPV4_PORT_RE = re.compile(r"^(?P<ip>\d{1,3}(?:\.\d{1,3}){3})(?::(?P<port>\d{1,5}))?$")
++
++
++def read_threatfox(path, min_confidence=75, rules=None):
++    """Extract domains and IPs from a ThreatFox get_iocs payload.
++
++    Returns a dict: domains(set), ips(set), stats(Counter), skipped(Counter).
++
++    ThreatFox labels every IOC with a confidence_level. The default cut is 75:
++    on 2026-11-19 that keeps 8,489 of 9,486 IOCs and discards 997 low-confidence
++    entries (993 at 50, 4 at 70), which is where the false-positive risk sits.
++
++    `ip:port` is split - the port is not part of a CDB IP entry, and a port is
++    not an indicator on its own for these rule sets.
++    """
++    rules = rules or InfraRules(set(), set())
++    data = json.loads(open(path, encoding="utf-8").read())
++    iocs = data.get("iocs") if isinstance(data, dict) else data
++    if not isinstance(iocs, list):
++        iocs = []
++
++    domains, ips = set(), set()
++    stats, skipped = Counter(), Counter()
++
++    for item in iocs:
++        if not isinstance(item, dict):
++            continue
++        ioc_type = (item.get("ioc_type") or "").lower()
++        value = (item.get("ioc") or item.get("ioc_value") or "").strip().lower()
++        if not value:
++            skipped["empty"] += 1
++            continue
++        conf = item.get("confidence_level")
++        try:
++            conf = int(conf) if conf is not None else 0
++        except (TypeError, ValueError):
++            conf = 0
++        if conf < min_confidence:
++            skipped["low_confidence"] += 1
++            continue
++
++        if ioc_type == "domain":
++            reason, _entry = rules.classify(value)
++            if reason:
++                skipped["infra:" + reason] += 1
++                continue
++            domains.add(value)
++            stats["domain"] += 1
++        elif ioc_type in ("ip:port", "ip"):
++            m = IPV4_PORT_RE.match(value)
++            if not m:
++                skipped["unparsable_ip"] += 1
++                continue
++            ips.add(m.group("ip"))
++            stats["ip"] += 1
++        elif ioc_type == "url":
++            host = extract_host(value)
++            if not host:
++                skipped["unparsable_url"] += 1
++                continue
++            if IPV4_RE.match(host):
++                ips.add(host)
++                stats["url->ip"] += 1
++            else:
++                reason, _entry = rules.classify(host)
++                if reason:
++                    skipped["infra:" + reason] += 1
++                    continue
++                domains.add(host)
++                stats["url->domain"] += 1
++        else:
++            skipped[ioc_type or "unknown"] += 1
++
++    return {"domains": domains, "ips": ips, "stats": stats, "skipped": skipped}
++
++
++def cmd_lists(args):
++    """Full build: URLhaus + ThreatFox -> domain and IP CDB lists."""
++    rules = InfraRules.load(args.allow)
++
++    RULES_HOLDER["rules"] = rules
++    uh = read_urlhaus(args.urlhaus) if args.urlhaus else None
++    tf = (
++        read_threatfox(args.threatfox, min_confidence=args.min_confidence, rules=rules)
++        if args.threatfox
++        else {"domains": set(), "ips": set(), "stats": Counter(), "skipped": Counter()}
++    )
++
++    urlhaus_domains = uh["domains"] if uh else set()
++    tf_domains = tf["domains"]
++    all_domains = urlhaus_domains | tf_domains
++
++    # IPs: the ipsum feed is already handled by the collector as
++    # top_malicious.txt. ThreatFox only contributes IPs it observed as C2,
++    # which is a different and more specific signal.
++    all_ips = set(tf["ips"])
++
++    n_dom = write_cdb(all_domains, args.domains_out)
++    n_ip = write_cdb(all_ips, args.ips_out)
++
++    print("URLhaus domains (filtered):  %d" % len(urlhaus_domains))
++    print("ThreatFox domains (conf>=%d): %d" % (args.min_confidence, len(tf_domains)))
++    print("  new from ThreatFox only:   %d" % len(tf_domains - urlhaus_domains))
++    print("Domain list written:         %d" % n_dom)
++    print("ThreatFox IPs (conf>=%d):     %d" % (args.min_confidence, n_ip))
++    print("IP list written:             %d" % n_ip)
++
++    tf_skipped = tf["skipped"]
++    if tf_skipped:
++        print("ThreatFox skipped:           " + ", ".join(
++            "%s=%d" % (k, v) for k, v in tf_skipped.most_common()
++        ))
++
++    if args.report and uh is not None:
++        write_report(args.report, uh)
++        print("Report:                      %s" % args.report)
++    return 0
++
++
+ def main(argv=None):
+     p = argparse.ArgumentParser(description="Build CDB lists from raw IOC dumps")
+     sub = p.add_subparsers(dest="cmd", required=True)
+@@ -282,6 +407,16 @@ def main(argv=None):
+     d.add_argument("--report", default=None)
+     d.set_defaults(func=cmd_domains)
+ 
++    l = sub.add_parser("lists", help="URLhaus + ThreatFox -> domain and IP CDB lists")
++    l.add_argument("--urlhaus", default=None)
++    l.add_argument("--threatfox", default=None)
++    l.add_argument("--allow", default="infra_allow.txt")
++    l.add_argument("--domains-out", default="malicious-domains.txt")
++    l.add_argument("--ips-out", default="malicious-ips.txt")
++    l.add_argument("--min-confidence", type=int, default=75)
++    l.add_argument("--report", default=None)
++    l.set_defaults(func=cmd_lists)
++
+     c = sub.add_parser("check", help="validate allowlist, optionally against a CSV")
+     c.add_argument("urlhaus", nargs="?", default=None)
+     c.add_argument("--allow", default="infra_allow.txt")
+diff --git a/tests/test_infra_filter.py b/tests/test_infra_filter.py
+index 0fedc4f..7b7a8ed 100644
+--- a/tests/test_infra_filter.py
++++ b/tests/test_infra_filter.py
+@@ -204,3 +204,73 @@ class TestAllowlistFile(unittest.TestCase):
+ 
+ if __name__ == "__main__":
+     unittest.main(verbosity=2)
++
++
++class TestThreatFox(unittest.TestCase):
++    """ThreatFox carries the confidence signal URLhaus lacks."""
++
++    def _json(self, iocs):
++        import json
++        import tempfile
++
++        fh = tempfile.NamedTemporaryFile("w", suffix=".json", delete=False,
++                                         encoding="utf-8")
++        json.dump({"iocs": iocs}, fh)
++        fh.close()
++        self.addCleanup(os.unlink, fh.name)
++        return fh.name
++
++    def test_domains_and_ips_split(self):
++        from ioc_extract import read_threatfox
++
++        path = self._json([
++            {"ioc": "bad-c2.example", "ioc_type": "domain", "confidence_level": 100},
++            {"ioc": "91.107.247.163:80", "ioc_type": "ip:port", "confidence_level": 90},
++            {"ioc": "45.9.1.2", "ioc_type": "ip:port", "confidence_level": 75},
++        ])
++        r = read_threatfox(path)
++        self.assertEqual(r["domains"], {"bad-c2.example"})
++        self.assertEqual(r["ips"], {"91.107.247.163", "45.9.1.2"})
++
++    def test_low_confidence_is_dropped(self):
++        from ioc_extract import read_threatfox
++
++        path = self._json([
++            {"ioc": "sure.example", "ioc_type": "domain", "confidence_level": 100},
++            {"ioc": "maybe.example", "ioc_type": "domain", "confidence_level": 50},
++        ])
++        r = read_threatfox(path, min_confidence=75)
++        self.assertEqual(r["domains"], {"sure.example"})
++        self.assertEqual(r["skipped"]["low_confidence"], 1)
++
++    def test_hashes_are_not_domains(self):
++        from ioc_extract import read_threatfox
++
++        path = self._json([
++            {"ioc": "a" * 64, "ioc_type": "sha256_hash", "confidence_level": 100},
++        ])
++        r = read_threatfox(path)
++        self.assertEqual(r["domains"], set())
++        self.assertEqual(r["ips"], set())
++
++    def test_infra_domains_from_threatfox_are_suppressed(self):
++        from ioc_extract import read_threatfox
++
++        path = self._json([
++            {"ioc": "github.com", "ioc_type": "domain", "confidence_level": 100},
++            {"ioc": "payload.github.com", "ioc_type": "domain", "confidence_level": 100},
++        ])
++        r = read_threatfox(path, rules=rules())
++        self.assertEqual(r["domains"], set())
++        self.assertEqual(r["skipped"]["infra:platform"], 2)
++
++    def test_url_ioc_is_reduced_to_host(self):
++        from ioc_extract import read_threatfox
++
++        path = self._json([
++            {"ioc": "http://evil.example/a/b", "ioc_type": "url", "confidence_level": 90},
++            {"ioc": "http://5.6.7.8/x", "ioc_type": "url", "confidence_level": 90},
++        ])
++        r = read_threatfox(path)
++        self.assertEqual(r["domains"], {"evil.example"})
++        self.assertEqual(r["ips"], {"5.6.7.8"})

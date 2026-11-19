@@ -29,25 +29,41 @@ echo "=== Building CDB lists ==="
 # working tree from the last commit) - the guard then sees an unchanged
 # count and passes it through.
 
-# IPs
+# IPs from IPsum (the aggregated multi-source blocklist).
 if [ -s "$LATEST_DIR/top_malicious.txt" ]; then
   grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$LATEST_DIR/top_malicious.txt" | awk '{print $1":"}' > malicious-ips.txt
 else
   echo "[!] top_malicious.txt missing/empty - keeping previous malicious-ips.txt"
 fi
 
-# Domains from URLhaus, filtered for shared infrastructure (infra_allow.txt).
-# A platform domain (github.com, cdn.discordapp.com, pastebin.com) is not an
-# IOC - blocking it matches the platform instead of the payload, which is what
-# broke rules 100101/100102. ioc_extract.py also fixes a parser bug: the
-# URLhaus export has no header row, so the old code silently dropped the first
-# IOC of every day. Suppressed hosts land in <day>/infra_suppressed.md.
-if [ -s "$LATEST_DIR/urlhaus.csv" ]; then
-  python3 ioc_extract.py domains "$LATEST_DIR/urlhaus.csv" malicious-domains.txt \
+# Domains from URLhaus (infra-filtered) PLUS ThreatFox, and C2 IPs from
+# ThreatFox. ThreatFox was previously used only for hashes, so its 4,062
+# domains and 1,699 ip:port entries were collected daily and thrown away -
+# despite carrying a confidence_level that URLhaus does not.
+# ThreatFox IPs are written to a sidecar and merged below so they are added to
+# the ipsum list rather than replacing it.
+if [ -s "$LATEST_DIR/urlhaus.csv" ] || [ -s "$LATEST_DIR/threatfox_recent.json" ]; then
+  UH=""
+  TF=""
+  [ -s "$LATEST_DIR/urlhaus.csv" ] && UH="$LATEST_DIR/urlhaus.csv"
+  [ -s "$LATEST_DIR/threatfox_recent.json" ] && TF="$LATEST_DIR/threatfox_recent.json"
+  python3 ioc_extract.py lists \
+      ${UH:+--urlhaus "$UH"} \
+      ${TF:+--threatfox "$TF"} \
       --allow infra_allow.txt \
+      --domains-out malicious-domains.txt \
+      --ips-out .threatfox-ips.tmp \
       --report "$LATEST_DIR/infra_suppressed.md"
+
+  if [ -s .threatfox-ips.tmp ]; then
+    # Union with the ipsum list, keep it sorted and deduplicated.
+    sort -u malicious-ips.txt .threatfox-ips.tmp > .ips.merged
+    mv .ips.merged malicious-ips.txt
+    echo "[+] merged $(wc -l < .threatfox-ips.tmp) ThreatFox C2 IPs into malicious-ips.txt"
+    rm -f .threatfox-ips.tmp
+  fi
 else
-  echo "[!] urlhaus.csv missing/empty - keeping previous malicious-domains.txt"
+  echo "[!] no URLhaus/ThreatFox data - keeping previous lists"
 fi
 
 # Hashes from ThreatFox (new API: value field is "ioc"; old export was
