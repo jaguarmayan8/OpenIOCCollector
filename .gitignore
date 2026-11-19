@@ -35,3 +35,4 @@ Output/**/cdb/
 # (`git show HEAD:malicious-ips.txt`), so these duplicate snapshots are gone.
 malicious-*.txt.prev
 .gh_token
+.gh_token
