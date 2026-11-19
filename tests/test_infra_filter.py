@@ -105,7 +105,8 @@ class TestCdbOutput(unittest.TestCase):
             path = os.path.join(tmp, "out.txt")
             n = write_cdb({"b.com", "a.com", "b.com"}, path)
             self.assertEqual(n, 2)
-            body = open(path, encoding="utf-8").read()
+            with open(path, encoding="utf-8") as fh:
+                body = fh.read()
             self.assertEqual(body, "a.com:\nb.com:\n")
 
     def test_empty_input_makes_empty_file(self):
@@ -114,7 +115,8 @@ class TestCdbOutput(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             path = os.path.join(tmp, "out.txt")
             self.assertEqual(write_cdb(set(), path), 0)
-            self.assertEqual(open(path, encoding="utf-8").read(), "")
+            with open(path, encoding="utf-8") as fh:
+                self.assertEqual(fh.read(), "")
 
 
 class TestUrlhausParsing(unittest.TestCase):

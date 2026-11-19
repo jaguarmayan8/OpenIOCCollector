@@ -293,7 +293,8 @@ def read_threatfox(path, min_confidence=75, rules=None):
     not an indicator on its own for these rule sets.
     """
     rules = rules or InfraRules(set(), set())
-    data = json.loads(open(path, encoding="utf-8").read())
+    with open(path, encoding="utf-8") as fh:
+        data = json.load(fh)
     iocs = data.get("iocs") if isinstance(data, dict) else data
     if not isinstance(iocs, list):
         iocs = []
