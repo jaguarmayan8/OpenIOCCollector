@@ -170,7 +170,7 @@ def main():
 
   <p style="margin-top:24px;">
     <a href="{REPO}">GitHub repository</a> ·
-    <a href="{REPO}/tree/main/{day.relative_to(BASE).as_posix()}">Today's raw output</a>
+    <a href="{REPO}/releases/tag/iocs-{day.name}">Today's raw dumps</a>
   </p>
 </main>
 </body>

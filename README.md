@@ -89,3 +89,19 @@ Cybersecurity | Detection Engineering | Home Lab
 ## License
 
 GPL-3.0
+
+## Data storage model
+
+Raw upstream dumps are **not** versioned. Committing them added ~38 MB/day
+(URLhaus CSV ~30 MB + ThreatFox JSON ~7 MB) to git history permanently, which
+pushed this repository past 1 GB — deleting the working-tree copy never
+reclaimed the blobs.
+
+| What | Where it lives | Retention |
+| --- | --- | --- |
+| Raw dumps (`urlhaus.csv`, `threatfox_recent.json`, …) | GitHub Release `iocs-YYYYMMDD` | 30 days (release), 3 days locally |
+| CDB lists (`malicious-ips/domains/hashes.txt`) | repo root, checksummed | current version only |
+| Run summaries / VT results | `Output/YYYY/YYYY-MM/YYYYMMDD/` | 90 days |
+
+`publish_raw.sh` uploads the dumps, `prune_output.py` keeps the local disk in
+check. See [SIZE_FIX.md](SIZE_FIX.md) for the one-time history rewrite.

@@ -2,8 +2,12 @@
 # Shared post-collection pipeline: CDB list extraction, staleness guard,
 # VirusTotal enrichment, dashboard generation, retention pruning and SHA256
 # checksums for the Wazuh puller.
-# Used by BOTH run_and_push.sh (Kali cron) and
-# .github/workflows/collector.yml (GitHub Actions).
+#
+# This is the ONLY copy of the pipeline logic. run_and_push.sh (Kali cron) and
+# .github/workflows/collector.yml (GitHub Actions) both call it - the previous
+# duplicated copy in run_and_push.sh had already drifted (no checksums step,
+# hardcoded paths) and would have re-written the .prev files that are no
+# longer tracked.
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -22,7 +26,7 @@ echo "=== Building CDB lists ==="
 # tolerates partial failures on purpose, and the staleness guard below will
 # refuse to push a list that shrank or went empty. So: if a feed file is
 # missing, skip that extraction and KEEP THE PREVIOUS LIST (it is in the
-# working tree from the last run/commit) - the guard then sees an unchanged
+# working tree from the last commit) - the guard then sees an unchanged
 # count and passes it through.
 
 # IPs
@@ -96,40 +100,48 @@ echo "=== Sanity check before pushing ==="
 # A list that is EMPTY, or collapsed to a tiny fraction of its previous size,
 # almost always means an upstream feed broke (410, auth expired, format
 # change) - not that the internet got safer. Pushing that to Wazuh would
-# silently blind rules 100100-100111. Previous snapshots are kept next to
-# the lists (malicious-<type>.prev, committed) for comparison and rollback.
+# silently blind rules 100100-100111.
+#
+# The previous size is read from the last COMMIT (git show HEAD:<file>) rather
+# than from a committed .prev snapshot. Git history already stores every
+# version, so the .prev files were a second copy of the same data in the tree
+# - 2.2 MB on disk plus a duplicate ~2 MB blob in history every single day.
 MIN_FRACTION=50   # block push if new list < MIN_FRACTION% of previous
 MIN_ABSOLUTE=10   # ... or if it has fewer entries than this
 
+prev_count() {
+  local file="$1" n=""
+  if git cat-file -e "HEAD:$file" 2>/dev/null; then
+    n=$(git show "HEAD:$file" | wc -l || true)
+    echo "${n:-0}"
+  elif [ -f "$file.prev" ]; then
+    # Fallback for a repo whose HEAD does not have the file yet (first run).
+    wc -l < "$file.prev"
+  else
+    echo 0
+  fi
+}
+
 check_list() {
-  local name="$1" file="$2" prev
-  local count
-  count=$(wc -l < "$file")
+  local name="$1" file="$2" count prev_count_val
   if [ ! -f "$file" ]; then
     echo "ABORT: $file missing"
     exit 1
   fi
+  count=$(wc -l < "$file")
   if [ "$count" -lt "$MIN_ABSOLUTE" ]; then
     echo "ABORT: $file has only $count entries (< $MIN_ABSOLUTE) - upstream feed likely broken"
     exit 1
   fi
-  prev="$file.prev"
-  if [ -f "$prev" ]; then
-    local prev_count
-    prev_count=$(wc -l < "$prev")
-    # only compare when the previous snapshot was itself non-trivial
-    if [ "$prev_count" -ge "$MIN_ABSOLUTE" ]; then
-      # integer percent: count*100/prev
-      if [ $(( count * 100 / prev_count )) -lt "$MIN_FRACTION" ]; then
-        echo "ABORT: $file collapsed from $prev_count to $count entries (< ${MIN_FRACTION}% of previous) - refusing to push"
-        exit 1
-      fi
+  prev_count_val=$(prev_count "$file")
+  # only compare when the previous list was itself non-trivial
+  if [ "${prev_count_val:-0}" -ge "$MIN_ABSOLUTE" ]; then
+    if [ $(( count * 100 / prev_count_val )) -lt "$MIN_FRACTION" ]; then
+      echo "ABORT: $file collapsed from $prev_count_val to $count entries (< ${MIN_FRACTION}% of previous) - refusing to push"
+      exit 1
     fi
   fi
-  # update the rolling snapshot for the next run (committed, so the guard
-  # state survives across GitHub Actions runners too)
-  cp "$file" "$prev"
-  echo "OK: $name ($count entries)"
+  echo "OK: $name ($count entries, previous $prev_count_val)"
 }
 
 check_list "malicious-ips"      malicious-ips.txt
@@ -142,9 +154,11 @@ python3 vt_enrich.py
 echo "=== Generate dashboard ==="
 python3 generate_dashboard.py
 
-echo "=== Pruning old output (retention) ==="
-# Deletes Output day folders older than KEEP_DAYS (default 90; override:
-#   python3 prune_output.py 60   or   KEEP_DAYS=60 ...)
+echo "=== Pruning old output (two-tier retention) ==="
+# raw dumps (urlhaus.csv ~30 MB/day, threatfox ~7 MB/day) are disposable -
+# they are published as GitHub Release assets by publish_raw.sh. Summaries and
+# VT results are tiny and kept as history.
+#   RAW_KEEP_DAYS=3 DERIVED_DAYS=90 by default
 # Runs BEFORE the commit so deletions are pushed with today's update.
 python3 prune_output.py
 
