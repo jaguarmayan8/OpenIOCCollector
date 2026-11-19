@@ -1,12 +1,36 @@
 __pycache__/
 *.pyc
 cron.log
+cron.log.*
 run_andpush.sh.bak
 .venv/
-__pycache__/
-*.pyc
-cron.log
-run_andpush.sh.bak
-.venv/
+.env
 .vt_api_key
+.vt_api_key*
 .abusech_auth_key
+.abusech_auth_key*
+
+# ---------------------------------------------------------------------------
+# Raw feed dumps are NOT versioned.
+#
+# They used to be committed, which added ~38 MB/day (URLhaus CSV ~30 MB +
+# ThreatFox JSON ~7 MB) to git history *permanently* - prune_output.py
+# deleting the working-tree copy did not remove the blob from history, so the
+# repo grew without bound. These files are now published as GitHub Release
+# assets by publish_raw.sh and pruned locally by prune_output.py.
+#
+# The patterns below are the safety net: they stop ANY `git add Output/` or
+# `git add -A` (including the ones in run_and_push.sh / gitpush.sh) from
+# re-tracking a raw dump. See SIZE_FIX.md.
+# ---------------------------------------------------------------------------
+Output/**/urlhaus.csv
+Output/**/threatfox_recent.json
+Output/**/ssl_blacklist.csv
+Output/**/feodo_tracker.txt
+Output/**/top_malicious.txt
+Output/**/malwarebazaar_recent.json
+Output/**/cdb/
+
+# The staleness guard reads the previous size from git history now
+# (`git show HEAD:malicious-ips.txt`), so these duplicate snapshots are gone.
+malicious-*.txt.prev
