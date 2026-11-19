@@ -34,3 +34,4 @@ Output/**/cdb/
 # The staleness guard reads the previous size from git history now
 # (`git show HEAD:malicious-ips.txt`), so these duplicate snapshots are gone.
 malicious-*.txt.prev
+.gh_token
