@@ -36,3 +36,4 @@ Output/**/cdb/
 malicious-*.txt.prev
 .gh_token
 .gh_token
+*.patch
