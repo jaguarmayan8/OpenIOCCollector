@@ -36,29 +36,16 @@ else
   echo "[!] top_malicious.txt missing/empty - keeping previous malicious-ips.txt"
 fi
 
-# Domains from URLhaus - parsed with csv.DictReader so quoted commas and
-# column reordering (the authenticated export differs from the old keyless
-# one) can't silently break the extraction.
+# Domains from URLhaus, filtered for shared infrastructure (infra_allow.txt).
+# A platform domain (github.com, cdn.discordapp.com, pastebin.com) is not an
+# IOC - blocking it matches the platform instead of the payload, which is what
+# broke rules 100101/100102. ioc_extract.py also fixes a parser bug: the
+# URLhaus export has no header row, so the old code silently dropped the first
+# IOC of every day. Suppressed hosts land in <day>/infra_suppressed.md.
 if [ -s "$LATEST_DIR/urlhaus.csv" ]; then
-python3 - "$LATEST_DIR/urlhaus.csv" << 'PY'
-import csv, re, sys
-host_re = re.compile(r"(?<=://)[^/:]+")
-domains = set()
-with open(sys.argv[1], newline="", errors="ignore") as f:
-    rows = csv.reader(l for l in f if l.strip() and not l.startswith("#"))
-    header = next(rows, None)
-    url_idx = header.index("url") if header and "url" in (header or []) else 2
-    for row in rows:
-        if len(row) <= url_idx:
-            continue
-        for host in host_re.findall(row[url_idx]):
-            if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+", host):
-                domains.add(host)
-with open("malicious-domains.txt", "w") as f:
-    for d in sorted(domains):
-        f.write(d + ":\n")
-print(f"Extracted {len(domains)} domains")
-PY
+  python3 ioc_extract.py domains "$LATEST_DIR/urlhaus.csv" malicious-domains.txt \
+      --allow infra_allow.txt \
+      --report "$LATEST_DIR/infra_suppressed.md"
 else
   echo "[!] urlhaus.csv missing/empty - keeping previous malicious-domains.txt"
 fi

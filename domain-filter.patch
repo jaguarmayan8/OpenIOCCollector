@@ -1,0 +1,1094 @@
+diff --git a/DOMAIN_FILTER.md b/DOMAIN_FILTER.md
+new file mode 100644
+index 0000000..13af478
+--- /dev/null
++++ b/DOMAIN_FILTER.md
+@@ -0,0 +1,66 @@
++# Domain filter — why the CDB list no longer contains github.com
++
++## The problem
++
++`malicious-domains.txt` feeds Wazuh rules 100101 / 100102. It was built by
++taking the host out of every URLhaus row, but URLhaus reports **payload URLs,
++not payload domains**. On 2026-11-19 that meant:
++
++| Host | URLs in the feed |
++| --- | --- |
++| `github.com` | 53,504 |
++| `raw.githubusercontent.com` | 45,243 |
++| `cdn.discordapp.com` | 239 |
++| `gitlab.com` | 172 |
++| `drive.google.com` | 150 |
++
++All seven platform hosts sat in the blocklist, so any rule match fired on
++ordinary GitHub fetches, Discord attachments and Drive downloads — including
++the tooling that maintains this repository.
++
++## What the filter does
++
++`infra_allow.txt` declares two tiers, and the distinction matters:
++
++- **`platform`** — the registrable domain is shared infrastructure, so the host
++  *and all subdomains* are suppressed (`github.com`, `raw.githubusercontent.com`,
++  `cdn.discordapp.com`). Specific subdomains are not meaningful threats.
++- **`hosting`** — free/consumer platform where each **subdomain is a separate
++  tenant**. Only the bare domain is suppressed; `evil.example-host.com` stays
++  in the list because that *is* a real indicator. Suppressing subdomains here
++  would throw away real detections — and would also block this project's own
++  `uberspace`-style github.io page.
++
++Matching is on DNS label boundaries, so `github.com` never matches
++`notgithub.com` or `github.com.evil.tld`.
++
++## Numbers from the 2026-11-19 feed
++
++| Metric | Value |
++| --- | --- |
++| URLhaus rows | 116,572 |
++| Rows with a non-IP host | 101,377 |
++| Blockable domains published | **767** |
++| Suppressed as infrastructure | 99,487 URLs across 62 hosts (**98.1%** of non-IP rows) |
++| Infra hosts left in the list | **0** (was 7) |
++| Committed list size | 829 -> 767 lines |
++
++Every suppressed host is written to `<day>/infra_suppressed.md` with a sample
++URL, so nothing is silently discarded. The full URLs remain in the day's
++GitHub Release asset (`iocs-YYYYMMDD`).
++
++## What this does NOT do
++
++It does not detect GitHub-hosted payloads. Blocking the domain is the wrong
++control for those; the payload path is (`.../releases/download/v1.0.0/x.zip`).
++Options if you want that coverage later: emit a `malicious-urls.txt` CDB list
++with full URLs and match it only in web-proxy logs, or alert on the URL fields
++of URLhaus rows you care about rather than blocking at the domain level.
++
++## Verifying
++
++```bash
++python3 ioc_extract.py check                      # allowlist unit probes
++python3 ioc_extract.py check Output/2026/2026-11/20261119/urlhaus.csv   # real split
++python3 -m unittest discover -s tests -v          # 15 tests
++```
+diff --git a/build_lists.sh b/build_lists.sh
+index e165bde..c1fbf98 100755
+--- a/build_lists.sh
++++ b/build_lists.sh
+@@ -36,29 +36,16 @@ else
+   echo "[!] top_malicious.txt missing/empty - keeping previous malicious-ips.txt"
+ fi
+ 
+-# Domains from URLhaus - parsed with csv.DictReader so quoted commas and
+-# column reordering (the authenticated export differs from the old keyless
+-# one) can't silently break the extraction.
++# Domains from URLhaus, filtered for shared infrastructure (infra_allow.txt).
++# A platform domain (github.com, cdn.discordapp.com, pastebin.com) is not an
++# IOC - blocking it matches the platform instead of the payload, which is what
++# broke rules 100101/100102. ioc_extract.py also fixes a parser bug: the
++# URLhaus export has no header row, so the old code silently dropped the first
++# IOC of every day. Suppressed hosts land in <day>/infra_suppressed.md.
+ if [ -s "$LATEST_DIR/urlhaus.csv" ]; then
+-python3 - "$LATEST_DIR/urlhaus.csv" << 'PY'
+-import csv, re, sys
+-host_re = re.compile(r"(?<=://)[^/:]+")
+-domains = set()
+-with open(sys.argv[1], newline="", errors="ignore") as f:
+-    rows = csv.reader(l for l in f if l.strip() and not l.startswith("#"))
+-    header = next(rows, None)
+-    url_idx = header.index("url") if header and "url" in (header or []) else 2
+-    for row in rows:
+-        if len(row) <= url_idx:
+-            continue
+-        for host in host_re.findall(row[url_idx]):
+-            if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+", host):
+-                domains.add(host)
+-with open("malicious-domains.txt", "w") as f:
+-    for d in sorted(domains):
+-        f.write(d + ":\n")
+-print(f"Extracted {len(domains)} domains")
+-PY
++  python3 ioc_extract.py domains "$LATEST_DIR/urlhaus.csv" malicious-domains.txt \
++      --allow infra_allow.txt \
++      --report "$LATEST_DIR/infra_suppressed.md"
+ else
+   echo "[!] urlhaus.csv missing/empty - keeping previous malicious-domains.txt"
+ fi
+diff --git a/infra_allow.txt b/infra_allow.txt
+new file mode 100644
+index 0000000..0959ebf
+--- /dev/null
++++ b/infra_allow.txt
+@@ -0,0 +1,151 @@
++# infra_allow.txt - shared-infrastructure filter for the domain CDB list.
++#
++# WHY THIS FILE EXISTS
++#   URLhaus reports the URL that hosts or delivers a payload, not the domain
++#   that is malicious. On 2026-11-19, 98,747 of 116,572 rows (85%) pointed at
++#   shared platforms - github.com, raw.githubusercontent.com, cdn.discordapp.com.
++#   Extracting the host from those rows puts github.com: in the CDB list, so
++#   rules 100101/100102 fire on every legitimate GitHub fetch in the lab and
++#   block the tooling that maintains this repo.
++#
++#   Suppressing them loses nothing: the payload path is the IOC
++#   (github.com/user/repo/raw/x/payload.exe), and the whole URL is preserved
++#   in the day's release asset.
++#
++# TWO TIERS - they are NOT interchangeable
++#
++#   platform <domain>
++#     The registrable domain is shared infrastructure. Suppressing it also
++#     suppresses every subdomain, because no subdomain is one tenant:
++#     raw.githubusercontent.com, cdn.discordapp.com, gist.github.com.
++#     Correct for code hosting, CDNs, pastebins, shorteners, tunnels.
++#
++#   hosting <domain>
++#     Multi-tenant hosting. The bare domain is noise, but each subdomain is a
++#     single customer - evil.000webhostapp.com is a real, precise IOC and must
++#     stay blockable. Only the apex is suppressed.
++#     Wrong choice here destroys real detections: blocking based on
++#     github.io would also block jaguarmayan8.github.io (this project's own
++#     dashboard), while evil.github.io is worth blocking.
++#
++# Matching is on label boundaries: an entry `github.com` matches github.com and
++# a.github.com but NOT notgithub.com or github.com.evil.tld.
++#
++# Extend freely - one entry per line, `#` starts a comment.
++
++# --- code hosting / artifact distribution --------------------------------
++platform github.com
++platform githubusercontent.com
++platform gitlab.com
++platform bitbucket.org
++platform sourceforge.net
++platform crates.io
++platform pypi.org
++
++# --- cloud storage / CDN ------------------------------------------------
++platform amazonaws.com
++platform cloudfront.net
++platform azureedge.net
++platform blob.core.windows.net
++platform digitaloceanspaces.com
++platform backblazeb2.com
++platform storage.googleapis.com
++platform firebasestorage.googleapis.com
++platform r2.cloudflarestorage.com
++
++# --- file transfer / paste / text hosting -------------------------------
++platform pastebin.com
++platform paste.ee
++platform hastebin.com
++platform ghostbin.co
++platform controlc.com
++platform justpaste.it
++platform rentry.co
++platform telegra.ph
++platform ideone.com
++platform dpaste.org
++platform dpaste.com
++platform catbox.moe
++platform litter.catbox.moe
++platform gofile.io
++platform pixeldrain.com
++platform transfer.sh
++platform file.io
++platform dropbox.com
++platform dropboxusercontent.com
++platform mega.nz
++platform mediafire.com
++platform onedrive.live.com
++platform 1drv.ms
++platform docs.google.com
++platform drive.google.com
++platform sites.google.com
++
++# --- messaging / collaboration attachments -------------------------------
++# Malware is pushed through these as file attachments; the account or channel
++# is the IOC, not the platform domain.
++platform discord.com
++platform discordapp.com
++platform discordapp.net
++platform slack.com
++platform slack-edge.com
++platform teams.microsoft.com
++platform sharepoint.com
++platform onmicrosoft.com
++
++# --- URL shorteners ------------------------------------------------------
++# The IOC is the destination, never the wrapper.
++platform bit.ly
++platform tinyurl.com
++platform t.co
++platform goo.gl
++platform ow.ly
++platform is.gd
++platform cutt.ly
++platform rebrand.ly
++platform shorturl.at
++platform buff.ly
++platform rb.gy
++
++# --- tunnels / remote access --------------------------------------------
++# Legitimate services that are routinely used to expose a C2 past NAT.
++platform ngrok.io
++platform ngrok-free.app
++platform ngrok.app
++platform trycloudflare.com
++platform localtunnel.me
++platform serveo.net
++platform localhost.run
++platform quickconnect.to
++
++# --- multi-tenant free hosting: apex only, subdomains stay blockable ------
++hosting github.io
++hosting gitlab.io
++hosting netlify.app
++hosting vercel.app
++hosting pages.dev
++hosting workers.dev
++hosting web.app
++hosting firebaseapp.com
++hosting appspot.com
++hosting herokuapp.com
++hosting onrender.com
++hosting up.railway.app
++hosting fly.dev
++hosting glitch.me
++hosting replit.app
++hosting replit.dev
++hosting repl.co
++hosting wixsite.com
++hosting weebly.com
++hosting blogspot.com
++hosting wordpress.com
++hosting 000webhostapp.com
++hosting surge.sh
++hosting notion.site
++hosting gitbook.io
++hosting canva.site
++hosting godaddysites.com
++hosting business.site
++hosting azurewebsites.net
++hosting azurestaticapps.net
+diff --git a/ioc_extract.py b/ioc_extract.py
+new file mode 100644
+index 0000000..14020cb
+--- /dev/null
++++ b/ioc_extract.py
+@@ -0,0 +1,295 @@
++#!/usr/bin/env python3
++"""ioc_extract.py - build CDB lists from a day's raw feed dumps.
++
++Replaces the inline heredocs that used to live in build_lists.sh. Two reasons:
++
++  1. Domain extraction needs a shared-infrastructure filter (infra_allow.txt).
++     A domain that IS a platform - github.com, cdn.discordapp.com, pastebin.com -
++     is useless and actively harmful as a blocklist entry: it matches the
++     platform, not the payload. URLhaus reports payload URLs, so most rows sit
++     on shared platforms. Unfiltered, the CDB list blocks the lab's own traffic.
++
++  2. The old parser assumed the URLhaus export had a header row. It does not -
++     it is `#` comments followed by data - so the first IOC of every day was
++     silently discarded. Header detection here is explicit.
++
++USAGE
++    python3 ioc_extract.py domains <urlhaus.csv> <out.txt>
++        [--allow infra_allow.txt] [--report <day>/infra_suppressed.txt]
++
++    python3 ioc_extract.py check [urlhaus.csv]
++        Validate infra_allow.txt and optionally report the suppression split.
++        Writes nothing - run this before editing the allowlist.
++
++OUTPUT
++    A CDB list: one `value:` per line, sorted and de-duplicated.
++"""
++
++from __future__ import annotations
++
++import argparse
++import csv
++import re
++import sys
++from collections import Counter, defaultdict
++from pathlib import Path
++
++SCHEME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*://")
++HOST_RE = re.compile(r"^(?P<host>[^/:?#]+)")
++IPV4_RE = re.compile(r"^\d{1,3}(?:\.\d{1,3}){3}$")
++IPV6_RE = re.compile(r"^\[?[0-9A-Fa-f:]+\]?$")
++
++PLATFORM = "platform"
++HOSTING = "hosting"
++
++
++class InfraRules:
++    """Two tiers of suppression - see infra_allow.txt for why they differ."""
++
++    __slots__ = ("platform", "hosting", "source")
++
++    def __init__(self, platform, hosting, source=""):
++        self.platform = set(platform)
++        self.hosting = set(hosting)
++        self.source = source
++
++    @classmethod
++    def load(cls, path):
++        platform, hosting = set(), set()
++        with open(path, encoding="utf-8") as fh:
++            for lineno, raw in enumerate(fh, 1):
++                line = raw.split("#", 1)[0].strip()
++                if not line:
++                    continue
++                parts = line.split(None, 1)
++                if len(parts) != 2:
++                    raise ValueError(
++                        "%s:%d: expected '<platform|hosting> <domain>', got %r"
++                        % (path, lineno, raw.rstrip())
++                    )
++                tier, domain = parts[0].lower(), parts[1].strip().lower().rstrip(".")
++                if tier not in (PLATFORM, HOSTING):
++                    raise ValueError("%s:%d: unknown tier %r" % (path, lineno, tier))
++                if "." not in domain:
++                    raise ValueError("%s:%d: %r is not a domain" % (path, lineno, domain))
++                (platform if tier == PLATFORM else hosting).add(domain)
++        return cls(platform, hosting, str(path))
++
++    def classify(self, host):
++        """Return (reason, matched_entry); reason None means blockable."""
++        h = (host or "").strip().lower().rstrip(".")
++        if not h or "." not in h or h.startswith("-"):
++            return None, None
++        if IPV4_RE.match(h) or (":" in h and IPV6_RE.match(h)):
++            return None, None  # IPs belong to the IP list, not this filter
++
++        labels = h.split(".")
++        # Walk suffixes on label boundaries: a.b.github.com -> b.github.com ->
++        # github.com. So `notgithub.com` and `github.com.evil.tld` never match.
++        for i in range(0, len(labels) - 1):
++            candidate = ".".join(labels[i:])
++            if candidate in self.platform:
++                return PLATFORM, candidate
++            if candidate in self.hosting and candidate == h:
++                return "hosting-apex", candidate
++        return None, None
++
++    def __len__(self):
++        return len(self.platform) + len(self.hosting)
++
++
++def extract_host(url):
++    """Host from a URL or bare hostname: lowercased, no port, no path."""
++    text = (url or "").strip()
++    if not text:
++        return None
++    # Strip the scheme explicitly: with an optional scheme group, "http://"
++    # backtracks and yields "http" as the host.
++    text = SCHEME_RE.sub("", text, count=1)
++    m = HOST_RE.match(text)
++    if not m:
++        return None
++    host = m.group("host").strip().rstrip(".").lower()
++    if not host or host.startswith(".") or host.startswith("-"):
++        return None
++    return host
++
++
++def iter_rows(path):
++    """CSV data rows, skipping '#' comments and blank lines."""
++    with open(path, newline="", errors="ignore", encoding="utf-8") as fh:
++        reader = csv.reader(
++            line for line in fh if line.strip() and not line.startswith("#")
++        )
++        for row in reader:
++            yield row
++
++
++def read_urlhaus(path, url_index=None, sample_limit=10):
++    """Split URLhaus hosts into blockable vs suppressed.
++
++    Returns a dict: domains(set), suppressed(Counter), reasons(dict),
++    samples(dict), total(int rows with a host), had_header(bool).
++    """
++    rows = list(iter_rows(path))
++    out = {
++        "domains": set(),
++        "suppressed": Counter(),
++        "reasons": {},
++        "samples": defaultdict(list),
++        "total": 0,
++        "had_header": False,
++    }
++    if not rows:
++        return out
++
++    header = [c.strip().lower() for c in rows[0]]
++    if "url" in header:
++        idx, body, out["had_header"] = header.index("url"), rows[1:], True
++    else:
++        idx, body = 2, rows
++    if url_index is not None:
++        idx = url_index
++
++    kept, suppressed = out["domains"], out["suppressed"]
++    for row in body:
++        if len(row) <= idx:
++            continue
++        url = row[idx].strip()
++        if not url:
++            continue
++        host = extract_host(url)
++        if not host:
++            continue
++        if IPV4_RE.match(host) or (":" in host and IPV6_RE.match(host)):
++            continue  # IP literals belong to the IP list, not the domain list
++        out["total"] += 1
++        reason, entry = RULES_HOLDER["rules"].classify(host)
++        if reason is None:
++            kept.add(host)
++            continue
++        suppressed[host] += 1
++        out["reasons"][host] = "%s:%s" % (reason, entry)
++        if len(out["samples"][host]) < sample_limit:
++            out["samples"][host].append(url)
++    return out
++
++
++# Set by the CLI entry point so read_urlhaus() keeps a simple signature.
++RULES_HOLDER = {"rules": InfraRules(set(), set())}
++
++
++def write_cdb(values, path):
++    ordered = sorted(set(values))
++    Path(path).parent.mkdir(parents=True, exist_ok=True)
++    with open(path, "w", encoding="utf-8") as fh:
++        for v in ordered:
++            fh.write(v + ":\n")
++    return len(ordered)
++
++
++def write_report(path, result):
++    Path(path).parent.mkdir(parents=True, exist_ok=True)
++    suppressed = result["suppressed"]
++    total = result["total"]
++    n_urls = sum(suppressed.values())
++    pct = (100.0 * n_urls / total) if total else 0.0
++    lines = [
++        "# Shared-infrastructure domains suppressed from the CDB list",
++        "",
++        "%d URL(s) across %d host(s) - %.1f%% of %d rows with a host."
++        % (n_urls, len(suppressed), pct, total),
++        "",
++        "These are platform domains, not payload domains. Blocking them would",
++        "match the platform instead of the malware. The full URLs are preserved",
++        "in the day's release asset (`iocs-<date>`).",
++        "",
++        "| Host | URLs | Matched rule | Sample URL |",
++        "| --- | --- | --- | --- |",
++    ]
++    for host, count in suppressed.most_common(50):
++        sample = (result["samples"].get(host) or [""])[0]
++        lines.append(
++            "| `%s` | %d | `%s` | %s |"
++            % (host, count, result["reasons"].get(host, ""), sample)
++        )
++    if len(suppressed) > 50:
++        lines.append("\n_...and %d more hosts._" % (len(suppressed) - 50))
++    Path(path).write_text("\n".join(lines) + "\n", encoding="utf-8")
++
++
++def cmd_domains(args):
++    rules = InfraRules.load(args.allow)
++    RULES_HOLDER["rules"] = rules
++    result = read_urlhaus(args.urlhaus)
++    n = write_cdb(result["domains"], args.out)
++    supp = result["suppressed"]
++    total = result["total"]
++    print("URLhaus rows with a host: %d (header: %s)" % (total, result["had_header"]))
++    print("Blockable domains:        %d" % n)
++    print(
++        "Suppressed (infra):       %d URLs / %d hosts (%.1f%%)"
++        % (sum(supp.values()), len(supp), (100.0 * sum(supp.values()) / total) if total else 0.0)
++    )
++    if args.report:
++        write_report(args.report, result)
++        print("Report:                   %s" % args.report)
++    return 0
++
++
++def cmd_check(args):
++    rules = InfraRules.load(args.allow)
++    print(
++        "infra_allow.txt: %d platform + %d hosting = %d entries"
++        % (len(rules.platform), len(rules.hosting), len(rules))
++    )
++    probes = [
++        "github.com", "raw.githubusercontent.com", "cdn.discordapp.com",
++        "pastebin.com", "notgithub.com", "github.com.evil.tld",
++        "000webhostapp.com", "evil.000webhostapp.com",
++        "github.io", "jaguarmayan8.github.io", "example.org",
++    ]
++    for probe in probes:
++        reason, entry = rules.classify(probe)
++        label = ("%s (%s)" % (reason, entry)) if reason else "BLOCKABLE"
++        print("  %-32s -> %s" % (probe, reason or "BLOCKABLE"))
++        _ = entry
++    if args.urlhaus:
++        RULES_HOLDER["rules"] = rules
++        result = read_urlhaus(args.urlhaus)
++        supp = result["suppressed"]
++        print("\n%-34s %8s  %s" % ("HOST", "URLS", "MATCHED"))
++        for host, count in supp.most_common(15):
++            print("%-34s %8d  %s" % (host, count, result["reasons"][host]))
++        print(
++            "\ntotal rows %d | blockable %d | suppressed %d URLs / %d hosts"
++            % (
++                result["total"], len(result["domains"]),
++                sum(supp.values()), len(supp),
++            )
++        )
++    return 0
++
++
++def main(argv=None):
++    p = argparse.ArgumentParser(description="Build CDB lists from raw IOC dumps")
++    sub = p.add_subparsers(dest="cmd", required=True)
++
++    d = sub.add_parser("domains", help="URLhaus CSV -> domain CDB list")
++    d.add_argument("urlhaus")
++    d.add_argument("out")
++    d.add_argument("--allow", default="infra_allow.txt")
++    d.add_argument("--report", default=None)
++    d.set_defaults(func=cmd_domains)
++
++    c = sub.add_parser("check", help="validate allowlist, optionally against a CSV")
++    c.add_argument("urlhaus", nargs="?", default=None)
++    c.add_argument("--allow", default="infra_allow.txt")
++    c.set_defaults(func=cmd_check)
++
++    args = p.parse_args(argv)
++    return args.func(args)
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/malicious-domains.txt b/malicious-domains.txt
+index 827b127..af23275 100644
+--- a/malicious-domains.txt
++++ b/malicious-domains.txt
+@@ -8,17 +8,16 @@
+ 2.57.122.176.nip.io:
+ 221.37.167.72.host.secureserver.net:
+ 28ac1a-47fe-97aa9fa-081953438-583a20e8.brackendell.cc:
+-297-47d1-852d-0f1a190C45.garbagestress.cc:
++297-47d1-852d-0f1a190c45.garbagestress.cc:
+ 2duo.com.br:
+ 2homebrews.com:
+-3D4EBF0-54a1-4844-bD7a-709370159964.selectivewilled.cc:
+ 3byy0j.oss-cn-beijing.aliyuncs.com:
++3d4ebf0-54a1-4844-bd7a-709370159964.selectivewilled.cc:
+ 434f06c-geik4j16cf-d1fa-73d9f.acutelyunfailing.cc:
+-5459-457c-fdFf.tawnyfold.cc:
++5459-457c-fdff.tawnyfold.cc:
+ 67clientofficial.shop:
+ 6ae7d77987027fb6113ab10c.imgix.net:
+ 6af3227a926b60443dfa4412.imgix.net:
+-9d0be5e43042be826d3e5e2a880a311d.r2.cloudflarestorage.com:
+ a.g6.wtf:
+ aass1122.tos-cn-beijing.volces.com:
+ aawwf.hkg.bcebos.com:
+@@ -72,9 +71,7 @@ badmonner.s.gy:
+ bagsrad.com:
+ balancing.my.id:
+ balladquartz.com:
+-bas3.s3-eu-west-1.amazonaws.com:
+ bb2c6-42dfkea8-9fhh47-927aebce12d4.fasterflogging.cc:
+-belt-hiking-round-skirt.trycloudflare.com:
+ bergdorfgoodmanbag.com:
+ beschaffungszentrale.de:
+ bhenchod.rabinda-sarobar.online:
+@@ -104,7 +101,6 @@ bsadbnqwic.com:
+ btorsercoyt31.cc:
+ buloru.com:
+ bunaisd.screenconnect.com:
+-c32f4dda3dceee6b85ba1f5f2f3308bf.r2.cloudflarestorage.com:
+ caizom.eu.cc:
+ casapepepuertosherry.es:
+ casasmediterraneas.com:
+@@ -116,7 +112,6 @@ cdn-1s.hypstock.info:
+ cdn-2s.hypstock.info:
+ cdn-4f.hypstock.info:
+ cdn.876553.xyz:
+-cdn.discordapp.com:
+ cdn.hypstock.info:
+ cdn.wpoler.help:
+ cdn044us.xyz:
+@@ -132,7 +127,6 @@ checkout.bloamnu.shop:
+ cheetoclient.org:
+ chilymove.net:
+ cianet.ir:
+-circuits-partners-resolved-peas.trycloudflare.com:
+ clarkstonfamilydental.screenconnect.com:
+ cleverstack-ext30341.vercel.app:
+ cli.clipdghhs.top:
+@@ -141,7 +135,6 @@ clod.lippasswer.top:
+ cloud-browse.codes:
+ cloudflare.gd:
+ cloudflareconfirm.com:
+-codeload.github.com:
+ coinworknew.com:
+ complianceportals.com:
+ cosmicsky.cc:
+@@ -151,13 +144,10 @@ crhhmd.top:
+ crm.dline.com.tr:
+ crm.lanhsin.eu:
+ crojam.com:
+-cryp8.s3.us-east-2.amazonaws.com:
+ cs2xexternal.com:
+ cube-60.com:
+ cuyarts.com.pe:
+ czarnolandia.world:
+-d17wy7mzcv4fy2.cloudfront.net:
+-d1k4ozb5t9l7ci.cloudfront.net:
+ d78aab4760-db52-74aaa652cd4f.embergrab.cc:
+ da7wg.realtimefuturedev.buzz:
+ dashijie2026.oss-ap-southeast-7.aliyuncs.com:
+@@ -175,14 +165,11 @@ dh.1121103.xyz:
+ diag.wpoler.help:
+ digidonna.ru:
+ dimonpert.com:
+-discord.com:
+ discordzapret.site:
+ discordzapretik.sbs:
+ distnode.biz:
+ divinex.to:
+ dl.downloadonly.me:
+-dl.dropbox.com:
+-dl.dropboxusercontent.com:
+ dl.google.com:
+ dnf.gampangjepe.org:
+ do.opinionvip.club:
+@@ -209,31 +196,9 @@ download.bitbrowser-cn.cyou:
+ download.foden.site:
+ download.tg1101.com:
+ download.vertex-software.digital:
+-download1336.mediafire.com:
+-download1348.mediafire.com:
+-download1349.mediafire.com:
+-download1580.mediafire.com:
+-download1590.mediafire.com:
+-download1654.mediafire.com:
+-download2260.mediafire.com:
+-download2265.mediafire.com:
+-download2267.mediafire.com:
+-download2275.mediafire.com:
+-download2288.mediafire.com:
+-download2290.mediafire.com:
+-download2292.mediafire.com:
+-download2296.mediafire.com:
+-download2332.mediafire.com:
+-download2358.mediafire.com:
+-download2363.mediafire.com:
+-download844.mediafire.com:
+-download850.mediafire.com:
+ downloads.goxlr.studio:
+-dozen-touched-but-flyer.trycloudflare.com:
+-dpaste.org:
+ draft-loop.com:
+ dreambot.cc:
+-drive.google.com:
+ dsfojsofsdofijdsofjisdofjisdofijsdfijsdiojsdo.com:
+ dulivo.vu:
+ dulkirmod.st:
+@@ -250,7 +215,6 @@ dxx5o.fixlow.shop:
+ dxx5q.fixlow.shop:
+ dxxs.fixlow.shop:
+ e76d78a-ab4760-db52-652cd4fy-u43jda.tidepull.cc:
+-earthquake-retention-formed-gets.trycloudflare.com:
+ easyfiles.cc:
+ eatcullt.com:
+ efn.lol:
+@@ -270,7 +234,6 @@ farmhelper.org:
+ farmutils.com:
+ fastly.jsdelivr.net:
+ fastsetup.lol:
+-fat-tracking-josh-strongly.trycloudflare.com:
+ fc.yuo123.cc:
+ fcitantibot.pro:
+ fcmelle.de:
+@@ -281,11 +244,9 @@ file.celciuscreditor.com:
+ file.garden:
+ files.54daysaverage.qzz.io:
+ files.8weeksaverage.xyz:
+-files.catbox.moe:
+ files.mcclients.com:
+ files.polisia.cam:
+ files.trade4rex.com:
+-firebasestorage.googleapis.com:
+ firmamentskyblock.ru:
+ firstalwayshere.com:
+ fitbodnz.com:
+@@ -297,7 +258,6 @@ for-what-u-check-it-bro.lol:
+ forge-copper.com:
+ fr.mcgrorys.top:
+ franfrbar.com:
+-fsdownload.s3.eu-west-3.amazonaws.com:
+ fuzerom.cfd:
+ g6.wtf:
+ gapi.amplebatch.in.net:
+@@ -312,8 +272,6 @@ getreroll.cc:
+ gfisoda.biz:
+ ghostclient.st:
+ giafroge.biz:
+-github.com:
+-gitlab.com:
+ glcdn.githack.com:
+ gold-marylee-16.tiiny.site:
+ goobaaclient.lovable.app:
+@@ -335,8 +293,6 @@ hf-mirror.com:
+ hfm-qnyxrf78xc1i0k.cfd:
+ hll912-1484535448.cos.ap-hongkong.myqcloud.com:
+ horizonlauncher.net:
+-hospital-prod-bucket.s3.amazonaws.com:
+-hospital-prod-bucket.s3.ap-southeast-1.amazonaws.com:
+ hotelsalamander.pl:
+ houseless.com.br:
+ hskstrading.com:
+@@ -400,7 +356,6 @@ liesetaler.de:
+ linenquill.com:
+ lingering-cloud-8a93.zinhoooo.workers.dev:
+ linuxutil5.pages.dev:
+-lists-pro-galaxy-bigger.trycloudflare.com:
+ load-reservationerror8247.com:
+ lorelion.cloud:
+ lsmdngnakjbgazxv.com:
+@@ -413,7 +368,6 @@ madeiracityschools.screenconnect.com:
+ maenc.icu:
+ magenta-tropical-egret-691.mypinata.cloud:
+ maildeveloper.site:
+-mailto-carmen-connected-paying.trycloudflare.com:
+ marlowclient.net:
+ matrixclient.org:
+ mc-goobaclient.netlify.app:
+@@ -452,7 +406,6 @@ nest-52.com:
+ netlfjs.shop:
+ new-file-vthmc.ko7u8b.space:
+ new-file-yuanj.ko7u8b.space:
+-newcert.s3.us-east-005.backblazeb2.com:
+ nexguard.pro:
+ nexorafoundry.com:
+ nfshgu.top:
+@@ -495,7 +448,6 @@ pakdigital.org:
+ panamgroup.com.pe:
+ pannki.com:
+ parallelchain-labs.com:
+-pastebin.com:
+ pcdanfhn.appdlhub.workers.dev:
+ pcsa.nu:
+ pebbleanthem.shop:
+@@ -508,7 +460,6 @@ physioga.net:
+ pictureurl.com:
+ pilot.stichtingbhv.nl:
+ pingl.vip:
+-pixeldrain.com:
+ pk.9winchamp.com:
+ plain-queen-ff1a.modpages.workers.dev:
+ play.nopixel-rp.ir:
+@@ -561,21 +512,18 @@ qofnend.bpbxter.com:
+ qsk.renwr.life:
+ qsx.renwr.life:
+ quartz-pearl.com:
+-questionnaire-buzz-row-trainer.trycloudflare.com:
+ quickrun31.cc:
+ quill-95.com:
+ qwb.wpoler.help:
+ qxb.renwr.life:
+ r3lzu9.fernthema.shop:
+ raster15.com:
+-raw.githubusercontent.com:
+ razao.pt:
+ rbxhub.pro:
+ recon-rival.nyc.boxd.sh:
+ refining.qpon:
+ reiventarseuconhecimento.com:
+ relay.lecoindudiabetique.com:
+-release-assets.githubusercontent.com:
+ remote-helpdesk.com:
+ repo.huaweicloud.com:
+ rerollnow.cc:
+@@ -599,7 +547,6 @@ runelitepluginhub.net:
+ rup.ksoftir.cc:
+ rush360.net:
+ ruthaiv.com:
+-s3-eu-west-1.amazonaws.com:
+ s4.ncreuh.icu:
+ s6k.hypstock.info:
+ s7g.hypstock.info:
+@@ -625,7 +572,6 @@ sevt.mcgrorys.top:
+ sgwv.jp:
+ siedle-balkan.com:
+ simpludelicios.md:
+-situation-significance-replace-coral.trycloudflare.com:
+ sivemss.fixlow.shop:
+ skcrss.icu:
+ skyblockaddons.org:
+@@ -661,15 +607,12 @@ stkp1.hyperfxs.icu:
+ stkp2.hyperfxs.icu:
+ storage-c15.hyperfx.info:
+ storage-f13.hyperfx.info:
+-storage.googleapis.com:
+ storage10.hyperfx.info:
+ storage2.hyperfx.info:
+ storage5.hyperfx.info:
+ storage6.hyperfx.info:
+ storage7.hyperfx.info:
+ storage8.hyperfx.info:
+-store-eu-par-6.gofile.io:
+-store1.gofile.io:
+ studiogagnegagne.screenconnect.com:
+ sugarfreedcup.co.za:
+ sugarfreedcupcake.co.za:
+@@ -717,8 +660,6 @@ txt.fixlow.shop:
+ txxt.fixlow.shop:
+ u.pone.rs:
+ uber-joeleasing.de:
+-ucd9bd7b2d78fd09cd6b92e4ab63.dl.dropboxusercontent.com:
+-ucfea10e4d01e1b5c131c0c41850.dl.dropboxusercontent.com:
+ unojoin.com:
+ unoparty.online:
+ unoplayy.com:
+@@ -729,7 +670,6 @@ v15.next.forgejo.org:
+ v5q.eu:
+ valentimadvocacia.com.br:
+ vape-client-landing.netlify.app:
+-vaul8.s3.us-east-2.amazonaws.com:
+ velmasqwxri.shop:
+ velmontriq.net:
+ vergabe-zentrale.de:
+@@ -773,7 +713,6 @@ www.baritoneclient.net:
+ www.beschaffungszentrale.de:
+ www.cargo-passion.com:
+ www.complianceportals.com:
+-www.dropbox.com:
+ www.easybillingsolutions.xyz:
+ www.einzigartigfrei.de:
+ www.excelnt.ai:
+@@ -787,7 +726,6 @@ www.krause-fahrzeuge.de:
+ www.lebang.si:
+ www.lehmann-autohaus.de:
+ www.maplezenith.live:
+-www.mediafire.com:
+ www.meteoraddons.net:
+ www.mxh4h.com:
+ www.nightmare-cheats.su:
+diff --git a/tests/test_infra_filter.py b/tests/test_infra_filter.py
+new file mode 100644
+index 0000000..0fedc4f
+--- /dev/null
++++ b/tests/test_infra_filter.py
+@@ -0,0 +1,206 @@
++#!/usr/bin/env python3
++"""Tests for the shared-infrastructure domain filter.
++
++Run:  python3 -m unittest discover -s tests -v
++Needs only the standard library.
++"""
++
++import os
++import sys
++import unittest
++from collections import Counter
++
++sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
++
++from ioc_extract import (  # noqa: E402
++    HOSTING,
++    PLATFORM,
++    InfraRules,
++    extract_host,
++    write_cdb,
++)
++
++
++def rules():
++    return InfraRules(
++        platform={"github.com", "githubusercontent.com", "discordapp.com",
++                  "pastebin.com", "amazonaws.com"},
++        hosting={"github.io", "000webhostapp.com", "netlify.app"},
++    )
++
++
++class TestPlatformTier(unittest.TestCase):
++    def test_exact_platform_is_suppressed(self):
++        reason, entry = rules().classify("github.com")
++        self.assertEqual(reason, PLATFORM)
++        self.assertEqual(entry, "github.com")
++
++    def test_subdomains_of_platform_are_suppressed(self):
++        # The whole point: raw.githubusercontent.com must not be blocklisted.
++        for host in (
++            "raw.githubusercontent.com",
++            "gist.githubusercontent.com",
++            "cdn.discordapp.com",
++            "media.discordapp.com",
++            "bucket.s3.amazonaws.com",
++            "a.b.c.github.com",
++        ):
++            with self.subTest(host=host):
++                self.assertEqual(rules().classify(host)[0], PLATFORM)
++
++    def test_label_boundary_is_respected(self):
++        # A suffix match must not degenerate into a substring match.
++        for host in ("notgithub.com", "github.com.evil.tld", "evilgithub.com"):
++            with self.subTest(host=host):
++                self.assertIsNone(rules().classify(host)[0])
++
++    def test_normal_domain_is_blockable(self):
++        for host in ("malware-c2.example", "xn--80ak6aa92e.com", "1.2.3.4.evil.org"):
++            with self.subTest(host=host):
++                self.assertIsNone(rules().classify(host)[0])
++
++
++class TestHostingTier(unittest.TestCase):
++    def test_apex_is_suppressed(self):
++        self.assertEqual(rules().classify("000webhostapp.com")[0], "hosting-apex")
++        self.assertEqual(rules().classify("github.io")[0], "hosting-apex")
++
++    def test_tenant_subdomain_stays_blockable(self):
++        # Each subdomain is one customer: these are precise IOCs.
++        for host in (
++            "evil.000webhostapp.com",
++            "evil.github.io",
++            "jaguarmayan8.github.io",
++            "app.netlify.app",
++        ):
++            with self.subTest(host=host):
++                self.assertIsNone(rules().classify(host)[0])
++
++
++class TestExtractHost(unittest.TestCase):
++    def test_url_forms(self):
++        cases = {
++            "http://61.53.75.166:43450/i": "61.53.75.166",
++            "https://raw.githubusercontent.com/u/r/main/x.exe": "raw.githubusercontent.com",
++            "https://GitHub.com/A/B": "github.com",
++            "https://example.org:8443/a?b=1": "example.org",
++            "http://example.com./x": "example.com",
++            "example.com/path": "example.com",
++        }
++        for url, want in cases.items():
++            with self.subTest(url=url):
++                self.assertEqual(extract_host(url), want)
++
++    def test_garbage_rejected(self):
++        for url in ("", "   ", "http://", "://nope", "-bad.com"):
++            with self.subTest(url=url):
++                self.assertIsNone(extract_host(url))
++
++
++class TestCdbOutput(unittest.TestCase):
++    def test_sorted_deduped_with_colon(self):
++        import tempfile
++
++        with tempfile.TemporaryDirectory() as tmp:
++            path = os.path.join(tmp, "out.txt")
++            n = write_cdb({"b.com", "a.com", "b.com"}, path)
++            self.assertEqual(n, 2)
++            body = open(path, encoding="utf-8").read()
++            self.assertEqual(body, "a.com:\nb.com:\n")
++
++    def test_empty_input_makes_empty_file(self):
++        import tempfile
++
++        with tempfile.TemporaryDirectory() as tmp:
++            path = os.path.join(tmp, "out.txt")
++            self.assertEqual(write_cdb(set(), path), 0)
++            self.assertEqual(open(path, encoding="utf-8").read(), "")
++
++
++class TestUrlhausParsing(unittest.TestCase):
++    """The export has no header; the old parser dropped the first IOC."""
++
++    def _csv(self, body):
++        import tempfile
++
++        fh = tempfile.NamedTemporaryFile("w", suffix=".csv", delete=False,
++                                         encoding="utf-8")
++        fh.write(body)
++        fh.close()
++        self.addCleanup(os.unlink, fh.name)
++        return fh.name
++
++    def test_first_data_row_is_not_dropped(self):
++        from ioc_extract import read_urlhaus
++
++        rules_obj = rules()
++        import ioc_extract
++
++        ioc_extract.RULES_HOLDER["rules"] = rules_obj
++        path = self._csv(
++            "# comment line\n"
++            "# another\n"
++            "1,2026-11-19 00:00:00,http://first-evil.com/a,online,x\n"
++            "2,2026-11-19 00:00:01,http://second-evil.com/b,online,x\n"
++        )
++        result = read_urlhaus(path)
++        self.assertEqual(result["total"], 2)
++        self.assertIn("first-evil.com", result["domains"])
++        self.assertFalse(result["had_header"])
++
++    def test_real_header_is_detected_and_skipped(self):
++        from ioc_extract import read_urlhaus
++        import ioc_extract
++
++        ioc_extract.RULES_HOLDER["rules"] = rules()
++        path = self._csv(
++            "id,dateadded,url,url_status,threat,tags\n"
++            "1,2026-11-19,http://evil.com/a,online,x,y\n"
++        )
++        result = read_urlhaus(path)
++        self.assertTrue(result["had_header"])
++        self.assertEqual(result["total"], 1)
++        self.assertEqual(result["domains"], {"evil.com"})
++
++    def test_platform_rows_are_suppressed_and_counted(self):
++        from ioc_extract import read_urlhaus
++        import ioc_extract
++
++        ioc_extract.RULES_HOLDER["rules"] = rules()
++        path = self._csv(
++            "1,2026-11-19,http://github.com/a/raw/main/p.exe,online\n"
++            "2,2026-11-19,http://raw.githubusercontent.com/b/main/q.exe,online\n"
++            "3,2026-11-19,http://c2.evil.net/x,online\n"
++        )
++        result = read_urlhaus(path)
++        self.assertEqual(result["domains"], {"c2.evil.net"})
++        self.assertEqual(sum(result["suppressed"].values()), 2)
++        self.assertIn("github.com", result["suppressed"])
++
++
++class TestAllowlistFile(unittest.TestCase):
++    def test_shipped_allowlist_parses_and_covers_known_bad_hosts(self):
++        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
++        path = os.path.join(root, "infra_allow.txt")
++        self.assertTrue(os.path.exists(path), "infra_allow.txt missing")
++        r = InfraRules.load(path)
++        self.assertGreater(len(r), 50)
++        # Every host observed in the 2026-11-19 CDB list must be suppressed.
++        for host in (
++            "github.com", "raw.githubusercontent.com", "gitlab.com",
++            "discord.com", "cdn.discordapp.com", "drive.google.com",
++            "pastebin.com",
++        ):
++            with self.subTest(host=host):
++                self.assertIsNotNone(r.classify(host)[0], "%s not suppressed" % host)
++
++    def test_shipped_allowlist_keeps_tenant_subdomains(self):
++        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
++        r = InfraRules.load(os.path.join(root, "infra_allow.txt"))
++        self.assertIsNone(r.classify("evil.000webhostapp.com")[0])
++        self.assertIsNone(r.classify("jaguarmayan8.github.io")[0])
++        self.assertIsNone(r.classify("some-malware-c2.top")[0])
++
++
++if __name__ == "__main__":
++    unittest.main(verbosity=2)

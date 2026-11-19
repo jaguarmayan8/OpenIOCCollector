@@ -1,0 +1,151 @@
+# infra_allow.txt - shared-infrastructure filter for the domain CDB list.
+#
+# WHY THIS FILE EXISTS
+#   URLhaus reports the URL that hosts or delivers a payload, not the domain
+#   that is malicious. On 2026-11-19, 98,747 of 116,572 rows (85%) pointed at
+#   shared platforms - github.com, raw.githubusercontent.com, cdn.discordapp.com.
+#   Extracting the host from those rows puts github.com: in the CDB list, so
+#   rules 100101/100102 fire on every legitimate GitHub fetch in the lab and
+#   block the tooling that maintains this repo.
+#
+#   Suppressing them loses nothing: the payload path is the IOC
+#   (github.com/user/repo/raw/x/payload.exe), and the whole URL is preserved
+#   in the day's release asset.
+#
+# TWO TIERS - they are NOT interchangeable
+#
+#   platform <domain>
+#     The registrable domain is shared infrastructure. Suppressing it also
+#     suppresses every subdomain, because no subdomain is one tenant:
+#     raw.githubusercontent.com, cdn.discordapp.com, gist.github.com.
+#     Correct for code hosting, CDNs, pastebins, shorteners, tunnels.
+#
+#   hosting <domain>
+#     Multi-tenant hosting. The bare domain is noise, but each subdomain is a
+#     single customer - evil.000webhostapp.com is a real, precise IOC and must
+#     stay blockable. Only the apex is suppressed.
+#     Wrong choice here destroys real detections: blocking based on
+#     github.io would also block jaguarmayan8.github.io (this project's own
+#     dashboard), while evil.github.io is worth blocking.
+#
+# Matching is on label boundaries: an entry `github.com` matches github.com and
+# a.github.com but NOT notgithub.com or github.com.evil.tld.
+#
+# Extend freely - one entry per line, `#` starts a comment.
+
+# --- code hosting / artifact distribution --------------------------------
+platform github.com
+platform githubusercontent.com
+platform gitlab.com
+platform bitbucket.org
+platform sourceforge.net
+platform crates.io
+platform pypi.org
+
+# --- cloud storage / CDN ------------------------------------------------
+platform amazonaws.com
+platform cloudfront.net
+platform azureedge.net
+platform blob.core.windows.net
+platform digitaloceanspaces.com
+platform backblazeb2.com
+platform storage.googleapis.com
+platform firebasestorage.googleapis.com
+platform r2.cloudflarestorage.com
+
+# --- file transfer / paste / text hosting -------------------------------
+platform pastebin.com
+platform paste.ee
+platform hastebin.com
+platform ghostbin.co
+platform controlc.com
+platform justpaste.it
+platform rentry.co
+platform telegra.ph
+platform ideone.com
+platform dpaste.org
+platform dpaste.com
+platform catbox.moe
+platform litter.catbox.moe
+platform gofile.io
+platform pixeldrain.com
+platform transfer.sh
+platform file.io
+platform dropbox.com
+platform dropboxusercontent.com
+platform mega.nz
+platform mediafire.com
+platform onedrive.live.com
+platform 1drv.ms
+platform docs.google.com
+platform drive.google.com
+platform sites.google.com
+
+# --- messaging / collaboration attachments -------------------------------
+# Malware is pushed through these as file attachments; the account or channel
+# is the IOC, not the platform domain.
+platform discord.com
+platform discordapp.com
+platform discordapp.net
+platform slack.com
+platform slack-edge.com
+platform teams.microsoft.com
+platform sharepoint.com
+platform onmicrosoft.com
+
+# --- URL shorteners ------------------------------------------------------
+# The IOC is the destination, never the wrapper.
+platform bit.ly
+platform tinyurl.com
+platform t.co
+platform goo.gl
+platform ow.ly
+platform is.gd
+platform cutt.ly
+platform rebrand.ly
+platform shorturl.at
+platform buff.ly
+platform rb.gy
+
+# --- tunnels / remote access --------------------------------------------
+# Legitimate services that are routinely used to expose a C2 past NAT.
+platform ngrok.io
+platform ngrok-free.app
+platform ngrok.app
+platform trycloudflare.com
+platform localtunnel.me
+platform serveo.net
+platform localhost.run
+platform quickconnect.to
+
+# --- multi-tenant free hosting: apex only, subdomains stay blockable ------
+hosting github.io
+hosting gitlab.io
+hosting netlify.app
+hosting vercel.app
+hosting pages.dev
+hosting workers.dev
+hosting web.app
+hosting firebaseapp.com
+hosting appspot.com
+hosting herokuapp.com
+hosting onrender.com
+hosting up.railway.app
+hosting fly.dev
+hosting glitch.me
+hosting replit.app
+hosting replit.dev
+hosting repl.co
+hosting wixsite.com
+hosting weebly.com
+hosting blogspot.com
+hosting wordpress.com
+hosting 000webhostapp.com
+hosting surge.sh
+hosting notion.site
+hosting gitbook.io
+hosting canva.site
+hosting godaddysites.com
+hosting business.site
+hosting azurewebsites.net
+hosting azurestaticapps.net
