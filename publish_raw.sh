@@ -12,10 +12,14 @@
 #   The files Wazuh consumes (malicious-*.txt) are still committed and still
 #   covered by checksums.sha256 - this script never touches them.
 #
+# DEPENDENCIES
+#   curl + python3 (both already required by this project). Deliberately does
+#   NOT need the `gh` CLI or jq - neither is installed on a stock Kali box.
+#   One code path, so it behaves identically on Kali and on the Actions runner.
+#
 # AUTH
-#   Needs only a token: GH_TOKEN or GITHUB_TOKEN, with Contents: read+write
-#   (classic PAT: "repo" scope). The `gh` CLI is used when installed, otherwise
-#   this falls back to the REST API via curl - so it works on a bare Kali box.
+#   GH_TOKEN or GITHUB_TOKEN with Contents: read+write (classic PAT: "repo"
+#   scope; fine-grained: Contents = Read and write on this repository).
 #
 # USAGE
 #   GH_TOKEN=ghp_xxx bash publish_raw.sh            # today (UTC)
@@ -24,7 +28,8 @@
 #   DRY_RUN=1 bash publish_raw.sh                   # show what would happen
 #
 # Exit status is 0 even when publishing fails: a release problem must never
-# block the CDB-list commit that Wazuh depends on. Failures are logged loudly.
+# block the CDB-list commit that Wazuh depends on. Failures are reported
+# loudly and end with "finished WITH ERRORS" - never a false "done".
 set -uo pipefail
 cd "$(dirname "$0")"
 
@@ -32,6 +37,10 @@ DAY="${DAY:-$(date -u +%Y%m%d)}"
 RAW_KEEP_DAYS="${RAW_KEEP_DAYS:-30}"
 DRY_RUN="${DRY_RUN:-0}"
 TAG="iocs-${DAY}"
+
+# Overridable only so the test harness can point at a local mock API.
+API_BASE="${GH_API_BASE:-https://api.github.com}"
+UPLOAD_BASE="${GH_UPLOAD_BASE:-https://uploads.github.com}"
 
 RAW_FILES=(
   urlhaus.csv
@@ -42,7 +51,14 @@ RAW_FILES=(
   malwarebazaar_recent.json
 )
 
-warn() { echo "[!] $*"; }
+warn() { echo "[!] $*" >&2; }
+FAILED=0
+
+PY=$(command -v python3 || true)
+if [ -z "$PY" ]; then
+  warn "python3 not found - cannot publish. Install python3 or skip this step."
+  exit 0
+fi
 
 DAY_DIR=$(find Output -type d -name "$DAY" 2>/dev/null | sort | tail -1 || true)
 if [ -z "${DAY_DIR}" ]; then
@@ -58,10 +74,10 @@ fi
 
 SLUG=$(git config --get remote.origin.url 2>/dev/null \
      | sed -E 's#^(git@|https://|http://)github\.com[:/]##; s#\.git$##' || true)
-if [ -z "$SLUG" ]; then
-  warn "Cannot determine owner/repo from 'git remote origin' - skipping publish"
-  exit 0
-fi
+case "$SLUG" in
+  */*) : ;;
+  *) warn "Cannot determine owner/repo from 'git remote origin' - skipping publish"; exit 0 ;;
+esac
 
 ASSETS=()
 for f in "${RAW_FILES[@]}"; do
@@ -80,7 +96,7 @@ if [ "${#ASSETS[@]}" -eq 0 ]; then
 fi
 
 if [ "$DRY_RUN" = "1" ]; then
-  echo "[dry-run] repo=${SLUG} tag=${TAG} assets=${#ASSETS[@]} keep=${RAW_KEEP_DAYS}d"
+  echo "[dry-run] repo=${SLUG} tag=${TAG} assets=${#ASSETS[@]} keep=${RAW_KEEP_DAYS}d api=${API_BASE}"
   exit 0
 fi
 
@@ -93,129 +109,126 @@ are committed in the repository root:
 | --- | --- |
 | \`malicious-ips.txt\` | Wazuh CDB, rule 100100 |
 | \`malicious-domains.txt\` | Wazuh CDB, rules 100101 / 100102 |
-| \`malicious-hashes.txt\` | Wazuh CDB, rules 110100 / 100111 |
+| \`malicious-hashes.txt\` | Wazuh CDB, rules 100110 / 100111 |
 
 Verify those against \`checksums.sha256\`. Releases older than ${RAW_KEEP_DAYS}
 days are deleted automatically."
 
-# ---------------------------------------------------------------------------
-# Preferred path: gh CLI (what the GitHub Actions workflow uses)
-# ---------------------------------------------------------------------------
-if [ "${NO_GH:-0}" != "1" ] && command -v gh >/dev/null 2>&1; then
-  export GH_TOKEN="$TOKEN"
-  FAILED=0
-  if gh release view "$TAG" >/dev/null 2>&1; then
-    if gh release upload "$TAG" "${ASSETS[@]}" --clobber; then
-      echo "[+] Updated release ${TAG}"
-    else
-      warn "gh release upload FAILED for ${TAG}"; FAILED=1
-    fi
-  else
-    if gh release create "$TAG" "${ASSETS[@]}" --title "Raw IOC dumps ${DAY}" \
-        --latest=false --notes "$NOTES"; then
-      echo "[+] Created release ${TAG}"
-    else
-      warn "gh release create FAILED for ${TAG}"; FAILED=1
-    fi
-  fi
-  if [ "$RAW_KEEP_DAYS" -gt 0 ]; then
-    CUTOFF=$(date -u -d "${RAW_KEEP_DAYS} days ago" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null \
-          || date -u -v-"${RAW_KEEP_DAYS}"d +%Y-%m-%dT%H:%M:%SZ)
-    gh release list --limit 200 --json tagName,createdAt \
-      | jq -r --arg c "$CUTOFF" '.[] | select(.createdAt < $c) | .tagName' 2>/dev/null \
-      | while read -r old; do
-          case "$old" in
-            iocs-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9])
-              echo "[-] Deleting old release $old"; gh release delete "$old" --yes --cleanup-tag ;;
-          esac
-        done
-  fi
-  if [ "${FAILED:-0}" -ne 0 ]; then
-    warn "publish_raw.sh finished WITH ERRORS for ${DAY} (see above). The raw dumps are still on local disk."
-    warn "Most likely cause: the token lacks Contents: read+write, or expired."
-  else
-    echo "[+] publish_raw.sh done for ${DAY}"
-  fi
-  exit 0
-fi
-
-# ---------------------------------------------------------------------------
-# Fallback: REST API via curl (no gh installed)
-# ---------------------------------------------------------------------------
-echo "[i] gh CLI not found - using the GitHub REST API via curl"
-API="https://api.github.com/repos/${SLUG}"
-UPLOAD="https://uploads.github.com/repos/${SLUG}/releases"
-UA="OpenIOCCollector/2.0"
+API="${API_BASE}/repos/${SLUG}"
+UPLOAD="${UPLOAD_BASE}/repos/${SLUG}/releases"
 
 api() {
   curl -sS -H "Authorization: Bearer ${TOKEN}" \
        -H "Accept: application/vnd.github+json" \
        -H "X-GitHub-Api-Version: 2022-11-28" \
-       -H "User-Agent: ${UA}" "$@"
+       -H "User-Agent: OpenIOCCollector/2.0" "$@"
 }
 
-api_code() {
-  curl -sS -o /dev/null -w '%{http_code}' -H "Authorization: Bearer ${TOKEN}" \
-       -H "Accept: application/vnd.github+json" \
-       -H "X-GitHub-Api-Version: 2022-11-28" \
-       -H "User-Agent: ${UA}" "$@"
+# json_get <field>   (reads JSON on stdin, prints the field or nothing)
+json_get() {
+  "$PY" -c 'import sys,json
+try:
+    d=json.load(sys.stdin)
+except Exception:
+    sys.exit(0)
+v=d.get(sys.argv[1]) if isinstance(d,dict) else None
+if v not in (None,""):
+    print(v)' "$1"
 }
 
-REL_JSON=$(api "${API}/releases/tags/${TAG}" 2>/dev/null || true)
-REL_ID=$(printf '%s' "$REL_JSON" | jq -r '.id // empty' 2>/dev/null || true)
-FAILED=0
+# json_msg   (reads JSON on stdin, prints .message or nothing)
+json_msg() {
+  "$PY" -c 'import sys,json
+try:
+    d=json.load(sys.stdin)
+except Exception:
+    sys.exit(0)
+if isinstance(d,dict) and d.get("message"):
+    print(d["message"])'
+}
+
+echo "[i] Publishing to ${SLUG} as release ${TAG}"
+
+# --- find or create the release --------------------------------------------
+REL_ID=$(api "${API}/releases/tags/${TAG}" | json_get id)
 
 if [ -n "$REL_ID" ]; then
   echo "[i] Release ${TAG} exists (id ${REL_ID}) - replacing assets"
 else
-  BODY=$(jq -n --arg tag "$TAG" --arg name "Raw IOC dumps ${DAY}" --arg body "$NOTES" \
-    '{tag_name:$tag, name:$name, body:$body, draft:false, prerelease:false, make_latest:"false"}')
-  REL_JSON=$(api -X POST "${API}/releases" -d "$BODY" 2>/dev/null || true)
-  REL_ID=$(printf '%s' "$REL_JSON" | jq -r '.id // empty' 2>/dev/null || true)
+  BODY=$("$PY" -c 'import json,sys
+print(json.dumps({"tag_name":sys.argv[1],"name":sys.argv[2],"body":sys.argv[3],
+                  "draft":False,"prerelease":False,"make_latest":"false"}))' \
+        "$TAG" "Raw IOC dumps ${DAY}" "$NOTES")
+  RESP=$(api -X POST "${API}/releases" -d "$BODY")
+  REL_ID=$(printf '%s' "$RESP" | json_get id)
   if [ -z "$REL_ID" ]; then
-    warn "Could not create release ${TAG}. API said: $(printf '%s' "$REL_JSON" | jq -r '.message? // "no message"' 2>/dev/null)"
+    warn "Could not create release ${TAG}. API said: $(printf '%s' "$RESP" | json_msg)"
     warn "Check that the token has Contents: read+write on ${SLUG}."
     exit 0
   fi
   echo "[+] Created release ${TAG} (id ${REL_ID})"
 fi
 
-# Existing assets with the same name block re-upload; delete them first.
-EXISTING=$(api "${API}/releases/${REL_ID}/assets?per_page=100" 2>/dev/null || true)
+# --- upload assets (replace any same-named asset first) --------------------
+ASSET_IDS=$(api "${API}/releases/${REL_ID}/assets?per_page=100" | "$PY" -c 'import sys,json
+try:
+    d=json.load(sys.stdin)
+except Exception:
+    d=[]
+for a in (d if isinstance(d,list) else []):
+    print("{}\t{}".format(a.get("name",""), a.get("id","")))')
+
 for p in "${ASSETS[@]}"; do
   NAME=$(basename "$p")
-  OLD_ID=$(printf '%s' "$EXISTING" | jq -r --arg n "$NAME" '.[]? | select(.name==$n) | .id' 2>/dev/null | head -1)
-  if [ -n "$OLD_ID" ] && [ "$OLD_ID" != "null" ]; then
-    api -X DELETE "${API}/releases/assets/${OLD_ID}" >/dev/null 2>&1 && echo "[-] Removed old asset ${NAME}"
+  OLD_ID=$(printf '%s\n' "$ASSET_IDS" | awk -F'\t' -v n="$NAME" '$1==n {print $2; exit}')
+  if [ -n "${OLD_ID:-}" ] && [ "$OLD_ID" != "null" ]; then
+    api -X DELETE "${API}/releases/assets/${OLD_ID}" >/dev/null 2>&1 \
+      && echo "[-] Removed old asset ${NAME}"
   fi
-  CODE=$(curl -sS -o /tmp/_rel_up.json -w '%{http_code}' -X POST \
+  RESP_FILE=$(mktemp)
+  CODE=$(curl -sS -o "$RESP_FILE" -w '%{http_code}' -X POST \
     -H "Authorization: Bearer ${TOKEN}" \
     -H "Content-Type: application/octet-stream" \
     -H "Accept: application/vnd.github+json" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
-    -H "User-Agent: ${UA}" \
+    -H "User-Agent: OpenIOCCollector/2.0" \
     --data-binary @"$p" \
     "${UPLOAD}/${REL_ID}/assets?name=${NAME}" || echo 000)
   if [ "$CODE" = "201" ] || [ "$CODE" = "200" ]; then
     echo "[+] Uploaded ${NAME}"
   else
     FAILED=1
-    warn "Upload of ${NAME} failed (HTTP ${CODE}): $(jq -r '.message? // ""' /tmp/_rel_up.json 2>/dev/null)"
+    warn "Upload of ${NAME} failed (HTTP ${CODE}): $(json_msg < "$RESP_FILE")"
   fi
+  rm -f "$RESP_FILE"
 done
 
-# Prune old raw-dump releases.
-if [ "$RAW_KEEP_DAYS" -gt 0 ]; then
+# --- prune old raw-dump releases -------------------------------------------
+if [ "${RAW_KEEP_DAYS}" -gt 0 ]; then
   CUTOFF=$(date -u -d "${RAW_KEEP_DAYS} days ago" +%Y-%m-%dT%H:%M:%SZ 2>/dev/null \
         || date -u -v-"${RAW_KEEP_DAYS}"d +%Y-%m-%dT%H:%M:%SZ)
   echo "[i] Pruning raw-feed releases older than ${CUTOFF}"
-  api "${API}/releases?per_page=100" 2>/dev/null \
-    | jq -r --arg c "$CUTOFF" '.[]? | select(.created_at < $c) | select(.tag_name|test("^iocs-[0-9]{8}$")) | "\(.id) \(.tag_name)"' 2>/dev/null \
-    | while read -r id tag; do
-        [ -z "$id" ] && continue
-        echo "[-] Deleting old release ${tag}"
-        api -X DELETE "${API}/releases/${id}" >/dev/null 2>&1 || warn "delete failed for ${tag}"
-      done
+  api "${API}/releases?per_page=100" | "$PY" -c 'import sys,json,re
+cutoff=sys.argv[1]
+try:
+    d=json.load(sys.stdin)
+except Exception:
+    d=[]
+for r in (d if isinstance(d,list) else []):
+    tag=r.get("tag_name","")
+    created=r.get("created_at","")
+    if created and created < cutoff and re.fullmatch(r"iocs-\d{8}", tag):
+        print("{}\t{}".format(r.get("id",""), tag))' "$CUTOFF" \
+  | while IFS=$'\t' read -r id tag; do
+      [ -z "${id:-}" ] && continue
+      echo "[-] Deleting old release ${tag}"
+      api -X DELETE "${API}/releases/${id}" >/dev/null 2>&1 || warn "delete failed for ${tag}"
+    done
 fi
 
-echo "[+] publish_raw.sh done for ${DAY}"
+if [ "$FAILED" -ne 0 ]; then
+  warn "publish_raw.sh finished WITH ERRORS for ${DAY}. Raw dumps are still on local disk."
+else
+  echo "[+] publish_raw.sh done for ${DAY}"
+fi
+exit 0
