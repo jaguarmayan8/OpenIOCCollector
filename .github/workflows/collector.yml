@@ -28,6 +28,12 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
+      # Runs the stdlib unittest suite. No pip: the tests import only
+      # ioc_extract.py / generate_dashboard.py, never requests. This fails the
+      # job BEFORE a broken build can commit lists or push a dashboard.
+      - name: Run tests
+        run: python3 -m unittest discover -s tests -v
+
       # Secrets come from repo settings - no key files on any runner.
       # collector.py exits 1 if fewer than 2 feeds returned data, which
       # fails the workflow BEFORE anything broken is committed.
