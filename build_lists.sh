@@ -11,6 +11,12 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# Byte order for every sort/compare below, regardless of the host's locale.
+# A CI runner, a Kali cron job and a Mac all collate "1.2.3.4:" differently
+# once punctuation is ignored, so identical data could serialise to different
+# bytes - and a byte-different list is a whole-file diff.
+export LC_ALL=C
+
 echo "=== Finding latest output directory ==="
 LATEST_DIR=$(find Output -type d -name "$(date +%Y%m%d)" | sort | tail -1)
 
@@ -94,6 +100,23 @@ PY
 else
   echo "[!] threatfox_recent.json missing/empty - keeping previous malicious-hashes.txt"
 fi
+
+echo "=== Normalising lists (byte order, deduplicated) ==="
+# The published files are sorted here, once, so that identical input always
+# produces identical bytes: the same list from either producer gives the same
+# file, and a day's commit shows only the entries that actually changed
+# instead of rewriting the file because the feed listed them in another order.
+# The IP list in particular arrives in IPsum's own order (unsorted) and is only
+# sorted today when a ThreatFox merge happens to run.
+for f in malicious-ips.txt malicious-domains.txt malicious-hashes.txt; do
+  [ -s "$f" ] || continue
+  before=$(wc -l < "$f")
+  sort -u "$f" -o "$f"
+  after=$(wc -l < "$f")
+  if [ "$before" -ne "$after" ]; then
+    echo "  $f: $before -> $after lines ($((before - after)) duplicates dropped)"
+  fi
+done
 
 echo "IPs: $(wc -l < malicious-ips.txt)"
 echo "Domains: $(wc -l < malicious-domains.txt)"

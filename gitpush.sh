@@ -60,8 +60,17 @@ LOG_FILE="$PWD/cron.log"
     echo "$(date) - No new files to push"
   else
     git commit -m "Daily IOC update $(date +%Y-%m-%d)"
-    git push origin main
-    echo "$(date) - Pushed to GitHub"
+    if ! git push origin main; then
+      # The other producer (CI or a manual run) got there first. Rebase onto it
+      # rather than dropping this run's output on a rejected push.
+      echo "$(date) - push rejected - rebasing on origin/main"
+      if git pull --rebase --autostash --no-edit origin main; then
+        git push origin main && echo "$(date) - Pushed to GitHub (after rebase)"
+      else
+        echo "$(date) - ERROR: rebase conflict - resolve by hand"
+        exit 1
+      fi
+    fi
   fi
 
   echo "$(date) - Job finished"

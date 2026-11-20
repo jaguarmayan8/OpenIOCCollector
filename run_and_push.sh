@@ -42,6 +42,9 @@ echo "=== Committing and pushing to GitHub ==="
 # .gitignore keeps the raw dumps out even though this adds the whole folder.
 git add Output/ malicious-ips.txt malicious-domains.txt malicious-hashes.txt docs/index.html checksums.sha256
 git commit -m "Daily IOC update $(date +%Y-%m-%d)" || echo "No changes to commit"
-git push
+git push || {
+  echo "=== push rejected - rebasing on origin/main ==="
+  git pull --rebase --autostash --no-edit origin main && git push
+}
 
 echo "=== Done ==="
