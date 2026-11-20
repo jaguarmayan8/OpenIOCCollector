@@ -33,6 +33,16 @@ LOG_FILE="$PWD/cron.log"
     exit 1
   fi
 
+  # Guard: the container and the host must agree on "today". They diverge when
+  # the container runs in UTC and the host is on local time, which makes the
+  # build above abort on a missing folder. Fail loudly instead of pushing
+  # yesterday's numbers.
+  if [ ! -d "Output/$(date +%Y)/$(date +%Y-%m)/$(date +%Y%m%d)" ]; then
+    echo "$(date) - ERROR: no Output folder for local today ($(date +%Y%m%d)) -"
+    echo "  container/host date mismatch. Check the /etc/localtime mount."
+    exit 1
+  fi
+
   echo "$(date) - Committing..."
   git add Output/ malicious-ips.txt malicious-domains.txt malicious-hashes.txt \
           docs/index.html checksums.sha256

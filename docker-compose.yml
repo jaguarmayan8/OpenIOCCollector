@@ -26,4 +26,10 @@ services:
     volumes:
       # Raw dumps land here; the host pipeline (build_lists.sh) reads them.
       - ./Output:/app/Output
+      # The collector names the day folder from datetime.now(). Containers run
+      # in UTC by default, so a 22:30 CST run created Output/.../20261120 while
+      # the host looked for 20261119 - and build_lists.sh aborts when today's
+      # folder is missing. Mounting the host clock keeps one definition of
+      # "today" for both sides.
+      - /etc/localtime:/etc/localtime:ro
     restart: "no"

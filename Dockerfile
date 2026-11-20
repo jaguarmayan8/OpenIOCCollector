@@ -15,6 +15,9 @@ FROM python:3.12-slim
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
+# /etc/localtime is bind-mounted by docker-compose.yml so the day folder
+# matches the host's date. Nothing depends on tzdata being installed.
+
 WORKDIR /app
 
 # Deliberately no apt-get: the collector speaks HTTPS through requests only.
