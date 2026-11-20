@@ -15,6 +15,11 @@ services:
     build: .
     image: openioccollector:latest
     container_name: ioc-collector
+    # /app/Output is a bind mount owned by the invoking user. The image
+    # defaults to a non-root uid (10001) which cannot create subdirectories
+    # in a 755 dir owned by someone else, so run as the host uid:gid here.
+    # Override with LOCAL_UID/LOCAL_GID if your account is not 1000:1000.
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
     environment:
       ABUSECH_AUTH_KEY: ${ABUSECH_AUTH_KEY:-}
       VT_API_KEY: ${VT_API_KEY:-}

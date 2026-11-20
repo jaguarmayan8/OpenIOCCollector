@@ -83,6 +83,11 @@ docker compose run --rm ioc-collector   # collects into ./Output
 bash build_lists.sh                     # then the host pipeline, as above
 ```
 
+The compose service runs as `${LOCAL_UID:-1000}:${LOCAL_GID:-1000}` so it can
+write into the bind-mounted `Output/`. If your account is not `1000:1000`,
+export `LOCAL_UID=$(id -u)` and `LOCAL_GID=$(id -g)` first (a bare
+`docker run` without `--user` uses the image uid and cannot write there).
+
 Keys come from the environment, or from `.env` (compose loads it
 automatically). `.dockerignore` keeps `Output/`, `.git` and the key files out
 of every image layer. `gitpush.sh` chains the same three steps for a

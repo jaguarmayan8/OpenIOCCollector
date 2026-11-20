@@ -29,6 +29,9 @@ COPY collector.py ./
 RUN useradd --create-home --uid 10001 collector \
     && mkdir -p /app/Output \
     && chown -R collector:collector /app
+# Keeps a bare `docker run` non-root. docker-compose.yml overrides this with
+# the host uid:gid, because Output/ is a bind mount owned by your user and
+# uid 10001 cannot create subdirectories in a 755 directory it does not own.
 USER collector
 
 CMD ["python", "collector.py"]
