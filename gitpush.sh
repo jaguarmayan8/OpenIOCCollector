@@ -43,6 +43,13 @@ LOG_FILE="$PWD/cron.log"
     exit 1
   fi
 
+  # Same opt-in Wazuh step as run_and_push.sh, so the Docker cron path and the
+  # host path finally do the same things. Non-fatal by design: a manager that
+  # is switched off must not stop the GitHub publish.
+  if [ "${WAZUH_PUSH:-0}" = "1" ]; then
+    bash wazuh_push.sh || echo "$(date) - WARNING: Wazuh push failed - continuing"
+  fi
+
   echo "$(date) - Committing..."
   # Local (not UTC) date in the message: the folder just built is named from
   # the host's local date, so `date -u` labelled the 19th's data "2026-11-20"

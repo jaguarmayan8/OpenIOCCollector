@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write         # needed to commit Output/ and the CDB lists back
+  issues: write           # needed by the failure reporter below
 
 concurrency:
   group: ioc-collector
@@ -19,9 +20,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      # Pinned to a full commit SHA, not the mutable `@v4` / `@v5` tags: a tag
+      # can be re-pointed at any commit by whoever controls the action's repo,
+      # and the next run would execute code nobody reviewed. Update the SHA
+      # deliberately, with the version in the trailing comment.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065   # v5
         with:
           python-version: "3.12"
 
@@ -63,6 +68,25 @@ jobs:
           git config user.name "ioc-collector[bot]"
           git config user.email "ioc-collector[bot]@users.noreply.github.com"
           git add Output/ docs/index.html checksums.sha256 malicious-ips.txt malicious-domains.txt malicious-hashes.txt
-          git add malicious-ips.txt.prev malicious-domains.txt.prev malicious-hashes.txt.prev 2>/dev/null || true
           git commit -m "Daily IOC update $(date +%Y-%m-%d)" || echo "No changes to commit"
           git push
+
+      # Durable failure record. A red run only notifies whoever last touched
+      # the cron line, and disappears from view within a day; an issue stays on
+      # the repo page until it is closed. Repeats comment on the same issue
+      # instead of opening a new one every night.
+      - name: Report failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -uo pipefail
+          TITLE="[auto] nightly IOC collection failed"
+          printf -v BODY 'The scheduled IOC collection run failed.\n\nRun: %s\nCommit: %s\nReported: %s\n\nNothing was published: the CDB lists and dashboard still hold the previous successful run, and Wazuh is serving those. Check the run log before closing this issue.\n' "$RUN_URL" "${GITHUB_SHA:-unknown}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          EXISTING=$(gh issue list --state open --limit 100 --search "in:title nightly IOC collection failed" --json number --jq '.[0].number // empty' 2>/dev/null) || EXISTING=""
+          if [ -n "${EXISTING:-}" ]; then
+            gh issue comment "$EXISTING" --body "$BODY" || echo "could not comment on issue #$EXISTING"
+          else
+            gh issue create --title "$TITLE" --body "$BODY" || echo "could not open an issue - see $RUN_URL"
+          fi
