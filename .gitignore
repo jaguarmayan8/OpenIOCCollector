@@ -37,3 +37,6 @@ malicious-*.txt.prev
 
 # one-off fix scripts applied once and deleted
 apply-dashboard-fix.sh
+
+# one-off fix scripts (applied once, then deleted)
+apply-*.sh
