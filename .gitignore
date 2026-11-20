@@ -34,3 +34,6 @@ Output/**/cdb/
 malicious-*.txt.prev
 .gh_token
 *.patch
+
+# one-off fix scripts applied once and deleted
+apply-dashboard-fix.sh
