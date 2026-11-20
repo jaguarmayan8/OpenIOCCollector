@@ -103,6 +103,26 @@ Selected IOCs are converted into Wazuh CDB lists and used by custom rules:
 
 The daily collector updates the IP, domain, and hash lists automatically.
 
+### Push vs pull
+
+The default is the **pull** model: `wazuh_pull_lists.sh` runs on the manager
+(root cron), fetches the lists over HTTPS and verifies `checksums.sha256`.
+Nothing on the Kali side has to reach the manager, and a manager that is offline
+simply catches up on its next run.
+
+The legacy **push** model is opt-in - one variable in the cron entry:
+
+```bash
+WAZUH_PUSH=1 ./run_and_push.sh
+```
+
+It copies the lists over SSH via `wazuh_push.sh` with
+`StrictHostKeyChecking=yes`, so the manager's host key must be in `known_hosts`
+first; the script prints the exact `ssh-keyscan` command and the fingerprint to
+compare. A push failure logs `WARNING` and the GitHub publish still runs - it
+never aborts the job. Optional overrides: `WAZUH_HOST`, `WAZUH_REMOTE_CMD`,
+`WAZUH_KNOWN_HOSTS`, `WAZUH_SSH_KEY`, `WAZUH_CONNECT_TIMEOUT`.
+
 ## Future Improvements
 
 - Convert collected IOCs into Wazuh CDB lists [Done]

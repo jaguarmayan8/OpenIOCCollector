@@ -19,12 +19,19 @@ echo "=== Starting IOC Collector ==="
 # Lists, guard, VT enrichment, dashboard, retention, checksums.
 bash build_lists.sh
 
-echo "=== Copying lists to Wazuh Manager ==="
-# Kept for the push-style setup. If the manager runs the pull script
-# (wazuh_pull_lists.sh) instead, comment these two lines out - the pull path
-# verifies checksums.sha256, which is strictly better than scp.
-scp -o StrictHostKeyChecking=no malicious-ips.txt malicious-domains.txt malicious-hashes.txt masterchap@192.168.4.122:~/
-ssh masterchap@192.168.4.122 "sudo /usr/local/bin/update-malicious-ips.sh"
+echo "=== Wazuh lists ==="
+# The PUSH model is opt-in. The default is the pull model: the manager runs
+# wazuh_pull_lists.sh and verifies checksums.sha256, so nothing happens here.
+# Set WAZUH_PUSH=1 in the cron environment to push over SSH instead.
+#
+# Failure is deliberately non-fatal. Under `set -e` the old inline scp/ssh pair
+# aborted this script when the manager was off - before the git push below - so
+# a sleeping LAN box silently stopped the GitHub publish as well.
+if [ "${WAZUH_PUSH:-0}" = "1" ]; then
+  bash wazuh_push.sh || echo "WARNING: Wazuh push failed - continuing to GitHub publish"
+else
+  echo "Skipped (pull model). WAZUH_PUSH=1 enables the SSH push."
+fi
 
 echo "=== Publishing raw dumps to a GitHub Release ==="
 # Raw dumps are not committed any more (~38 MB/day in history). See SIZE_FIX.md.
