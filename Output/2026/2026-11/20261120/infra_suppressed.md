@@ -1,6 +1,6 @@
 # Shared-infrastructure domains suppressed from the CDB list
 
-99757 URL(s) across 65 host(s) - 98.1% of 101736 rows with a host.
+99992 URL(s) across 65 host(s) - 98.1% of 101980 rows with a host.
 
 These are platform domains, not payload domains. Blocking them would
 match the platform instead of the malware. The full URLs are preserved
@@ -9,12 +9,12 @@ in the day's release asset (`iocs-<date>`).
 | Host | URLs | Matched rule | Sample URL |
 | --- | --- | --- | --- |
 | `github.com` | 53287 | `platform:github.com` | https://github.com/SomeDevNow/love2d-minesweeper/releases/download/1.1/Minesweeper-win64.zip |
-| `raw.githubusercontent.com` | 45710 | `platform:githubusercontent.com` | https://raw.githubusercontent.com/LianCole/sticky-note/refs/heads/master/public/fonts/fa-solid-500.woff2 |
-| `cdn.discordapp.com` | 249 | `platform:discordapp.com` | https://cdn.discordapp.com/attachments/1573300759540400208/1573303365549555802/d7cbe2f2e2?ex=6b018470&is=6b0032f0&hm=a806cd356ae20143f246b70c0e41d677e09dcda27296a5fa0548dbca7a6a0afa& |
-| `gitlab.com` | 169 | `platform:gitlab.com` | https://gitlab.com/Bledderhawk/fivem-mod-menu/-/raw/main/Loader.exe |
-| `drive.google.com` | 155 | `platform:drive.google.com` | https://drive.google.com/uc?export=download&id=1g5P7dkLvuGrOfTu4J1uUrG9xtU-DW7tE |
-| `www.dropbox.com` | 68 | `platform:dropbox.com` | https://www.dropbox.com/scl/fi/6yeixujdlrc5poiee4osu/1f8e3fdf2b?rlkey=h3ak4x1jh7e4ok23kbf45zrn6&st=c1wubp8t&dl=1 |
-| `www.mediafire.com` | 14 | `platform:mediafire.com` | https://www.mediafire.com/file_premium/0od1v22zt0fiuoe/2026_Conven54142-Borr_256AQFKB0816JCP7.zip/file |
+| `raw.githubusercontent.com` | 45910 | `platform:githubusercontent.com` | https://raw.githubusercontent.com/Yns1000/bde-event/refs/heads/main/public/fonts/fa-solid-400.woff2 |
+| `cdn.discordapp.com` | 253 | `platform:discordapp.com` | https://cdn.discordapp.com/attachments/1567313157385363520/1573407808039297205/9403055230?ex=6b01e5b5&is=6b009435&hm=c48bbeb59c6757bca4a1033a1e4c45d4227787eb0a6c2f5021ba598b08d66e68& |
+| `drive.google.com` | 182 | `platform:drive.google.com` | https://drive.google.com/uc?export=download&id=1EAOpcfpUB0VLJNToGk49ZpTcl6HXEgsz |
+| `gitlab.com` | 170 | `platform:gitlab.com` | https://gitlab.com/BurnSession/fivem-spoofer/-/raw/main/FiveMSpoofer.zip |
+| `www.dropbox.com` | 69 | `platform:dropbox.com` | https://www.dropbox.com/scl/fi/5f9qmzjfv0h5e1rqteufy/31.zip?rlkey=0ksy687dpqhjblsocxo5xpdtw&st=qhgqyd1q&dl=1 |
+| `www.mediafire.com` | 15 | `platform:mediafire.com` | https://www.mediafire.com/file_premium/9xuxsk9vjb2kwvv/1126Ref_3639007-Aprob9448_RefN7CK.zip/file |
 | `files.catbox.moe` | 12 | `platform:catbox.moe` | https://files.catbox.moe/f5k6y9.JS |
 | `circuits-partners-resolved-peas.trycloudflare.com` | 8 | `platform:trycloudflare.com` | https://circuits-partners-resolved-peas.trycloudflare.com/sh?t=171k1 |
 | `dl.dropboxusercontent.com` | 7 | `platform:dropboxusercontent.com` | https://dl.dropboxusercontent.com/scl/fi/yqp8y3v4695qent56wn9a/SeraitsGame-Setup-1.0.0.exe?rlkey=7dzfoia9hpobrf2ani7x96b61&st=v2a3w5j8 |
@@ -22,6 +22,7 @@ in the day's release asset (`iocs-<date>`).
 | `dpaste.org` | 4 | `platform:dpaste.org` | https://dpaste.org/jE8yF/raw |
 | `fsdownload.s3.eu-west-3.amazonaws.com` | 3 | `platform:amazonaws.com` | https://fsdownload.s3.eu-west-3.amazonaws.com/EXNACE.mobileconfig |
 | `belt-hiking-round-skirt.trycloudflare.com` | 3 | `platform:trycloudflare.com` | https://belt-hiking-round-skirt.trycloudflare.com/svc/u.sh |
+| `download2294.mediafire.com` | 2 | `platform:mediafire.com` | https://download2294.mediafire.com/0ab4bsnyxzgg2nRmyikP8J3Wl8PPU8aaEDLhj2Q4qhhjzv_yvrRwiKtCl35vtnGU38mI00Rqa8TpvQeDIRlf9DURPhsHc3SRCaH_CCutmIgL5vBGCfelxATCaXZ9hkarl3OELYGYgyBxhyblqOD-q5fz5huxEDLgJkL5PJIl2xE/krd5eej1cse8u89/CrimsonMods.zip |
 | `release-assets.githubusercontent.com` | 2 | `platform:githubusercontent.com` | https://release-assets.githubusercontent.com/github-production-release-asset/1464433103/3fc95244-f8ca-4bee-ae82-a6877f0b14b0?sp=r&sv=2018-11-09&sr=b&spr=https&se=2026-11-19T18%3A51%3A39Z&rscd=attachment%3B+filename%3DTgWsProxy_windows_7_32bit.exe&rsct=application%2Foctet-stream&skoid=96c2d410-5711-43a1-aedd-ab1947aa7ab0&sktid=398a6654-997b-47e9-b12b-9515b896b4de&skt=2026-11-19T17%3A51%3A04Z&ske=2026-11-19T18%3A51%3A39Z&sks=b&skv=2018-11-09&sig=D01iPd%2B2y%2Fc2XAVtXHL5KcNsvKg47zkFYw25CgK8rok%3D&jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmVsZWFzZS1hc3NldHMuZ2l0aHVidXNlcmNvbnRlbnQuY29tIiwia2V5Ijoia2V5MSIsImV4cCI6MTc5NTExMTkxOCwibmJmIjoxNzk1MTExNjE4LCJwYXRoIjoicmVsZWFzZWFzc2V0cHJvZHVjdGlvbi5ibG9iLmNvcmUud2luZG93cy5uZXQifQ.LfiCtcK7eh8nSP4e3KYqE6vL2QbIiIIc6_ryE-XjsVs&response-content-disposition=attachment%3B%20filename%3DTgWsProxy_windows_7_32bit.exe&response-content-type=application%2Foctet-stream |
 | `download1590.mediafire.com` | 2 | `platform:mediafire.com` | https://download1590.mediafire.com/m3n38fh5ldfgsBFeimykE79OT-aqRlklSR1TGOwQRHoGfJH5TQCA5wY_6eMWaqHNFfv15XaAWwZ5XFvzSrBLkPHGThp6WCXWEeyV7_IVnG2vVZiEsbwKCBZhemUjP2nfasobG6L4u_EZx26565ScbzfLbO15vHH1tdCz-BToO8I/bcubbifng782iz0/Cs2Hack.zip |
 | `earthquake-retention-formed-gets.trycloudflare.com` | 2 | `platform:trycloudflare.com` | https://earthquake-retention-formed-gets.trycloudflare.com/Bluekit.tar.gz |
@@ -34,7 +35,6 @@ in the day's release asset (`iocs-<date>`).
 | `mailto-carmen-connected-paying.trycloudflare.com` | 2 | `platform:trycloudflare.com` | https://mailto-carmen-connected-paying.trycloudflare.com/rec.wsh |
 | `codeload.github.com` | 2 | `platform:github.com` | https://codeload.github.com/simple213/Synapse-Exec-Update-v2.8/zip/refs/heads/main |
 | `download2338.mediafire.com` | 1 | `platform:mediafire.com` | https://download2338.mediafire.com/yu7ki5pysm0g82HZw5SKe7UGq7I11XNvWyOzmkXEBSmBrlwLCtlOLLp2GxT-G8165f7ZMKKzl_dmIO3adWgxf0yefDgx2H7D9u-MvPuSoxuIRFhwli3Cr-atZCTHP_nXS-QBVjTpf0Gw6vHfu6VrwKQCX1q6XVOQqT2gOG8ZlLI/o1oyaczwa2m68pi/v2.2_Mmntw..zip |
-| `download2294.mediafire.com` | 1 | `platform:mediafire.com` | https://download2294.mediafire.com/psukt01h7dagupDJFlxDF4hGuRFRR4lowTrkaZp_fgNG__wpb1cb62II6mTaaizWDGbQXfM-3lLovvHZ4dEbaqBxFUQi1ujHWKhV1CZaEo28fg0tiK1BevDmhpI6mt1PJNTFmIWpXS2Tu9XIZDeN3Fy2iM5VABupBvPVlnTSTZQ/krd5eej1cse8u89/CrimsonMods.zip |
 | `download2277.mediafire.com` | 1 | `platform:mediafire.com` | https://download2277.mediafire.com/qijmrp8cvyygo90fnYH6gawbdAE9ImzKPqiVnZRHltnNnr7ONjnONdtlZWnSEUSstqgJMh0J9x9sVwNygw_dRBzEkpzC5_xSEotmcXtyraCaFMWXL30GM7snv5QkblEUfnhTSQczX8vPZYGadTeBs3dnkx076etFjO2Zz2y_Gq8/bcubbifng782iz0/Cs2Hack.zip |
 | `download942.mediafire.com` | 1 | `platform:mediafire.com` | https://download942.mediafire.com/upekdhyxbulgYJuQEprM66uW0u_S-dkT-9rTobrWk8mlo4LcmhorNd8XN2i_OORZehAMxwBbzjgtRECoMc5QOp-nZYCThIy7eO0x6tNXThl1GoM0M1wsuiC91AkioZgP6gw0hFbsVLh18yFeNcUSZmuMfHjpiO8wL-3ClkUkkH0S_rg/rtk67vd9oca14d3/b2d9f12353 |
 | `download2363.mediafire.com` | 1 | `platform:mediafire.com` | https://download2363.mediafire.com/r9dn7ueq2yzgGGCEs4HdeEsNmREtL4nYXLHzxVW8LpaKg0J6Pm2uxFLihRW316I-FI27844t5llDlDCF3Hm-KDKFUSzO6a3z_e0iIzE0Jv_L1dN6ulkAw2tIGu4ZILh0xwU4uvxtGabBRnCCkDqcYC3JJV7HEjJPOVwE-i3hjBs/jssom5tjkjaxyc9/Boostarpper_V1.95.5.zip |
