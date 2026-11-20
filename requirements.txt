@@ -1,3 +1,11 @@
-tweepy>=4.14.0
-iocextract>=1.16.0
-python-dotenv>=1.0.0
+# Only what the code imports.
+#
+# collector.py and vt_enrich.py both import requests; nothing else is used.
+# tweepy, iocextract and python-dotenv were dependencies of the retired
+# Twitter pipeline (tweetfeed.py). They are imported nowhere, and installing
+# them made every image build slower and carried two abandoned libraries into
+# the runtime image.
+#
+# requests itself was missing, so a clean install could not even import
+# collector.py - the image built fine and then failed on first run.
+requests>=2.31,<3

@@ -1,0 +1,40 @@
+# Without this file `COPY . .` sent the whole working tree into the image:
+# Output/ alone is hundreds of MB, .git is history, and .abusech_auth_key /
+# .vt_api_key would have been baked into a layer and readable by anyone who
+# pulls the image. Keep this list in step with the Dockerfile's COPY lines.
+
+# History and CI metadata
+.git
+.gitignore
+.gitattributes
+.github
+
+# Data - the collector writes this at runtime, and it is mounted from the host
+Output/
+docs/
+
+# Tests, migrations and one-off scripts are not part of the runtime image
+tests/
+migrate/
+*.sh
+*.patch
+*.md
+
+# Credentials: collector.py and vt_enrich.py read keys from the environment
+.env
+.env.*
+.abusech_auth_key
+.abusech_auth_key*
+.vt_api_key
+.vt_api_key*
+.gh_token
+
+# Dead artifacts from the pre-docs site
+latest.json
+site/
+
+# Python noise
+__pycache__/
+*.py[cod]
+.venv/
+cron.log*

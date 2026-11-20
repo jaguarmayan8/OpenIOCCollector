@@ -1,35 +1,48 @@
 #!/bin/bash
+# Docker-based cron entry point: collect inside the container, then run the
+# SAME host pipeline as run_and_push.sh (build_lists.sh), then commit.
+#
+# This script used to be a third copy of the pipeline: it ran `docker compose
+# up -d` (against a Dockerfile whose CMD pointed at a file that does not exist)
+# and then committed ONLY Output/, so the CDB lists, dashboard and checksums
+# were never published on this path. All of that now lives in build_lists.sh,
+# which is also what GitHub Actions calls - one implementation, one behaviour.
+set -uo pipefail
 
-cd /home/chap/OpenIOCCollector || exit 1
+cd "$(dirname "$0")" || exit 1
 
-LOG_FILE="/home/chap/OpenIOCCollector/cron.log"
-echo "===== $(date) =====" >> "$LOG_FILE"
+LOG_FILE="$PWD/cron.log"
 
-# Make sure we have a proper PATH
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+{
+  echo "===== $(date) ====="
+  echo "$(date) - Starting collector (docker)..."
 
-# Run the collector
-echo "$(date) - Starting collector..." >> "$LOG_FILE"
-/usr/bin/docker compose up --build -d >> "$LOG_FILE" 2>&1
-EXIT_CODE=$?
+  # A one-shot job: `run --rm`, not `up -d`. The collector's exit code is
+  # deliberately NOT fatal - run_and_push.sh treats a partial feed failure as
+  # non-fatal too, and build_lists.sh's staleness guard is what decides whether
+  # the resulting lists are safe to publish.
+  if docker compose run --rm --build ioc-collector; then
+    echo "$(date) - Collector finished"
+  else
+    echo "$(date) - WARNING: collector exited non-zero - build_lists.sh guard decides"
+  fi
 
-if [ $EXIT_CODE -ne 0 ]; then
-    echo "$(date) - ERROR: Collector failed with exit code $EXIT_CODE" >> "$LOG_FILE"
-else
-    echo "$(date) - Collector finished successfully" >> "$LOG_FILE"
-fi
+  echo "$(date) - Building lists / dashboard / checksums..."
+  if ! bash build_lists.sh; then
+    echo "$(date) - ERROR: build_lists.sh failed - nothing published"
+    exit 1
+  fi
 
-# Push to GitHub
-echo "$(date) - Checking for new files..." >> "$LOG_FILE"
-git add Output/ >> "$LOG_FILE" 2>&1
+  echo "$(date) - Committing..."
+  git add Output/ malicious-ips.txt malicious-domains.txt malicious-hashes.txt \
+          docs/index.html checksums.sha256
+  if git diff --cached --quiet; then
+    echo "$(date) - No new files to push"
+  else
+    git commit -m "Daily IOC update $(date -u +%Y-%m-%d)"
+    git push origin main
+    echo "$(date) - Pushed to GitHub"
+  fi
 
-if git diff --cached --quiet; then
-    echo "$(date) - No new files to push" >> "$LOG_FILE"
-else
-    git commit -m "Daily IOC update - $(date +'%Y-%m-%d %H:%M')" >> "$LOG_FILE" 2>&1
-    git push origin main >> "$LOG_FILE" 2>&1
-    echo "$(date) - Successfully pushed to GitHub" >> "$LOG_FILE"
-fi
-
-echo "$(date) - Job finished" >> "$LOG_FILE"
-echo "" >> "$LOG_FILE"
+  echo "$(date) - Job finished"
+} >> "$LOG_FILE" 2>&1

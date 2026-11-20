@@ -42,20 +42,51 @@ Daily collector on Kali pulls public threat intelligence feeds, organizes the ou
 ## Project Structure
 
 OpenIOCCollector/
-- Output/
-- collector.py
-- run_and_push.sh
-- vt_enrich.py
-- generate_dashboard.py
-- requirements.txt
+- Output/                 daily dumps + summaries (raw dumps are unversioned)
+- collector.py            fetches the six feeds
+- ioc_extract.py          builds the CDB lists (URLhaus + ThreatFox)
+- infra_allow.txt         shared-infrastructure suppression tiers
+- build_lists.sh          lists -> guard -> VT -> dashboard -> prune -> checksums
+- run_and_push.sh         cron entry point (Kali host)
+- gitpush.sh              cron entry point (Docker variant)
+- generate_dashboard.py   renders docs/index.html
+- vt_enrich.py            VirusTotal lookups for the sample hashes
+- Dockerfile              collector-only image
+- docker-compose.yml      one-shot collector job
+- requirements.txt        requests
+- tests/                  unittest suite (runs in CI before any push)
 - README.md
 
 ## How to Run
 
-- git clone https://github.com/jaguarmayan8/OpenIOCCollector.git
-- cd OpenIOCCollector
-- sudo apt install -y python3-requests
-- python3 collector.py
+```bash
+git clone https://github.com/jaguarmayan8/OpenIOCCollector.git
+cd OpenIOCCollector
+pip install -r requirements.txt      # requests only; use a venv on Kali (PEP 668)
+export ABUSECH_AUTH_KEY=...          # abuse.ch auth key
+export VT_API_KEY=...                # optional - VirusTotal enrichment
+python3 collector.py                 # collect today's feeds
+bash build_lists.sh                  # lists, staleness guard, dashboard, checksums
+```
+
+`run_and_push.sh` runs both steps plus the commit; that is what cron calls.
+
+### Docker
+
+The image runs the collector and nothing else - one pass, then exit. Lists,
+dashboard and checksums run on the host, because the staleness guard reads the
+previous list from git history and `.git` is deliberately not in the image.
+
+```bash
+docker compose build
+docker compose run --rm ioc-collector   # collects into ./Output
+bash build_lists.sh                     # then the host pipeline, as above
+```
+
+Keys come from the environment, or from `.env` (compose loads it
+automatically). `.dockerignore` keeps `Output/`, `.git` and the key files out
+of every image layer. `gitpush.sh` chains the same three steps for a
+Docker-based cron job.
 
 ## Wazuh Integration
 
@@ -73,7 +104,7 @@ The daily collector updates the IP, domain, and hash lists automatically.
 - Add basic statistics [Done]
 - Improve error handling for empty feeds [Done]
 - Create a simple summary dashboard [Done]
-- Add Docker support
+- Add Docker support [Done] — collector image + one-shot compose job, see "How to Run → Docker"
 
 ## Dashboard
 

@@ -1,11 +1,24 @@
-version: "3.9"
+# Docker Compose for the collector job.
+#
+# Notes on what changed:
+#   * `version:` is obsolete in Compose v2 and only produced a warning.
+#   * container_name said "twitter-iocsfeed" - the project has not been Twitter
+#     based since tweetfeed.py was retired.
+#   * `env_file: .env` made compose FAIL outright when .env was absent. Compose
+#     already loads .env for interpolation, so the environment block below is
+#     both optional-safe and explicit about which two keys are used.
+#   * The service is a one-shot job: run it with `docker compose run --rm
+#     ioc-collector`, not `up -d` (there is no daemon to detach).
 
 services:
-  iocsfeed:
+  ioc-collector:
     build: .
-    container_name: twitter-iocsfeed
-    env_file:
-      - .env
+    image: openioccollector:latest
+    container_name: ioc-collector
+    environment:
+      ABUSECH_AUTH_KEY: ${ABUSECH_AUTH_KEY:-}
+      VT_API_KEY: ${VT_API_KEY:-}
     volumes:
+      # Raw dumps land here; the host pipeline (build_lists.sh) reads them.
       - ./Output:/app/Output
     restart: "no"
