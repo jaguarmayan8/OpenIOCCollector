@@ -64,5 +64,5 @@ jobs:
           git config user.email "ioc-collector[bot]@users.noreply.github.com"
           git add Output/ docs/index.html checksums.sha256 malicious-ips.txt malicious-domains.txt malicious-hashes.txt
           git add malicious-ips.txt.prev malicious-domains.txt.prev malicious-hashes.txt.prev 2>/dev/null || true
-          git commit -m "Daily IOC update $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+          git commit -m "Daily IOC update $(date +%Y-%m-%d)" || echo "No changes to commit"
           git push

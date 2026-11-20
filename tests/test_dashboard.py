@@ -18,6 +18,7 @@ from generate_dashboard import (  # noqa: E402
     latest_day_dir,
     main,
     parse_summary,
+    render,
 )
 
 SUMMARY = """# Daily IOC Report - 2026-11-19 13:39
@@ -173,3 +174,45 @@ class TestFreshnessAndRender(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+class TestPublishedTotals(unittest.TestCase):
+    """The dashboard headline must describe the lists it publishes.
+
+    Regression: the page showed the collector's raw feed-entry sum (277,570)
+    with the word "Approximate", while the three published lists held ~144k
+    deduped, confidence-filtered entries. Both numbers are real; the page now
+    labels which is which.
+    """
+
+    def test_headline_reports_published_count_not_raw_sum(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            day = base / "Output" / "2026" / "2026-11" / "20261119"
+            day.mkdir(parents=True)
+            (day / "daily_summary.md").write_text(SUMMARY, encoding="utf-8")
+            (base / "malicious-ips.txt").write_text("1.2.3.4\n5.6.7.8\n9.9.9.9\n")
+            (base / "malicious-domains.txt").write_text("a.example\nb.example\n")
+            (base / "malicious-hashes.txt").write_text("deadbeef\n")
+
+            html = render(day, base=base, now=datetime(2026, 11, 19, 20, 0, tzinfo=timezone.utc))
+
+            self.assertIn("6 unique IOCs published", html)
+            self.assertIn("277,570 raw feed entries", html)
+            self.assertNotIn("Approximate total IOCs collected", html)
+
+    def test_missing_raw_total_still_renders(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            day = base / "Output" / "2026" / "2026-11" / "20261119"
+            day.mkdir(parents=True)
+            (day / "daily_summary.md").write_text("# Daily IOC Report - 2026-11-19 13:39\n")
+            (base / "malicious-ips.txt").write_text("1.2.3.4\n")
+
+            html = render(day, base=base, now=datetime(2026, 11, 19, 20, 0, tzinfo=timezone.utc))
+
+            self.assertIn("1 unique IOCs published", html)
+            self.assertIn("n/a raw feed entries", html)
+
+
+if __name__ == "__main__":
+    unittest.main()

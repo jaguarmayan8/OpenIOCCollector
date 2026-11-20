@@ -80,6 +80,12 @@ def count_lines(path):
     )
 
 
+def fmt_num(value):
+    """'278791' -> '278,791'; anything non-numeric ("n/a") passes through."""
+    text = str(value).strip()
+    return f"{int(text):,}" if text.isdigit() else text
+
+
 def parse_summary(path):
     """Parse daily_summary.md into a dict of feeds, success rate and total."""
     path = Path(path)
@@ -210,6 +216,14 @@ def render(day, base=None, now=None):
     ips = count_lines(base / "malicious-ips.txt")
     domains = count_lines(base / "malicious-domains.txt")
     hashes = count_lines(base / "malicious-hashes.txt")
+    # Two different quantities, deliberately reported as two numbers:
+    #   total_published - what the CDB lists actually contain (deduped, filtered)
+    #   total_raw       - the collector's sum of raw feed entries, before dedup
+    #                     and before the ThreatFox confidence / URLhaus domain
+    #                     filters. Publishing this alone overstated the corpus
+    #                     ~1.9x and read as a broken counter.
+    total_published = ips + domains + hashes
+    total_raw = fmt_num(parsed["total"])
     vt = vt_rows(day / "vt_enrichment.json", day / "vt_enrichment.md")
 
     counts = {s: 0 for s in STATUSES}
@@ -329,7 +343,9 @@ def render(day, base=None, now=None):
     <h2>Feeds — {info['data_date']:%Y-%m-%d}</h2>
     <div class="feeds">{feed_html}</div>
     <p class="sub">Collector clock at run: {esc(parsed['run_label'])} · {n_feeds} feeds checked
-       · Approximate total IOCs collected: {esc(parsed['total'])}</p>
+       · <b>{total_published:,} unique IOCs published</b>
+         ({ips:,} IPs + {domains:,} domains + {hashes:,} hashes)
+         from {esc(total_raw)} raw feed entries before dedup and confidence filtering</p>
   </section>
 
   <section class="card" style="margin-top:16px;">

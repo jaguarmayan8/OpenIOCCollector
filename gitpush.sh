@@ -44,12 +44,15 @@ LOG_FILE="$PWD/cron.log"
   fi
 
   echo "$(date) - Committing..."
+  # Local (not UTC) date in the message: the folder just built is named from
+  # the host's local date, so `date -u` labelled the 19th's data "2026-11-20"
+  # on any run after 18:00 CST
   git add Output/ malicious-ips.txt malicious-domains.txt malicious-hashes.txt \
           docs/index.html checksums.sha256
   if git diff --cached --quiet; then
     echo "$(date) - No new files to push"
   else
-    git commit -m "Daily IOC update $(date -u +%Y-%m-%d)"
+    git commit -m "Daily IOC update $(date +%Y-%m-%d)"
     git push origin main
     echo "$(date) - Pushed to GitHub"
   fi

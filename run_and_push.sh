@@ -34,7 +34,7 @@ GH_TOKEN="${GH_TOKEN:-${GITHUB_TOKEN:-}}" bash publish_raw.sh || true
 echo "=== Committing and pushing to GitHub ==="
 # .gitignore keeps the raw dumps out even though this adds the whole folder.
 git add Output/ malicious-ips.txt malicious-domains.txt malicious-hashes.txt docs/index.html checksums.sha256
-git commit -m "Daily IOC update $(date -u +%Y-%m-%d)" || echo "No changes to commit"
+git commit -m "Daily IOC update $(date +%Y-%m-%d)" || echo "No changes to commit"
 git push
 
 echo "=== Done ==="
