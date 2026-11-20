@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenIOCCollector Dashboard</title>
+<title>OpenIOCCollector Dashboard — 2026-11-19</title>
 <style>
   :root {
     --bg:#0b1220; --card:#121a2b; --line:#243049; --text:#e8eefc;
-    --muted:#9aa8c7; --ok:#3ddc97; --bad:#ff6b6b; --accent:#6ea8fe;
+    --muted:#9aa8c7; --ok:#3ddc97; --bad:#ff6b6b; --warn:#f5a524; --accent:#6ea8fe;
   }
   * { box-sizing:border-box; }
   body {
@@ -17,14 +17,27 @@
   header { padding-top:36px; }
   h1 { margin:0 0 8px; font-size:28px; }
   .sub { color:var(--muted); }
+  .banner { border-radius:12px; padding:14px 16px; margin:18px 0 0; font-size:14px; }
+  .banner.stale { background:#3a2410; border:1px solid var(--warn); color:#ffd79a; }
   .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; margin:24px 0; }
   .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:18px; }
+  .card.bad { border-color:var(--bad); }
+  .card.warn { border-color:var(--warn); }
   .num { font-size:28px; font-weight:700; }
   .label { color:var(--muted); margin-top:6px; font-size:13px; }
   .feeds { display:grid; gap:10px; }
-  .feed { display:flex; justify-content:space-between; gap:12px; background:#0f1726; padding:12px 14px; border-radius:10px; }
-  .ok { border-left:4px solid var(--ok); }
-  .empty { border-left:4px solid var(--bad); }
+  .feed { display:flex; align-items:baseline; gap:12px; background:#0f1726; padding:12px 14px; border-radius:10px; }
+  .feed b { flex:0 0 210px; }
+  .feed span { flex:1 1 auto; color:var(--muted); }
+  .feed .tag { flex:0 0 auto; font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
+  .feed.ok { border-left:4px solid var(--ok); }
+  .feed.ok .tag { color:var(--ok); }
+  .feed.empty { border-left:4px solid var(--warn); }
+  .feed.empty .tag { color:var(--warn); }
+  .feed.unknown { border-left:4px solid var(--warn); }
+  .feed.unknown .tag { color:var(--warn); }
+  .feed.error { border-left:4px solid var(--bad); background:#1c1215; }
+  .feed.error .tag { color:var(--bad); font-weight:700; }
   table { width:100%; border-collapse:collapse; font-size:13px; }
   th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); }
   th { color:var(--muted); font-weight:600; }
@@ -35,25 +48,29 @@
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · last run 2026-11-19 13:39</p>
+  <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-19</b>
+     · generated 2026-11-19 15:33 CST (4.3 h ago)</p>
+  
 </header>
 <main>
   <section class="grid">
-    <div class="card"><div class="num">140,106</div><div class="label">Malicious IPs</div></div>
-    <div class="card"><div class="num">829</div><div class="label">Malicious domains</div></div>
+    <div class="card"><div class="num">141,314</div><div class="label">Malicious IPs</div></div>
+    <div class="card"><div class="num">4,307</div><div class="label">Malicious domains</div></div>
     <div class="card"><div class="num">3,058</div><div class="label">Malicious hashes</div></div>
-    <div class="card"><div class="num">5/6 feeds with data</div><div class="label">Feeds with data</div></div>
+    <div class="card warn"><div class="num">5/6 feeds with data</div>
+      <div class="label">Feeds with data (1 empty/unknown)</div></div>
   </section>
 
   <section class="card">
-    <h2>Today's feeds</h2>
-    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>832.2 KB | ~11306 entries</span></div>
-<div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected</span></div>
-<div class="feed ok"><b>top_malicious.txt</b><span>2218.0 KB | ~140106 entries</span></div>
-<div class="feed ok"><b>urlhaus.csv</b><span>29693.6 KB | ~116572 entries</span></div>
-<div class="feed ok"><b>threatfox_recent.json</b><span>7154.8 KB | ~9486 entries</span></div>
-<div class="feed ok"><b>malwarebazaar_recent.json</b><span>132.4 KB | ~100 entries</span></div></div>
-    <p class="sub">Approximate total IOCs collected: 277570</p>
+    <h2>Feeds — 2026-11-19</h2>
+    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>832.2 KB | ~11306 entries</span><span class="tag">ok</span></div>
+<div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected</span><span class="tag">empty</span></div>
+<div class="feed ok"><b>top_malicious.txt</b><span>2218.0 KB | ~140106 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>urlhaus.csv</b><span>29693.6 KB | ~116572 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>threatfox_recent.json</b><span>7154.8 KB | ~9486 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>malwarebazaar_recent.json</b><span>132.4 KB | ~100 entries</span><span class="tag">ok</span></div></div>
+    <p class="sub">Collector clock at run: 2026-11-19 13:39 · 6 feeds checked
+       · Approximate total IOCs collected: 277570</p>
   </section>
 
   <section class="card" style="margin-top:16px;">
@@ -89,7 +106,7 @@
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
-    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/tree/main/Output/2026/2026-11/20261119">Today's raw output</a>
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261119">Raw dumps for 2026-11-19</a>
   </p>
 </main>
 </body>
