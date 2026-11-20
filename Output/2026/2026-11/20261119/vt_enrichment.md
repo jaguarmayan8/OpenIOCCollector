@@ -1,26 +1,26 @@
-# VirusTotal Enrichment - 2026-11-19 13:44
+# VirusTotal Enrichment - 2026-11-19 20:19
 
 Sample size: 20 hashes from ThreatFox
 
 | Hash | Found | Malicious | Suspicious | VT label | ThreatFox malware |
 | --- | --- | --- | --- | --- | --- |
-| `992c951f4af57ca7cd8396f5ed69c2199fd6fd4ae5e93726da3e198e78bec0a5` | True | 45 | 0 | trojan.coroxy/mint | SystemBC |
-| `6263a85611c02a0b78d5e5620f1f34a99eba3b74f614742e8b0cf29ca8ef4fa5` | True | 30 | 0 | trojan.gentlecrypt/gentlemen | Gentlemen |
-| `f483faa2b9c9815a0efb08023fe5d243b1b9f7e04b95127c506b6aae824c9d09` | True | 54 | 0 | ransomware.gentlemen/encoder | Gentlemen |
-| `daf2e4d0b5e859062953821663a332387f99a48e9405834f28f8f170c92bc05d` | True | 50 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `cd66fb941e63ad9a72687cafb050ed5b4d8b97b34461168581c4f150d6501523` | True | 54 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `bd5950d4bd3de1c6d1609b8369b7332ada40c50070a9a3cd8e80ec89b19c48dc` | True | 53 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `afc30b1a14f2f29572412ba883782eb3ad3a9e6bf9ff9c38aa48ff35a4ee73fa` | True | 53 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `9c6f6c0d7127c95aa1360ad6fb0ba5679527a6ea2cc17eb0bc2162dd1e13cd09` | True | 54 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `7eb2fd5e79e79c3f2a95023d617062908c9d8c5aff9fed8361a5a74dc0d1af75` | True | 53 | 0 | ransomware.gentlemen/encoder | Gentlemen |
-| `7d90023d535096da99bffcb3370008355435d9f022232870f3c27d29be8be60c` | True | 53 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `7284d45bdbb1e32e3fb1ca6041b448b165795c91a2748de715798238fc8b3bff` | True | 52 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `6a70824fc1777f81c8e8289258ac951e6bac7636db5315b6d7e76c5a58b82b6b` | True | 52 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `586459f1adf018de4586dcd61782839a3ee72d8469944e0f4dd45a6e20598869` | True | 54 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `4de88220ff6a6dcb137b17d8d3f77ab4bacc39ea4e4d1147f687b021b7a82b8c` | True | 52 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `3c2466d8a4572c26530e6f6bcef01fc1baefb98dbff2c65efaed5599622f51f3` | True | 56 | 0 | ransomware.gentlemen/encoder | Gentlemen |
-| `2da8816369c6163d84fb98790bc1a8511bea3eccd805ae9b4c995944ecf7a672` | True | 50 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `228fc86acbaa6626051fd189932cb1768254aec5a9539771cee8a567103bbec1` | True | 55 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `1d7d51d51f0d12661db27b7d7c06320f8cc51eabfd2550c298141ebc24704451` | True | 51 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `0d07a653649aefcc92c3315925cde3085b02b9a50f60cddf50b571fde3763955` | True | 48 | 0 | ransomware.gentlemen/gentlem | Gentlemen |
-| `53d2484ae1ad6ff9547d90f5f5ccd6ae1dca8cb24e622a07dfc74c9593b2c3fa` | True | 28 | 0 | ransomware.gentlemen/gentlecrypt | Gentlemen |
+| `43acd621c1c0db00833e754551656e9550d1a8cc8b13820abf60fe29d6203e7b` | True | 14 | 0 | trojan.mirai/agentlinux | Mirai |
+| `1958d225a674b5f6085df0f50dad66c64efc9b356acf131f3971c5669ce60f64` | True | 24 | 0 | trojan.mirai/camelot | Mirai |
+| `a1cdc11d48782ba51311889214e790ad86852f10649a53df0e22d02c696bb9ba` | True | 23 | 0 | trojan.mirai/gafgyt | Mirai |
+| `f006aaa1017115b9d41f28b3187671fabfbdbde131c75732348c4276e2f09373` | True | 23 | 0 | trojan.mirai/camelot | Mirai |
+| `60506893295413b2143b10066d30f9b8f3cb13eeb3f90e4702097c30c390bcf0` | True | 22 | 0 | trojan.mirai/gafgyt | Mirai |
+| `e83eb1fc0c4d2e1d3062c0e452c317392914acec5d7d9f88a491f001dc2884c1` | True | 23 | 0 | trojan.mirai/camelot | Mirai |
+| `14cceb54e80e04b16bc7aff71d5dac480a858ff372d83847f3d7a04289b131cb` | True | 22 | 0 | trojan.mirai/gafgyt | Mirai |
+| `387a5539480bad993b4d12314f81c4f70288b5e524f2a151c8fa09a6aa77472f` | True | 24 | 0 | trojan.mirai/camelot | Mirai |
+| `7061859151afce6026c564af8e6d06567b895912445ae7032c7de3a5fbfb45f4` | True | 22 | 0 | trojan.mirai/gafgyt | Mirai |
+| `939bacb6e74b920b834f0e3564fcbe860aeabc48cb522d68f34607f656d41813` | True | 23 | 0 | trojan.mirai/gafgyt | Mirai |
+| `10d880a0b91528bd791604f681bdae1dfa405aae7e7118084923e596f6afc4d4` | True | 23 | 0 | trojan.mirai/gafgyt | Mirai |
+| `9f6718521add64726fc04d051fa8c7b9a00ea0e9bafcedecd767f2f71454a988` | True | 23 | 0 | trojan.smartloader/abapplication | SmartLoader |
+| `a7be54b7ee5b7d69de059800e9eaff5e99f68172fbe9bfdc64d6a4e6db244190` | True | 34 | 0 | trojan.runner/abtrojan | SmartLoader |
+| `3ddbb6e922afd643058f62e6bfc6cae728acf344fee8677bd5cf544f474b2f4d` | True | 22 | 0 | trojan.mirai/gafgyt | Mirai |
+| `7bc6b89f89812fc713fe755bb119870035c216b883041a59a1d85e90ffc25491` | True | 17 | 0 | trojan.mirai/gafgyt | Mirai |
+| `2c35267958bcb8aaeaf7c3794150b422a8229726247d0e2024951cbb3bfb4973` | True | 22 | 0 | trojan.mirai/gafgyt | Mirai |
+| `95e666690fcdfecc1800c357bd5eb7a7f10311d5055ac994f136be311ab787a8` | True | 23 | 0 | trojan.mirai/gafgyt | Mirai |
+| `9ae0bfec6c4c501a05e942f45eb380f0dd2fde676743dd0004c82882c112635d` | True | 24 | 0 | trojan.mirai/camelot | Mirai |
+| `41c282a8c13276e670939eaaaa572e45e2607bb62cf2a94bc875963008805909` | True | 22 | 0 | trojan.mirai/gafgyt | Mirai |
+| `8a75ab59cf7efbeb980c04db8b87483ed1b8043a6d7f600ad5e0e31608c43d13` | True | 23 | 0 | trojan.mirai/gafgyt | Mirai |
