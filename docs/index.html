@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenIOCCollector Dashboard — 2026-11-20</title>
+<title>OpenIOCCollector Dashboard — 2026-11-21</title>
 <style>
   :root {
     --bg:#0b1220; --card:#121a2b; --line:#243049; --text:#e8eefc;
@@ -48,31 +48,31 @@
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-20</b>
-     · generated 2026-11-20 13:13 CST (5 min ago)</p>
+  <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-21</b>
+     · generated 2026-11-21 12:52 UTC (5 min ago)</p>
   
 </header>
 <main>
   <section class="grid">
-    <div class="card"><div class="num">143,169</div><div class="label">Malicious IPs</div></div>
-    <div class="card"><div class="num">3,345</div><div class="label">Malicious domains</div></div>
-    <div class="card"><div class="num">2,537</div><div class="label">Malicious hashes</div></div>
+    <div class="card"><div class="num">140,819</div><div class="label">Malicious IPs</div></div>
+    <div class="card"><div class="num">3,645</div><div class="label">Malicious domains</div></div>
+    <div class="card"><div class="num">3,123</div><div class="label">Malicious hashes</div></div>
     <div class="card warn"><div class="num">5/6 feeds with data</div>
       <div class="label">Feeds with data (1 empty/unknown)</div></div>
   </section>
 
   <section class="card">
-    <h2>Feeds — 2026-11-20</h2>
-    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>834.5 KB | ~11337 entries</span><span class="tag">ok</span></div>
+    <h2>Feeds — 2026-11-21</h2>
+    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>834.6 KB | ~11338 entries</span><span class="tag">ok</span></div>
 <div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected</span><span class="tag">empty</span></div>
-<div class="feed ok"><b>top_malicious.txt</b><span>2245.7 KB | ~141785 entries</span><span class="tag">ok</span></div>
-<div class="feed ok"><b>urlhaus.csv</b><span>29889.5 KB | ~117341 entries</span><span class="tag">ok</span></div>
-<div class="feed ok"><b>threatfox_recent.json</b><span>6308.0 KB | ~8300 entries</span><span class="tag">ok</span></div>
-<div class="feed ok"><b>malwarebazaar_recent.json</b><span>145.2 KB | ~100 entries</span><span class="tag">ok</span></div></div>
-    <p class="sub">Collector clock at run: 2026-11-20 13:13 · 6 feeds checked
-       · <b>149,051 unique IOCs published</b>
-         (143,169 IPs + 3,345 domains + 2,537 hashes)
-         from 278,863 raw feed entries before dedup and confidence filtering</p>
+<div class="feed ok"><b>top_malicious.txt</b><span>2207.3 KB | ~139424 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>urlhaus.csv</b><span>29606.1 KB | ~116288 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>threatfox_recent.json</b><span>7021.2 KB | ~9247 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>malwarebazaar_recent.json</b><span>134.2 KB | ~100 entries</span><span class="tag">ok</span></div></div>
+    <p class="sub">Collector clock at run: 2026-11-21 12:52 · 6 feeds checked
+       · <b>147,587 unique IOCs published</b>
+         (140,819 IPs + 3,645 domains + 3,123 hashes)
+         from 276,397 raw feed entries before dedup and confidence filtering</p>
   </section>
 
   <section class="card" style="margin-top:16px;">
@@ -82,33 +82,33 @@
         <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
       </thead>
       <tbody>
-        <tr><td class='hash'>84afc2944144274a…</td><td>True</td><td>13</td><td>0</td><td>trojan.mirai/agentlinux</td><td>Mirai</td></tr>
-<tr><td class='hash'>f00231f1106c96ad…</td><td>True</td><td>12</td><td>0</td><td>trojan.mirai/agentlinux</td><td>Mirai</td></tr>
-<tr><td class='hash'>f7b1679f830e516e…</td><td>True</td><td>15</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
-<tr><td class='hash'>3a70d5a568f1c281…</td><td>True</td><td>4</td><td>0</td><td>trojan.webshell</td><td>p0wnyshell</td></tr>
-<tr><td class='hash'>e902ead6893462d9…</td><td>True</td><td>13</td><td>0</td><td>trojan.mirai/agentlinux</td><td>Mirai</td></tr>
-<tr><td class='hash'>ec1104f754226c66…</td><td>True</td><td>10</td><td>0</td><td>trojan.dwnw/outbreak</td><td>Grandoreiro</td></tr>
-<tr><td class='hash'>034f9c7105448f79…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Mirai</td></tr>
-<tr><td class='hash'>b7c788bf01d50535…</td><td>True</td><td>19</td><td>0</td><td>trojan.mirai/cryp</td><td>Mirai</td></tr>
-<tr><td class='hash'>c4d7b8c3667bf787…</td><td>True</td><td>59</td><td>0</td><td>trojan.stealer/salat</td><td>SalatStealer</td></tr>
-<tr><td class='hash'>1aa218a4c6118390…</td><td>True</td><td>24</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>f71aad2ece5d4eab…</td><td>False</td><td>0</td><td>0</td><td></td><td>Mirai</td></tr>
-<tr><td class='hash'>abbe5568587f5cac…</td><td>True</td><td>28</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>79d82cc4c8bd3403…</td><td>True</td><td>27</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>16b5979fca5819bc…</td><td>True</td><td>29</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>a2491bb939b3df29…</td><td>True</td><td>27</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>c4576d3d75425f9a…</td><td>True</td><td>29</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>fff1cb6ccfe5a068…</td><td>False</td><td>0</td><td>0</td><td></td><td>Mirai</td></tr>
-<tr><td class='hash'>efebdd4a5b7eee1e…</td><td>True</td><td>29</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>a83dec4fcfd23b7d…</td><td>True</td><td>23</td><td>0</td><td>trojan.mirai/camelot</td><td>Mirai</td></tr>
-<tr><td class='hash'>1677d8f887614d4a…</td><td>True</td><td>23</td><td>0</td><td>trojan.mirai/gafgyt</td><td>Mirai</td></tr>
+        <tr><td class='hash'>99412eddb4712a89…</td><td>True</td><td>19</td><td>0</td><td>trojan.mirai/svirtu</td><td>Mirai</td></tr>
+<tr><td class='hash'>7a656791b445fff0…</td><td>True</td><td>34</td><td>0</td><td>trojan.adbminer/berbew</td><td>Hajime</td></tr>
+<tr><td class='hash'>90429399cf489e75…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>3624c7b2fdc001f8…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>a1f904c29d708e92…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
+<tr><td class='hash'>d925294fd83fc490…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
+<tr><td class='hash'>f519dc62db929a97…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
+<tr><td class='hash'>92b11d9f33274c3c…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>ea184e17f70d020a…</td><td>True</td><td>2</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>e49f2d6a455c69ef…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>f9d1e0acfb21333f…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>6fcb8f143fce7ffb…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
+<tr><td class='hash'>36d8d302e8f89eee…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
+<tr><td class='hash'>b6c84b5ce8f255aa…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
+<tr><td class='hash'>1ede10bb49112440…</td><td>True</td><td>2</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>c8d76e3185e02a22…</td><td>True</td><td>3</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>fc968a97dc1ca263…</td><td>True</td><td>4</td><td>0</td><td>trojan.zfow</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>ca132c4ac3a041b6…</td><td>True</td><td>4</td><td>0</td><td>trojan.jcnw</td><td>Unknown malware</td></tr>
+<tr><td class='hash'>96b477c79e93044d…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
+<tr><td class='hash'>00c4b34e9eef330a…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
       </tbody>
     </table>
   </section>
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
-    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261120">Raw dumps for 2026-11-20</a>
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261121">Raw dumps for 2026-11-21</a>
   </p>
 </main>
 </body>
