@@ -1,43 +1,26 @@
-<!--
-  IOC feed -> Wazuh detection rules: DOMAIN rules only.
-
-  Rules 100100 (IP), 100110 (MD5) and 100111 (SHA256) already live in
-  local_rules.xml. Do NOT redefine them here: Wazuh logs
-  "Rule ID '...' is duplicated. Only the first occurrence will be considered"
-  and silently ignores the second copy, which makes edits look ineffective.
-
-  This file adds the two rules the README documents but that were missing:
-      100101 / 100102  ->  etc/lists/malicious-domains
-
-  Install:
-      sudo cp local_ioc_rules.xml /var/ossec/etc/rules/local_ioc_rules.xml
-      sudo chown wazuh:wazuh /var/ossec/etc/rules/local_ioc_rules.xml
-      sudo chmod 640 /var/ossec/etc/rules/local_ioc_rules.xml
-      sudo /var/ossec/bin/wazuh-control restart
-
-  Lists load automatically at analysisd start (Wazuh >= 3.11); entries are
-  `value:` per line.
--->
 <group name="local,threat_intel,">
-
-  <!-- Field name `domain`: unbound/bind-style DNS server logs. -->
   <rule id="100101" level="12">
+    <decoded_as>json</decoded_as>
+    <list field="domain" lookup="address_match_key">etc/lists/malicious-domains</list>
+    <description>DNS lookup of known malicious domain $(domain) (IOC feed)</description>
+    <mitre><id>T1071.004</id></mitre>
+  </rule>
+  <rule id="100102" level="12">
+    <decoded_as>json</decoded_as>
+    <list field="query" lookup="address_match_key">etc/lists/malicious-domains</list>
+    <description>DNS query for known malicious domain $(query) (IOC feed)</description>
+    <mitre><id>T1071.004</id></mitre>
+  </rule>
+  <rule id="100103" level="12">
     <if_group>dns</if_group>
     <list field="domain" lookup="address_match_key">etc/lists/malicious-domains</list>
     <description>DNS query for known malicious domain $(domain) (IOC feed)</description>
-    <mitre>
-      <id>T1071.004</id>
-    </mitre>
+    <mitre><id>T1071.004</id></mitre>
   </rule>
-
-  <!-- Field name `query`: some DNS log formats and JSON-based DNS telemetry. -->
-  <rule id="100102" level="12">
+  <rule id="100104" level="12">
     <if_group>dns</if_group>
     <list field="query" lookup="address_match_key">etc/lists/malicious-domains</list>
     <description>DNS query for known malicious domain $(query) (IOC feed)</description>
-    <mitre>
-      <id>T1071.004</id>
-    </mitre>
+    <mitre><id>T1071.004</id></mitre>
   </rule>
-
 </group>
