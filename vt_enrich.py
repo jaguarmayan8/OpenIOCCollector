@@ -60,8 +60,13 @@ def vt_lookup(api_key, file_hash):
 def main():
     # Environment variable wins (GitHub Actions); file fallback (Kali cron).
     api_key = os.environ.get("VT_API_KEY", "").strip()
-    if not api_key:
+    if not api_key and KEY_FILE.exists():
         api_key = KEY_FILE.read_text(encoding="utf-8").strip()
+    if not api_key:
+        # Enrichment is optional; a missing key must not fail the build step
+        # and take the whole publish down with it.
+        print("[!] No VT_API_KEY and no .vt_api_key - skipping enrichment")
+        return
     tf_path = latest_threatfox()
     items = extract_hashes(tf_path)
     print(f"Enriching {len(items)} hashes from {tf_path}")

@@ -48,18 +48,36 @@ fi
 # despite carrying a confidence_level that URLhaus does not.
 # ThreatFox IPs are written to a sidecar and merged below so they are added to
 # the ipsum list rather than replacing it.
-if [ -s "$LATEST_DIR/urlhaus.csv" ] || [ -s "$LATEST_DIR/threatfox_recent.json" ]; then
+# A 17-byte {"iocs": []} is written even when the API call failed, so `-s`
+# (file is non-empty) cannot tell "quiet feed" from "never loaded". Ask for the
+# number of USABLE IOCs; zero is then treated exactly like a missing file.
+TF_IOCS=$(python3 ioc_extract.py count --threatfox "$LATEST_DIR/threatfox_recent.json" 2>/dev/null || echo 0)
+[ -z "$TF_IOCS" ] && TF_IOCS=0
+if [ "$TF_IOCS" -eq 0 ] && [ -f "$LATEST_DIR/threatfox_recent.json" ]; then
+  echo "[!] ThreatFox payload holds 0 usable IOCs - treating it as missing"
+fi
+
+if [ -s "$LATEST_DIR/urlhaus.csv" ] || [ "$TF_IOCS" -gt 0 ]; then
   UH=""
   TF=""
   [ -s "$LATEST_DIR/urlhaus.csv" ] && UH="$LATEST_DIR/urlhaus.csv"
-  [ -s "$LATEST_DIR/threatfox_recent.json" ] && TF="$LATEST_DIR/threatfox_recent.json"
+  [ "$TF_IOCS" -gt 0 ] && TF="$LATEST_DIR/threatfox_recent.json"
   python3 ioc_extract.py lists \
       ${UH:+--urlhaus "$UH"} \
       ${TF:+--threatfox "$TF"} \
       --allow infra_allow.txt \
       --domains-out malicious-domains.txt \
       --ips-out .threatfox-ips.tmp \
+      --tf-domains-out threatfox-domains.txt \
       --report "$LATEST_DIR/infra_suppressed.md"
+
+  # ThreatFox contributed nothing: re-add yesterday's ThreatFox domains so the
+  # union does not lose ~2,900 entries and trip the guard. The sidecar is
+  # committed, so this survives an outage instead of blocking the publish.
+  if [ "$TF_IOCS" -eq 0 ] && [ -s threatfox-domains.txt ]; then
+    sort -u malicious-domains.txt threatfox-domains.txt -o malicious-domains.txt
+    echo "[!] STALE COMPONENT: carried forward $(wc -l < threatfox-domains.txt) previous ThreatFox domains"
+  fi
 
   if [ -s .threatfox-ips.tmp ]; then
     # Union with the ipsum list, keep it sorted and deduplicated.
@@ -74,31 +92,12 @@ fi
 
 # Hashes from ThreatFox (new API: value field is "ioc"; old export was
 # "ioc_value"; also pulls hashes attached via malware_samples)
-if [ -s "$LATEST_DIR/threatfox_recent.json" ]; then
-python3 - "$LATEST_DIR/threatfox_recent.json" << 'PY'
-import json, sys
-path = sys.argv[1]
-hashes = set()
-with open(path) as f:
-    data = json.load(f)
-for entries in data.values():
-    for item in entries:
-        ioc_type = (item.get("ioc_type") or "").lower()
-        # new API: "ioc"; legacy export: "ioc_value"
-        value = (item.get("ioc") or item.get("ioc_value") or "").lower().strip()
-        if ioc_type in ("md5_hash", "sha1_hash", "sha256_hash") and value:
-            hashes.add(value)
-        for s in item.get("malware_samples") or []:
-            for k in ("md5_hash", "sha1_hash", "sha256_hash"):
-                if s.get(k):
-                    hashes.add(s[k].lower())
-with open("malicious-hashes.txt", "w") as f:
-    for h in sorted(hashes):
-        f.write(h + ":\n")
-print(f"Extracted {len(hashes)} hashes")
-PY
+if [ "$TF_IOCS" -gt 0 ]; then
+  python3 ioc_extract.py hashes "$LATEST_DIR/threatfox_recent.json" malicious-hashes.txt
 else
-  echo "[!] threatfox_recent.json missing/empty - keeping previous malicious-hashes.txt"
+  # Hashes come only from ThreatFox, so a zero-IOC payload would empty the
+  # list. Never write it - the previous file is the last known good.
+  echo "[!] STALE COMPONENT: keeping previous malicious-hashes.txt ($(wc -l < malicious-hashes.txt) entries)"
 fi
 
 echo "=== Normalising lists (byte order, deduplicated) ==="
@@ -164,7 +163,10 @@ check_list() {
   if [ "${prev_count_val:-0}" -ge "$MIN_ABSOLUTE" ]; then
     if [ $(( count * 100 / prev_count_val )) -lt "$MIN_FRACTION" ]; then
       echo "ABORT: $file collapsed from $prev_count_val to $count entries (< ${MIN_FRACTION}% of previous) - refusing to push"
-      exit 1
+      # 75 = deliberately blocked, NOT a crash: the workflow reports these as
+      # two different kinds of issue, because "upstream feed was thin today"
+      # needs no code debugging and should not page anyone at 03:00.
+      exit 75
     fi
   fi
   echo "OK: $name ($count entries, previous $prev_count_val)"

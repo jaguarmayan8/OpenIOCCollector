@@ -180,8 +180,17 @@ def read_urlhaus(path, url_index=None, sample_limit=10):
 RULES_HOLDER = {"rules": InfraRules(set(), set())}
 
 
-def write_cdb(values, path):
+def write_cdb(values, path, preserve_on_empty=False):
+    """Write a CDB list. With preserve_on_empty, an empty result never
+    truncates an existing non-empty file - the previous list is kept and the
+    caller is told, because "" published to Wazuh blinds the rules."""
     ordered = sorted(set(values))
+    if not ordered and preserve_on_empty and Path(path).exists():
+        kept = sum(1 for l in Path(path).read_text(encoding="utf-8").splitlines() if l.strip())
+        if kept:
+            print("[!] %s: no entries this run - KEEPING previous %d-entry file"
+                  % (path, kept))
+            return kept
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w", encoding="utf-8") as fh:
         for v in ordered:
@@ -301,6 +310,7 @@ def read_threatfox(path, min_confidence=75, rules=None):
 
     domains, ips = set(), set()
     stats, skipped = Counter(), Counter()
+    n_iocs = 0
 
     for item in iocs:
         if not isinstance(item, dict):
@@ -310,6 +320,7 @@ def read_threatfox(path, min_confidence=75, rules=None):
         if not value:
             skipped["empty"] += 1
             continue
+        n_iocs += 1
         conf = item.get("confidence_level")
         try:
             conf = int(conf) if conf is not None else 0
@@ -351,7 +362,8 @@ def read_threatfox(path, min_confidence=75, rules=None):
         else:
             skipped[ioc_type or "unknown"] += 1
 
-    return {"domains": domains, "ips": ips, "stats": stats, "skipped": skipped}
+    return {"domains": domains, "ips": ips, "stats": stats,
+            "skipped": skipped, "n_iocs": n_iocs}
 
 
 def cmd_lists(args):
@@ -363,7 +375,8 @@ def cmd_lists(args):
     tf = (
         read_threatfox(args.threatfox, min_confidence=args.min_confidence, rules=rules)
         if args.threatfox
-        else {"domains": set(), "ips": set(), "stats": Counter(), "skipped": Counter()}
+        else {"domains": set(), "ips": set(), "stats": Counter(),
+              "skipped": Counter(), "n_iocs": 0}
     )
 
     urlhaus_domains = uh["domains"] if uh else set()
@@ -375,13 +388,26 @@ def cmd_lists(args):
     # which is a different and more specific signal.
     all_ips = set(tf["ips"])
 
-    n_dom = write_cdb(all_domains, args.domains_out)
-    n_ip = write_cdb(all_ips, args.ips_out)
+    n_dom = write_cdb(all_domains, args.domains_out, preserve_on_empty=True)
+    n_ip = write_cdb(all_ips, args.ips_out, preserve_on_empty=True)
+
+    # ThreatFox-only domains, committed so a later day whose ThreatFox call
+    # returns nothing can carry this component forward instead of dropping
+    # ~2,900 domains out of the union and tripping the guard.
+    if getattr(args, "tf_domains_out", None):
+        write_cdb(tf_domains, args.tf_domains_out, preserve_on_empty=True)
 
     print("URLhaus domains (filtered):  %d" % len(urlhaus_domains))
     print("ThreatFox domains (conf>=%d): %d" % (args.min_confidence, len(tf_domains)))
     print("  new from ThreatFox only:   %d" % len(tf_domains - urlhaus_domains))
     print("Domain list written:         %d" % n_dom)
+    print("SUMMARY " + json.dumps({
+        "urlhaus_rows": uh["total"] if uh else 0,
+        "urlhaus_domains": len(urlhaus_domains),
+        "threatfox_iocs": tf.get("n_iocs", 0),
+        "threatfox_domains": len(tf_domains),
+        "threatfox_ips": len(tf["ips"]),
+    }, sort_keys=True))
     print("ThreatFox IPs (conf>=%d):     %d" % (args.min_confidence, n_ip))
     print("IP list written:             %d" % n_ip)
 
@@ -394,6 +420,48 @@ def cmd_lists(args):
     if args.report and uh is not None:
         write_report(args.report, uh)
         print("Report:                      %s" % args.report)
+    return 0
+
+
+def count_threatfox_iocs(path):
+    """Usable IOC entries in a ThreatFox payload; 0 for missing/empty/broken.
+
+    A collector that failed still writes {"iocs": []} (17 bytes), so a
+    file-size test cannot tell "feed is quiet" from "the feed never loaded".
+    """
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, ValueError):
+        return 0
+    iocs = data.get("iocs") if isinstance(data, dict) else data
+    return len([i for i in iocs if isinstance(i, dict) and (i.get("ioc") or i.get("ioc_value"))]) if isinstance(iocs, list) else 0
+
+
+def cmd_hashes(args):
+    """ThreatFox hashes -> CDB list, never truncating a good previous file."""
+    n_iocs = count_threatfox_iocs(args.threatfox)
+    if not n_iocs:
+        kept = write_cdb(set(), args.out, preserve_on_empty=True)
+        print("ThreatFox payload has 0 usable IOCs - previous %d-entry hash list kept" % kept)
+        return 0
+    hashes = set()
+    with open(args.threatfox, encoding="utf-8") as fh:
+        data = json.load(fh)
+    entries = data.get("iocs") if isinstance(data, dict) else data
+    for item in entries or []:
+        if not isinstance(item, dict):
+            continue
+        ioc_type = (item.get("ioc_type") or "").lower()
+        value = (item.get("ioc") or item.get("ioc_value") or "").lower().strip()
+        if ioc_type in ("md5_hash", "sha1_hash", "sha256_hash") and value:
+            hashes.add(value)
+        for s in item.get("malware_samples") or []:
+            for k in ("md5_hash", "sha1_hash", "sha256_hash"):
+                if s.get(k):
+                    hashes.add(s[k].lower())
+    n = write_cdb(hashes, args.out, preserve_on_empty=True)
+    print("ThreatFox IOCs: %d -> %d hashes written" % (n_iocs, n))
     return 0
 
 
@@ -416,7 +484,18 @@ def main(argv=None):
     l.add_argument("--ips-out", default="malicious-ips.txt")
     l.add_argument("--min-confidence", type=int, default=75)
     l.add_argument("--report", default=None)
+    l.add_argument("--tf-domains-out", default=None,
+                   help="sidecar of ThreatFox-only domains (carry-forward source)")
     l.set_defaults(func=cmd_lists)
+
+    n = sub.add_parser("count", help="print usable IOC count for a payload")
+    n.add_argument("--threatfox", required=True)
+    n.set_defaults(func=cmd_count)
+
+    h = sub.add_parser("hashes", help="ThreatFox JSON -> hash CDB list")
+    h.add_argument("threatfox")
+    h.add_argument("out")
+    h.set_defaults(func=cmd_hashes)
 
     c = sub.add_parser("check", help="validate allowlist, optionally against a CSV")
     c.add_argument("urlhaus", nargs="?", default=None)
@@ -425,6 +504,61 @@ def main(argv=None):
 
     args = p.parse_args(argv)
     return args.func(args)
+
+
+def count_threatfox_iocs(path):
+    """Usable IOC entries in a ThreatFox payload; 0 for missing/empty/broken.
+
+    The collector writes {"iocs": []} even when the API call failed, so a
+    file-size test cannot tell "feed is quiet" from "feed never loaded".
+    """
+    try:
+        with open(path, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, ValueError):
+        return 0
+    if isinstance(data, dict) and "iocs" in data:
+        iocs = data["iocs"]
+    elif isinstance(data, dict):
+        # legacy export shape: {"md5_hash": [...], "domain": [...]}
+        iocs = [i for v in data.values() if isinstance(v, list) for i in v]
+    else:
+        iocs = data
+    if not isinstance(iocs, list):
+        return 0
+    return len([i for i in iocs
+                if isinstance(i, dict) and (i.get("ioc") or i.get("ioc_value"))])
+
+
+def cmd_count(args):
+    print(count_threatfox_iocs(args.threatfox))
+    return 0
+
+
+def cmd_hashes(args):
+    """ThreatFox hashes -> CDB list, never truncating a good previous file."""
+    if not count_threatfox_iocs(args.threatfox):
+        kept = write_cdb(set(), args.out, preserve_on_empty=True)
+        print("ThreatFox payload has 0 usable IOCs - previous %d-entry hash list kept" % kept)
+        return 0
+    with open(args.threatfox, encoding="utf-8") as fh:
+        data = json.load(fh)
+    entries = data.get("iocs") if isinstance(data, dict) else data
+    hashes = set()
+    for item in entries or []:
+        if not isinstance(item, dict):
+            continue
+        ioc_type = (item.get("ioc_type") or "").lower()
+        value = (item.get("ioc") or item.get("ioc_value") or "").lower().strip()
+        if ioc_type in ("md5_hash", "sha1_hash", "sha256_hash") and value:
+            hashes.add(value)
+        for sample in item.get("malware_samples") or []:
+            for k in ("md5_hash", "sha1_hash", "sha256_hash"):
+                if sample.get(k):
+                    hashes.add(sample[k].lower())
+    n = write_cdb(hashes, args.out, preserve_on_empty=True)
+    print("ThreatFox IOCs: %d -> %d hashes written" % (count_threatfox_iocs(args.threatfox), n))
+    return 0
 
 
 if __name__ == "__main__":

@@ -51,7 +51,9 @@ jobs:
       - name: Build CDB lists, guard, VT enrichment, dashboard, prune
         env:
           VT_API_KEY: ${{ secrets.VT_API_KEY }}
-        run: bash build_lists.sh
+        # tee so the failure reporter can quote the real reason; `|| exit`
+        # keeps the step's own exit code (incl. 75 = guard block) intact.
+        run: bash build_lists.sh 2>&1 | tee build.log || exit ${PIPESTATUS[0]}
 
       # Raw dumps go to a Release asset, NOT to git. Committing them added
       # ~38 MB/day to history permanently (that is what pushed this repo past
@@ -68,6 +70,9 @@ jobs:
           git config user.name "ioc-collector[bot]"
           git config user.email "ioc-collector[bot]@users.noreply.github.com"
           git add Output/ docs/index.html checksums.sha256 malicious-ips.txt malicious-domains.txt malicious-hashes.txt
+          # The sidecar only exists after the first healthy ThreatFox day; a
+          # bare `git add` of a missing path exits non-zero and fails the step.
+          [ -f threatfox-domains.txt ] && git add threatfox-domains.txt || true
           git commit -m "Daily IOC update $(date +%Y-%m-%d)" || echo "No changes to commit"
           git push
 
@@ -83,7 +88,8 @@ jobs:
         run: |
           set -uo pipefail
           TITLE="[auto] nightly IOC collection failed"
-          printf -v BODY 'The scheduled IOC collection run failed.\n\nRun: %s\nCommit: %s\nReported: %s\n\nNothing was published: the CDB lists and dashboard still hold the previous successful run, and Wazuh is serving those. Check the run log before closing this issue.\n' "$RUN_URL" "${GITHUB_SHA:-unknown}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          TAIL=$(tail -25 build.log 2>/dev/null || echo "(no build.log - failed before the build step)")
+          printf -v BODY 'The scheduled IOC collection run failed.\n\nRun: %s\nCommit: %s\nReported: %s\n\nNothing was published: the CDB lists and dashboard still hold the previous successful run, and Wazuh is serving those.\n\n```\n%s\n```\n' "$RUN_URL" "${GITHUB_SHA:-unknown}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" "$TAIL"
           EXISTING=$(gh issue list --state open --limit 100 --search "in:title nightly IOC collection failed" --json number --jq '.[0].number // empty' 2>/dev/null) || EXISTING=""
           if [ -n "${EXISTING:-}" ]; then
             gh issue comment "$EXISTING" --body "$BODY" || echo "could not comment on issue #$EXISTING"
