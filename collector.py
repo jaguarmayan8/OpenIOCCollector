@@ -25,6 +25,7 @@ import json
 import logging
 import os
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 
@@ -45,6 +46,11 @@ BASE = Path(__file__).resolve().parent
 ABUSECH_KEY_FILE = BASE / ".abusech_auth_key"
 
 REQUEST_TIMEOUT = 45
+# ThreatFox returns ~7 MB of JSON. At 45 s the read can be cut mid-body
+# ("Response ended prematurely"); that is a transport failure, not an empty
+# feed, so it gets a longer deadline, a streamed read and retries.
+THREATFOX_TIMEOUT = 150
+THREATFOX_ATTEMPTS = 3
 USER_AGENT = "OpenIOCCollector/2.0 (home-lab threat intel collector)"
 
 # URLhaus export file to download. "recent.csv" is the example documented at
@@ -160,27 +166,47 @@ def fetch_threatfox(session: requests.Session, path: Path, auth_key: str):
     result is still written to disk so the pipeline never crashes on a
     missing file (today's 410 bug broke the hash extraction that way).
     """
-    r = session.post(
-        "https://threatfox-api.abuse.ch/api/v1/",
-        headers={"Auth-Key": auth_key},
-        # ThreatFox requires the request body to be a JSON document (its docs
-        # show: -d '{"query": "get_iocs", "days": 7}'). Sending form-encoded
-        # data (data=...) makes the API answer query_status="no_json".
-        # MalwareBazaar is different - its API reads form fields, which is why
-        # fetch_malwarebazaar below uses data=.
-        json={"query": "get_iocs", "days": THREATFOX_DAYS},
-        timeout=REQUEST_TIMEOUT,
-    )
-    r.raise_for_status()
-    payload = r.json()
+    payload = None
+    last_err = None
+    for attempt in range(1, THREATFOX_ATTEMPTS + 1):
+        try:
+            with session.post(
+                "https://threatfox-api.abuse.ch/api/v1/",
+                headers={"Auth-Key": auth_key},
+                # ThreatFox requires a JSON body (form-encoded answers
+                # query_status="no_json"). MalwareBazaar is the opposite - it
+                # reads form fields, hence data= in fetch_malwarebazaar below.
+                json={"query": "get_iocs", "days": THREATFOX_DAYS},
+                timeout=THREATFOX_TIMEOUT,
+                stream=True,
+            ) as r:
+                r.raise_for_status()
+                body = b"".join(r.iter_content(64 * 1024))
+            # A body cut mid-transfer is invalid JSON and lands in the except.
+            payload = json.loads(body)
+            last_err = None
+            break
+        except (requests.exceptions.RequestException, ValueError) as e:
+            last_err = e
+            log.warning("ThreatFox attempt %d/%d failed: %s: %s",
+                        attempt, THREATFOX_ATTEMPTS, type(e).__name__, e)
+            if attempt < THREATFOX_ATTEMPTS:
+                time.sleep(2 * attempt)
+    if payload is None:
+        raise RuntimeError("ThreatFox fetch failed after %d attempts: %s"
+                           % (THREATFOX_ATTEMPTS, last_err))
     status = payload.get("query_status")
     raw_data = payload.get("data")
     # Only a list is real IOC data - on errors like no_json, "data" is an
     # error STRING, and len() of it must not be counted as IOCs.
     data = raw_data if isinstance(raw_data, list) else []
-    if status != "ok":
-        # e.g. "no_results" is a valid empty answer, anything else is a problem
-        log.warning("ThreatFox API returned query_status=%s", status)
+    if status == "no_results":
+        log.info("ThreatFox: no_results (valid empty response)")
+    elif status != "ok":
+        # illegal_auth_key / no_json / schema change = a real error, never an
+        # empty feed. Raise so the summary records Error, not "Empty".
+        log.error("ThreatFox API returned query_status=%s", status)
+        raise RuntimeError("ThreatFox query_status=%s" % status)
     # Persist in the dict-of-lists shape the downstream scripts expect.
     path.write_text(json.dumps({"iocs": data}, indent=2), encoding="utf-8")
     return len(data)

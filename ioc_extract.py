@@ -394,8 +394,11 @@ def cmd_lists(args):
     # ThreatFox-only domains, committed so a later day whose ThreatFox call
     # returns nothing can carry this component forward instead of dropping
     # ~2,900 domains out of the union and tripping the guard.
-    if getattr(args, "tf_domains_out", None):
-        write_cdb(tf_domains, args.tf_domains_out, preserve_on_empty=True)
+    tf_out = getattr(args, "tf_domains_out", None)
+    if tf_out and tf_domains:
+        # Only when non-empty: a 0-byte sidecar makes the next run's
+        # `[ -s file ]` test false and silently disables carry-forward.
+        write_cdb(tf_domains, tf_out)
 
     print("URLhaus domains (filtered):  %d" % len(urlhaus_domains))
     print("ThreatFox domains (conf>=%d): %d" % (args.min_confidence, len(tf_domains)))

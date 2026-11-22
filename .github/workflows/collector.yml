@@ -51,9 +51,12 @@ jobs:
       - name: Build CDB lists, guard, VT enrichment, dashboard, prune
         env:
           VT_API_KEY: ${{ secrets.VT_API_KEY }}
-        # tee so the failure reporter can quote the real reason; `|| exit`
-        # keeps the step's own exit code (incl. 75 = guard block) intact.
-        run: bash build_lists.sh 2>&1 | tee build.log || exit ${PIPESTATUS[0]}
+        # tee so the failure reporter can quote the real reason. pipefail is
+        # MANDATORY: without it the pipeline's status is tee's (always 0), so a
+        # guard abort looks like success and the job publishes a shrunken list.
+        run: |
+          set -o pipefail
+          bash build_lists.sh 2>&1 | tee build.log
 
       # Raw dumps go to a Release asset, NOT to git. Committing them added
       # ~38 MB/day to history permanently (that is what pushed this repo past
