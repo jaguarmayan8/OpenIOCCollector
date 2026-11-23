@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenIOCCollector Dashboard — 2026-11-21</title>
+<title>OpenIOCCollector Dashboard — 2026-11-22</title>
 <style>
   :root {
     --bg:#0b1220; --card:#121a2b; --line:#243049; --text:#e8eefc;
@@ -43,36 +43,84 @@
   th { color:var(--muted); font-weight:600; }
   .hash { font-family:monospace; }
   a { color:var(--accent); }
+  .lookup { display:flex; gap:10px; margin:16px 0 6px; }
+  .lookup input { flex:1 1 auto; min-width:0; background:#0f1726; border:1px solid var(--line);
+                   color:var(--text); border-radius:10px; padding:11px 13px; font-size:15px; font-family:inherit; }
+  .lookup input::placeholder { color:#6b7a99; }
+  .lookup input:focus { outline:2px solid var(--accent); outline-offset:1px; }
+  .lookup button { flex:0 0 auto; background:var(--accent); color:#06101f; border:0; border-radius:10px;
+                    padding:11px 18px; font-size:15px; font-weight:700; font-family:inherit; cursor:pointer; }
+  .lookup button:hover { filter:brightness(1.08); }
+  .hint { color:var(--muted); font-size:12.5px; line-height:1.5; margin:0 0 10px; }
+  .status { font-size:13px; color:var(--muted); min-height:1.5em; }
+  .status.err { color:var(--bad); }
+  .result { margin-top:12px; border-radius:10px; padding:14px 16px; background:#0f1726; border-left:4px solid var(--line); }
+  .result.hit { border-left-color:var(--bad); }
+  .result.hit.low { border-left-color:var(--warn); }
+  .result.miss { border-left-color:var(--ok); }
+  .result .verdict { font-weight:700; font-size:16px; }
+  .result.hit .verdict { color:var(--bad); }
+  .result.hit.low .verdict { color:var(--warn); }
+  .result.miss .verdict { color:var(--ok); }
+  .result .val { font-family:monospace; word-break:break-all; font-size:14px; margin-top:3px; }
+  .result dl { display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:11px 0 0; font-size:13px; }
+  .result dt { color:var(--muted); }
+  .result dd { margin:0; word-break:break-all; }
+  .result .hint { margin:11px 0 0; }
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+              clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+  @media (max-width:560px) { .lookup { flex-direction:column; } .lookup button { width:100%; } }
 </style>
 </head>
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-21</b>
-     · generated 2026-11-21 12:52 UTC (5 min ago)</p>
+  <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-22</b>
+     · generated 2026-11-22 11:51 CST (7.0 h ago)</p>
   
 </header>
 <main>
   <section class="grid">
-    <div class="card"><div class="num">140,819</div><div class="label">Malicious IPs</div></div>
+    <div class="card"><div class="num">139,496</div><div class="label">Malicious IPs</div></div>
     <div class="card"><div class="num">3,645</div><div class="label">Malicious domains</div></div>
     <div class="card"><div class="num">3,123</div><div class="label">Malicious hashes</div></div>
-    <div class="card warn"><div class="num">5/6 feeds with data</div>
-      <div class="label">Feeds with data (1 empty/unknown)</div></div>
+    <div class="card bad"><div class="num">4/6 feeds with data</div>
+      <div class="label">Feeds with data (1 failed)</div></div>
+  </section>
+
+  <section class="card" style="margin-top:16px;" id="lookup">
+    <h2>Look up an indicator</h2>
+    <p class="hint">Checks today's published lists in your browser — nothing is uploaded.
+       Accepts an IP, a domain, a full URL (scheme, port, path and <code>www.</code> are
+       ignored) or a 32/40/64-character hash.</p>
+    <form class="lookup" id="ioc-lookup-form" autocomplete="off" role="search">
+      <label class="sr-only" for="ioc-input">IP, domain, URL or file hash</label>
+      <input id="ioc-input" type="search" spellcheck="false" autocapitalize="none"
+             placeholder="evil.example · 1.2.3.4 · hxxps://evil.example/a.bin · d41d8cd9…">
+      <button type="submit">Check</button>
+    </form>
+    <p class="status" id="ioc-lookup-status" role="status" aria-live="polite">Lists load on first use.</p>
+    <div class="result" id="ioc-lookup-result" role="region" aria-label="Lookup result" hidden></div>
+    <noscript>
+      <p class="hint">JavaScript is off, so the in-page lookup is unavailable. Download
+        <a href="https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-ips.txt">malicious-ips.txt</a>,
+        <a href="https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-domains.txt">malicious-domains.txt</a> or
+        <a href="https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-hashes.txt">malicious-hashes.txt</a> and grep them.</p>
+    </noscript>
   </section>
 
   <section class="card">
-    <h2>Feeds — 2026-11-21</h2>
-    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>834.6 KB | ~11338 entries</span><span class="tag">ok</span></div>
+    <h2>Feeds — 2026-11-22</h2>
+    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>835.1 KB | ~11345 entries</span><span class="tag">ok</span></div>
 <div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected</span><span class="tag">empty</span></div>
-<div class="feed ok"><b>top_malicious.txt</b><span>2207.3 KB | ~139424 entries</span><span class="tag">ok</span></div>
-<div class="feed ok"><b>urlhaus.csv</b><span>29606.1 KB | ~116288 entries</span><span class="tag">ok</span></div>
-<div class="feed ok"><b>threatfox_recent.json</b><span>7021.2 KB | ~9247 entries</span><span class="tag">ok</span></div>
-<div class="feed ok"><b>malwarebazaar_recent.json</b><span>134.2 KB | ~100 entries</span><span class="tag">ok</span></div></div>
-    <p class="sub">Collector clock at run: 2026-11-21 12:52 · 6 feeds checked
-       · <b>147,587 unique IOCs published</b>
-         (140,819 IPs + 3,645 domains + 3,123 hashes)
-         from 276,397 raw feed entries before dedup and confidence filtering</p>
+<div class="feed ok"><b>top_malicious.txt</b><span>2208.1 KB | ~139496 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>urlhaus.csv</b><span>29735.7 KB | ~116713 entries</span><span class="tag">ok</span></div>
+<div class="feed error"><b>threatfox_recent.json</b><span>Error - Response ended prematurely</span><span class="tag">error</span></div>
+<div class="feed ok"><b>malwarebazaar_recent.json</b><span>139.1 KB | ~100 entries</span><span class="tag">ok</span></div></div>
+    <p class="sub">Collector clock at run: 2026-11-22 17:45 · 6 feeds checked
+       · <b>146,264 unique IOCs published</b>
+         (139,496 IPs + 3,645 domains + 3,123 hashes)
+         from 267,654 raw feed entries before dedup and confidence filtering</p>
   </section>
 
   <section class="card" style="margin-top:16px;">
@@ -82,34 +130,411 @@
         <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
       </thead>
       <tbody>
-        <tr><td class='hash'>99412eddb4712a89…</td><td>True</td><td>19</td><td>0</td><td>trojan.mirai/svirtu</td><td>Mirai</td></tr>
-<tr><td class='hash'>7a656791b445fff0…</td><td>True</td><td>34</td><td>0</td><td>trojan.adbminer/berbew</td><td>Hajime</td></tr>
-<tr><td class='hash'>90429399cf489e75…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>3624c7b2fdc001f8…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>a1f904c29d708e92…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>d925294fd83fc490…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>f519dc62db929a97…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>92b11d9f33274c3c…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>ea184e17f70d020a…</td><td>True</td><td>2</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>e49f2d6a455c69ef…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>f9d1e0acfb21333f…</td><td>True</td><td>1</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>6fcb8f143fce7ffb…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>36d8d302e8f89eee…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>b6c84b5ce8f255aa…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>1ede10bb49112440…</td><td>True</td><td>2</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>c8d76e3185e02a22…</td><td>True</td><td>3</td><td>0</td><td>trojan.</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>fc968a97dc1ca263…</td><td>True</td><td>4</td><td>0</td><td>trojan.zfow</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>ca132c4ac3a041b6…</td><td>True</td><td>4</td><td>0</td><td>trojan.jcnw</td><td>Unknown malware</td></tr>
-<tr><td class='hash'>96b477c79e93044d…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
-<tr><td class='hash'>00c4b34e9eef330a…</td><td>False</td><td>0</td><td>0</td><td></td><td>Unknown malware</td></tr>
+        <tr><td colspan='6'>No VirusTotal sample yet.</td></tr>
       </tbody>
     </table>
   </section>
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
-    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261121">Raw dumps for 2026-11-21</a>
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261122">Raw dumps for 2026-11-22</a>
   </p>
 </main>
+<script id="ioc-lookup">
+/* In-page IOC lookup - no backend.
+ *
+ * On first keystroke the three CDB lists are fetched once from the repo's raw
+ * URLs (raw.githubusercontent.com answers `access-control-allow-origin: *`,
+ * verified against the live files), indexed into a Map, and queried locally.
+ * Nothing typed is ever sent anywhere.
+ *
+ * The parser accepts both list formats, because the published lists may carry
+ * either:
+ *     1.2.3.4:                  CDB terminator, no metadata
+ *     1.2.3.4:threatfox:100     value, source, confidence
+ * IPv6 needs care: `2001:db8::1:` ends in a colon that is the CDB terminator,
+ * not a separator, so a tail is only read as metadata when it looks like one.
+ *
+ * Normalisation mirrors ioc_extract.py's extract_host(): a pasted URL, port,
+ * userinfo, trailing dot or `www.` prefix must not turn a listed indicator into
+ * a false "not in today's lists".
+ */
+(function () {
+  "use strict";
+
+  var CFG = {"counts": {"domains": 3645, "hashes": 3123, "ips": 139496}, "dataDate": "2026-11-22", "lists": [{"key": "ips", "label": "IP list", "path": "malicious-ips.txt"}, {"key": "domains", "label": "Domain list", "path": "malicious-domains.txt"}, {"key": "hashes", "label": "Hash list", "path": "malicious-hashes.txt"}], "raw": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/", "stale": false};
+  var root = (typeof window !== "undefined") ? window : globalThis;
+
+  function fmt(n) {
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function isIpv4(s) {
+    var p = s.split(".");
+    if (p.length !== 4) { return false; }
+    for (var i = 0; i < 4; i++) {
+      if (!/^\d{1,3}$/.test(p[i])) { return false; }
+      if (+p[i] > 255) { return false; }
+      /* 01.2.3.4 is a different string to the feed's 1.2.3.4, not a match. */
+      if (p[i].length > 1 && p[i].charAt(0) === "0") { return false; }
+    }
+    return true;
+  }
+
+  function isIpv6(s) {
+    if (s.indexOf(":") < 0) { return false; }
+    if (!/^[0-9a-f:.]+$/.test(s)) { return false; }
+    /* "2001:db8::1:" is a CDB terminator artifact, not an address. */
+    if (s.charAt(s.length - 1) === ":" && s.slice(-2) !== "::") { return false; }
+    return s.indexOf(":") !== s.lastIndexOf(":");
+  }
+
+  function isDomain(s) {
+    if (s.length > 253) { return false; }
+    if (!/^[a-z0-9_-]+(\.[a-z0-9_-]+)+$/.test(s)) { return false; }
+    /* an all-numeric last label is an IP, not a TLD */
+    return /^[a-z0-9-]{2,}$/.test(s.slice(s.lastIndexOf(".") + 1));
+  }
+
+  function isValue(s) {
+    return isIpv4(s) || isIpv6(s) || isHash(s) || isDomain(s);
+  }
+
+  function isTagLike(s) { return /^[A-Za-z0-9_.|,\-:]+$/.test(s); }
+
+  function isHash(s) {
+    return /^[0-9a-f]{32}$/.test(s) ||
+           /^[0-9a-f]{40}$/.test(s) ||
+           /^[0-9a-f]{64}$/.test(s);
+  }
+
+  /* Strip everything a user may paste around the indicator itself. */
+  function strip(raw) {
+    var s = String(raw == null ? "" : raw).trim().slice(0, 2048);
+    if (!s) { return ""; }
+    s = s.replace(/\s+/g, "");
+    s = s.replace(/^[A-Za-z][A-Za-z0-9+.\-]*:\/\//, ""); /* scheme:// incl. hxxp:// */
+    s = s.replace(/^\/\//, "");
+    s = s.replace(/^[^@\/]*@/, "");                      /* userinfo@ */
+    return s;
+  }
+
+  function hostOf(s) {
+    var m = /^\[([^\]]+)\]/.exec(s);
+    if (m) { return m[1]; }                              /* [2001:db8::1]:80 */
+    var i = s.search(/[\/?#]/);
+    return i < 0 ? s : s.slice(0, i);
+  }
+
+  function dropPort(s) {
+    var p = s.split(":");
+    return (p.length === 2 && /^\d{1,5}$/.test(p[1])) ? p[0] : s;
+  }
+
+  /* -> {value, kind, candidates} or null.
+     Candidates exist because `www.` is listed sometimes and omitted sometimes;
+     both forms are checked rather than picking one and guessing. */
+  function normalize(raw) {
+    var s = strip(raw);
+    if (!s) { return null; }
+    var host = dropPort(hostOf(s)).replace(/\.+$/, "").toLowerCase();
+    if (!host) { return null; }
+    var kind = "domain";
+    if (isIpv4(host) || isIpv6(host)) { kind = "ip"; }
+    else if (isHash(host)) { kind = "hash"; }
+    var candidates = [host];
+    if (kind === "domain" && host.indexOf("www.") === 0 && host.length > 4) {
+      candidates.push(host.slice(4));
+    }
+    return { value: host, kind: kind, candidates: candidates };
+  }
+
+  /* One list line -> {value, tag} or null. */
+  function parseLine(line) {
+    if (!line) { return null; }
+    var v = String(line).replace(/^\s+/, "").replace(/\s+$/, "");
+    if (!v || v.charAt(0) === "#") { return null; }
+
+    /* "value:" - the plain CDB form. Tested FIRST, because splitting
+       "2001:db8::1:" on its last colon would yield value "2001:db8::" tag "1". */
+    if (v.charAt(v.length - 1) === ":" && isValue(v.slice(0, -1))) {
+      return { value: v.slice(0, -1), tag: "" };
+    }
+    if (isValue(v)) { return { value: v, tag: "" }; }
+
+    /* "value:source:confidence" - split at a colon whose LEFT side is a whole
+       indicator, so "1.2.3.4:threatfox:100" gives value "1.2.3.4" and tag
+       "threatfox:100" rather than value "1.2.3.4:threatfox" and tag "100". */
+    for (var i = v.lastIndexOf(":"); i > 0; i = v.lastIndexOf(":", i - 1)) {
+      var head = v.slice(0, i);
+      if (!isValue(head)) { continue; }
+      var rest = v.slice(i + 1);
+      if (rest === "") { return { value: head, tag: "" }; }
+      if (isTagLike(rest)) { return { value: head, tag: rest }; }
+    }
+    /* A URL-valued list (proxy/Suricata) keeps its full value. */
+    return { value: v, tag: "" };
+  }
+
+  /* "threatfox:100" -> {source:"threatfox", confidence:"100"} */
+  function parseTag(tag) {
+    if (!tag) { return { source: "", confidence: "" }; }
+    var p = String(tag).split(":");
+    if (p.length >= 2 && /^\d{1,3}$/.test(p[p.length - 1])) {
+      return { source: p.slice(0, -1).join(":"), confidence: p[p.length - 1] };
+    }
+    return { source: tag, confidence: "" };
+  }
+
+  function buildIndex(text) {
+    var lines = String(text).split("\n");
+    var map = new Map();
+    for (var i = 0; i < lines.length; i++) {
+      var row = parseLine(lines[i]);
+      if (row) { map.set(row.value, row.tag); }
+    }
+    return map;
+  }
+
+  function lookup(indices, norm) {
+    var hits = [];
+    if (!indices || !norm) { return hits; }
+    for (var k in indices) {
+      if (!Object.prototype.hasOwnProperty.call(indices, k)) { continue; }
+      var map = indices[k];
+      for (var i = 0; i < norm.candidates.length; i++) {
+        var v = norm.candidates[i];
+        if (map.has(v)) {
+          var t = parseTag(map.get(v));
+          hits.push({ list: k, value: v, source: t.source, confidence: t.confidence });
+          break;
+        }
+      }
+    }
+    return hits;
+  }
+
+  function vtUrl(norm) {
+    if (norm.kind === "hash") { return "https://www.virustotal.com/gui/file/" + norm.value; }
+    if (norm.kind === "ip") { return "https://www.virustotal.com/gui/ip-address/" + norm.value; }
+    return "https://www.virustotal.com/gui/domain/" + norm.value;
+  }
+
+  /* Exposed so the parser can be unit-tested under node (tests/test_lookup.py).
+     A wrong normalisation silently turns a real IOC into "not found", which is
+     worse than having no lookup at all. */
+  root.IOCLookup = {
+    normalize: normalize,
+    parseLine: parseLine,
+    parseTag: parseTag,
+    buildIndex: buildIndex,
+    lookup: lookup,
+    isIpv4: isIpv4,
+    isIpv6: isIpv6,
+    isHash: isHash
+  };
+
+  if (typeof document === "undefined") { return; }
+  var form = document.getElementById("ioc-lookup-form");
+  if (!form) { return; }
+
+  var input = document.getElementById("ioc-input");
+  var statusEl = document.getElementById("ioc-lookup-status");
+  var resultEl = document.getElementById("ioc-lookup-result");
+  var indices = null;
+  var loading = null;
+  var failed = null;
+  var timer = null;
+
+  function setStatus(text, cls) {
+    statusEl.textContent = text;
+    statusEl.className = "status" + (cls ? " " + cls : "");
+  }
+
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) { n.className = cls; }
+    if (text !== undefined && text !== null) { n.textContent = text; }
+    return n;
+  }
+
+  function labelFor(key) {
+    for (var i = 0; i < CFG.lists.length; i++) {
+      if (CFG.lists[i].key === key) { return CFG.lists[i].label; }
+    }
+    return key;
+  }
+
+  function loadedCount() {
+    var t = 0;
+    for (var k in indices) {
+      if (Object.prototype.hasOwnProperty.call(indices, k)) { t += indices[k].size; }
+    }
+    return t;
+  }
+
+  function expectedCount() {
+    var t = 0;
+    for (var k in CFG.counts) {
+      if (Object.prototype.hasOwnProperty.call(CFG.counts, k)) { t += CFG.counts[k] || 0; }
+    }
+    return t;
+  }
+
+  function downloadLinks(parent) {
+    CFG.lists.forEach(function (l, i) {
+      if (i) { parent.appendChild(document.createTextNode(" · ")); }
+      var a = el("a", "", l.path);
+      a.href = CFG.raw + l.path;
+      parent.appendChild(a);
+    });
+    return parent;
+  }
+
+  function load() {
+    if (indices) { return Promise.resolve(indices); }
+    if (loading) { return loading; }
+    var acc = {};
+    var done = 0;
+    setStatus("Loading " + fmt(expectedCount()) + " indicators…", "");
+    loading = Promise.all(CFG.lists.map(function (l) {
+      return fetch(CFG.raw + l.path, { mode: "cors" })
+        .then(function (r) {
+          if (!r.ok) { throw new Error(l.path + " -> HTTP " + r.status); }
+          return r.text();
+        })
+        .then(function (text) {
+          acc[l.key] = buildIndex(text);
+          done += 1;
+          setStatus(
+            "Loading lists… " + done + "/" + CFG.lists.length +
+            " (" + fmt(acc[l.key].size) + " " + labelFor(l.key).toLowerCase() + ")",
+            ""
+          );
+        });
+    })).then(function () {
+      indices = acc;
+      var stale = CFG.stale
+        ? " · STALE: the nightly run failed, these lists are from " + CFG.dataDate
+        : "";
+      setStatus(
+        "Ready · " + fmt(loadedCount()) + " indicators · data for " + CFG.dataDate + stale,
+        CFG.stale ? "err" : ""
+      );
+      return indices;
+    }).catch(function (err) {
+      failed = err;
+      loading = null;
+      setStatus(
+        "Lookup unavailable: " + err.message +
+        ". The lists could not be fetched (offline, blocked, or the repo is private).", "err"
+      );
+      var p = el("p", "hint", "Download them directly: ");
+      downloadLinks(p);
+      resultEl.textContent = "";
+      resultEl.className = "result miss";
+      resultEl.hidden = false;
+      resultEl.appendChild(p);
+      throw err;
+    });
+    return loading;
+  }
+
+  function show(norm) {
+    var hits = lookup(indices, norm);
+    var cls = "result " + (hits.length ? "hit" : "miss");
+    if (hits.length) {
+      var max = 0;
+      hits.forEach(function (h) { if (h.confidence) { max = Math.max(max, +h.confidence); } });
+      if (max && max < 75) { cls += " low"; }
+    }
+    resultEl.textContent = "";
+    resultEl.className = cls;
+    resultEl.hidden = false;
+
+    var verdict;
+    if (!hits.length) {
+      verdict = "Not in today's lists";
+    } else if (hits[0].source) {
+      verdict = "Found — " + hits[0].source +
+        (hits[0].confidence ? ", confidence " + hits[0].confidence : "");
+    } else {
+      verdict = "Found in the " + labelFor(hits[0].list);
+    }
+    resultEl.appendChild(el("div", "verdict", verdict));
+    resultEl.appendChild(el("div", "val", norm.value));
+
+    if (hits.length) {
+      var dl = el("dl");
+      hits.forEach(function (h) {
+        dl.appendChild(el("dt", "", "List"));
+        dl.appendChild(el("dd", "", labelFor(h.list)));
+        if (h.value !== norm.value) {
+          dl.appendChild(el("dt", "", "Matched as"));
+          dl.appendChild(el("dd", "", h.value));
+        }
+        dl.appendChild(el("dt", "", "Source"));
+        dl.appendChild(el("dd", "", h.source || "not tagged in this list version"));
+        if (h.confidence) {
+          dl.appendChild(el("dt", "", "Confidence"));
+          dl.appendChild(el("dd", "", h.confidence));
+        }
+      });
+      resultEl.appendChild(dl);
+      if (!hits[0].source) {
+        resultEl.appendChild(el("p", "hint",
+          "This list version stores bare values, so the reporting feed is not recorded — " +
+          "only that the indicator is in today's published list."));
+      }
+    } else {
+      resultEl.appendChild(el("p", "hint",
+        "Checked against " + fmt(loadedCount()) + " indicators for " + CFG.dataDate +
+        ". Absent means these feeds have not reported it; that is not a clean bill of health."));
+    }
+
+    var a = el("a", "", "Check on VirusTotal ↗");
+    a.href = vtUrl(norm);
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    var p = el("p", "hint");
+    p.appendChild(a);
+    resultEl.appendChild(p);
+  }
+
+  function run() {
+    var norm = normalize(input.value);
+    if (!norm) {
+      resultEl.hidden = true;
+      setStatus(
+        indices ? "Type an IP, domain, URL or file hash."
+                : "Type an IP, domain, URL or file hash to load the lists.",
+        ""
+      );
+      return;
+    }
+    if (failed) { return; }
+    if (!indices) {
+      load().then(run).catch(function () {});
+      return;
+    }
+    show(norm);
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (timer) { clearTimeout(timer); timer = null; }
+    run();
+  });
+
+  /* Load on first input, as promised in the UI copy - not on page load, so a
+     visitor who never uses the box never pays for 458 KB. */
+  input.addEventListener("input", function () {
+    if (timer) { clearTimeout(timer); }
+    if (!indices && !failed) { load().catch(function () {}); }
+    timer = setTimeout(run, 180);
+  });
+})();
+
+</script>
 </body>
 </html>

@@ -13,6 +13,10 @@ Trust rules (why this file is shaped the way it is):
     week-old IOCs under a "Today's feeds" heading.
   * Timestamps are shown with an explicit timezone and an age, because a bare
     "last run 13:39" cannot be distinguished from three days ago.
+  * The page can answer "is this indicator in today's lists?" with no backend:
+    lookup.js fetches the three CDB lists from the repo's raw URLs on first use
+    and indexes them in the browser. Counts alone make the page a poster; the
+    lookup is what a SOC analyst can actually use mid-investigation.
 """
 from __future__ import annotations
 
@@ -20,10 +24,90 @@ from datetime import date, datetime
 from pathlib import Path
 import json
 import re
+import sys
 
 BASE = Path(__file__).resolve().parent
 OUT_HTML = BASE / "docs" / "index.html"
 REPO = "https://github.com/jaguarmayan8/OpenIOCCollector"
+# Raw base for the lists the in-page lookup fetches. Verified against the live
+# files: raw.githubusercontent.com answers `access-control-allow-origin: *`, so
+# the dashboard reads the CDN copy directly and needs no backend of its own.
+# The lists are NOT copied into docs/ - that would put ~2.2 MB of daily-changing
+# text into git history again, which is the 1 GB problem SIZE_FIX.md documents.
+REPO_RAW = "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main"
+
+LOOKUP_JS_PATH = BASE / "lookup.js"
+CONFIG_SENTINEL = "/*__CONFIG__*/ {}"   # replaced by the JSON config object
+_lookup_cache = None
+
+
+def _lookup_js_text():
+    """lookup.js, or "" when this checkout is missing it.
+
+    A missing lookup.js must not take the publish down: the CDB lists and the
+    dashboard are the product, the lookup is a feature on top of them. It warns
+    loudly and the page renders without the box.
+    """
+    global _lookup_cache
+    if _lookup_cache is None:
+        try:
+            _lookup_cache = LOOKUP_JS_PATH.read_text(encoding="utf-8")
+        except OSError as exc:
+            print(
+                "[!] lookup.js unreadable (%s) - publishing the dashboard without "
+                "the lookup box" % exc,
+                file=sys.stderr,
+            )
+            _lookup_cache = ""
+    return _lookup_cache
+
+
+def lookup_section():
+    """The lookup card, or "" if the script is unavailable."""
+    if not _lookup_js_text():
+        return ""
+    return f"""  <section class="card" style="margin-top:16px;" id="lookup">
+    <h2>Look up an indicator</h2>
+    <p class="hint">Checks today's published lists in your browser — nothing is uploaded.
+       Accepts an IP, a domain, a full URL (scheme, port, path and <code>www.</code> are
+       ignored) or a 32/40/64-character hash.</p>
+    <form class="lookup" id="ioc-lookup-form" autocomplete="off" role="search">
+      <label class="sr-only" for="ioc-input">IP, domain, URL or file hash</label>
+      <input id="ioc-input" type="search" spellcheck="false" autocapitalize="none"
+             placeholder="evil.example · 1.2.3.4 · hxxps://evil.example/a.bin · d41d8cd9…">
+      <button type="submit">Check</button>
+    </form>
+    <p class="status" id="ioc-lookup-status" role="status" aria-live="polite">Lists load on first use.</p>
+    <div class="result" id="ioc-lookup-result" role="region" aria-label="Lookup result" hidden></div>
+    <noscript>
+      <p class="hint">JavaScript is off, so the in-page lookup is unavailable. Download
+        <a href="{REPO_RAW}/malicious-ips.txt">malicious-ips.txt</a>,
+        <a href="{REPO_RAW}/malicious-domains.txt">malicious-domains.txt</a> or
+        <a href="{REPO_RAW}/malicious-hashes.txt">malicious-hashes.txt</a> and grep them.</p>
+    </noscript>
+  </section>
+
+"""
+
+
+def lookup_script(info, ips, domains, hashes):
+    """The inlined script tag with its config, or "" if unavailable."""
+    js = _lookup_js_text()
+    if not js:
+        return ""
+    cfg = {
+        "raw": REPO_RAW + "/",
+        "dataDate": f"{info['data_date']:%Y-%m-%d}",
+        "stale": bool(info["stale"]),
+        "lists": [
+            {"key": "ips", "label": "IP list", "path": "malicious-ips.txt"},
+            {"key": "domains", "label": "Domain list", "path": "malicious-domains.txt"},
+            {"key": "hashes", "label": "Hash list", "path": "malicious-hashes.txt"},
+        ],
+        "counts": {"ips": ips, "domains": domains, "hashes": hashes},
+    }
+    body = js.replace(CONFIG_SENTINEL, json.dumps(cfg, sort_keys=True), 1)
+    return '<script id="ioc-lookup">\n%s\n</script>' % body
 
 # A day is "stale" once the summary is older than this, even if the folder
 # still carries today's date (e.g. the cron ran at 04:30 and died mid-run).
@@ -321,6 +405,33 @@ def render(day, base=None, now=None):
   th {{ color:var(--muted); font-weight:600; }}
   .hash {{ font-family:monospace; }}
   a {{ color:var(--accent); }}
+  .lookup {{ display:flex; gap:10px; margin:16px 0 6px; }}
+  .lookup input {{ flex:1 1 auto; min-width:0; background:#0f1726; border:1px solid var(--line);
+                   color:var(--text); border-radius:10px; padding:11px 13px; font-size:15px; font-family:inherit; }}
+  .lookup input::placeholder {{ color:#6b7a99; }}
+  .lookup input:focus {{ outline:2px solid var(--accent); outline-offset:1px; }}
+  .lookup button {{ flex:0 0 auto; background:var(--accent); color:#06101f; border:0; border-radius:10px;
+                    padding:11px 18px; font-size:15px; font-weight:700; font-family:inherit; cursor:pointer; }}
+  .lookup button:hover {{ filter:brightness(1.08); }}
+  .hint {{ color:var(--muted); font-size:12.5px; line-height:1.5; margin:0 0 10px; }}
+  .status {{ font-size:13px; color:var(--muted); min-height:1.5em; }}
+  .status.err {{ color:var(--bad); }}
+  .result {{ margin-top:12px; border-radius:10px; padding:14px 16px; background:#0f1726; border-left:4px solid var(--line); }}
+  .result.hit {{ border-left-color:var(--bad); }}
+  .result.hit.low {{ border-left-color:var(--warn); }}
+  .result.miss {{ border-left-color:var(--ok); }}
+  .result .verdict {{ font-weight:700; font-size:16px; }}
+  .result.hit .verdict {{ color:var(--bad); }}
+  .result.hit.low .verdict {{ color:var(--warn); }}
+  .result.miss .verdict {{ color:var(--ok); }}
+  .result .val {{ font-family:monospace; word-break:break-all; font-size:14px; margin-top:3px; }}
+  .result dl {{ display:grid; grid-template-columns:auto 1fr; gap:4px 14px; margin:11px 0 0; font-size:13px; }}
+  .result dt {{ color:var(--muted); }}
+  .result dd {{ margin:0; word-break:break-all; }}
+  .result .hint {{ margin:11px 0 0; }}
+  .sr-only {{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+              clip:rect(0 0 0 0); white-space:nowrap; border:0; }}
+  @media (max-width:560px) {{ .lookup {{ flex-direction:column; }} .lookup button {{ width:100%; }} }}
 </style>
 </head>
 <body>
@@ -339,7 +450,7 @@ def render(day, base=None, now=None):
       <div class="label">Feeds with data ({esc(feed_sub)})</div></div>
   </section>
 
-  <section class="card">
+{lookup_section()}  <section class="card">
     <h2>Feeds — {info['data_date']:%Y-%m-%d}</h2>
     <div class="feeds">{feed_html}</div>
     <p class="sub">Collector clock at run: {esc(parsed['run_label'])} · {n_feeds} feeds checked
@@ -365,6 +476,7 @@ def render(day, base=None, now=None):
     <a href="{REPO}/releases/tag/iocs-{day.name}">Raw dumps for {info['data_date']:%Y-%m-%d}</a>
   </p>
 </main>
+{lookup_script(info, ips, domains, hashes)}
 </body>
 </html>
 """
