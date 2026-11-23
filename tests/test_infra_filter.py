@@ -231,8 +231,8 @@ class TestThreatFox(unittest.TestCase):
             {"ioc": "45.9.1.2", "ioc_type": "ip:port", "confidence_level": 75},
         ])
         r = read_threatfox(path)
-        self.assertEqual(r["domains"], {"bad-c2.example"})
-        self.assertEqual(r["ips"], {"91.107.247.163", "45.9.1.2"})
+        self.assertEqual(set(r["domains"]), {"bad-c2.example"})
+        self.assertEqual(set(r["ips"]), {"91.107.247.163", "45.9.1.2"})
 
     def test_low_confidence_is_dropped(self):
         from ioc_extract import read_threatfox
@@ -242,7 +242,7 @@ class TestThreatFox(unittest.TestCase):
             {"ioc": "maybe.example", "ioc_type": "domain", "confidence_level": 50},
         ])
         r = read_threatfox(path, min_confidence=75)
-        self.assertEqual(r["domains"], {"sure.example"})
+        self.assertEqual(set(r["domains"]), {"sure.example"})
         self.assertEqual(r["skipped"]["low_confidence"], 1)
 
     def test_hashes_are_not_domains(self):
@@ -252,8 +252,8 @@ class TestThreatFox(unittest.TestCase):
             {"ioc": "a" * 64, "ioc_type": "sha256_hash", "confidence_level": 100},
         ])
         r = read_threatfox(path)
-        self.assertEqual(r["domains"], set())
-        self.assertEqual(r["ips"], set())
+        self.assertEqual(set(r["domains"]), set())
+        self.assertEqual(set(r["ips"]), set())
 
     def test_infra_domains_from_threatfox_are_suppressed(self):
         from ioc_extract import read_threatfox
@@ -263,7 +263,7 @@ class TestThreatFox(unittest.TestCase):
             {"ioc": "payload.github.com", "ioc_type": "domain", "confidence_level": 100},
         ])
         r = read_threatfox(path, rules=rules())
-        self.assertEqual(r["domains"], set())
+        self.assertEqual(set(r["domains"]), set())
         self.assertEqual(r["skipped"]["infra:platform"], 2)
 
     def test_url_ioc_is_reduced_to_host(self):
@@ -274,5 +274,5 @@ class TestThreatFox(unittest.TestCase):
             {"ioc": "http://5.6.7.8/x", "ioc_type": "url", "confidence_level": 90},
         ])
         r = read_threatfox(path)
-        self.assertEqual(r["domains"], {"evil.example"})
-        self.assertEqual(r["ips"], {"5.6.7.8"})
+        self.assertEqual(set(r["domains"]), {"evil.example"})
+        self.assertEqual(set(r["ips"]), {"5.6.7.8"})

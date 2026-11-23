@@ -101,6 +101,20 @@ Selected IOCs are converted into Wazuh CDB lists and used by custom rules:
 - Malicious domains: rules 100101 / 100102
 - Malicious hashes: rules 100110 / 100111
 
+Each entry carries its provenance in the CDB value:
+
+```text
+1.2.3.4:threatfox:100
+evil.example:threatfox:100|urlhaus
+5.6.7.8:ipsum
+```
+
+Wazuh matches on the **key** only (`match_key` / `address_match_key`), so the
+value never changes which traffic a rule catches - it makes the list
+self-describing and lets the dashboard lookup answer "which feed, at what
+confidence". Splitting a low-confidence tier into its own list is therefore a
+filtering decision, not a matching change.
+
 The daily collector updates the IP, domain, and hash lists automatically.
 
 ### Push vs pull

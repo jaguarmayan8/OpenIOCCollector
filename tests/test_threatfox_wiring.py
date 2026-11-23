@@ -81,9 +81,12 @@ class TestThreatFoxWiring(unittest.TestCase):
         ioc_extract.cmd_lists(args)
 
     def _values(self, path):
-        return {
-            line.rstrip(":") for line in Path(path).read_text(encoding="utf-8").splitlines() if line
-        }
+        """Keys only: `1.2.3.4:threatfox:100` -> `1.2.3.4`."""
+        keys = set()
+        for line in Path(path).read_text(encoding="utf-8").splitlines():
+            if line:
+                keys.add(ioc_extract.parse_tagged(line)[0])
+        return keys
 
     def test_threatfox_domain_reaches_the_domain_list(self):
         self._run()
@@ -105,12 +108,25 @@ class TestThreatFoxWiring(unittest.TestCase):
         self.assertIn("203.0.113.9", ip_values)
         self.assertNotIn("203.0.113.9:8080", ip_values)
 
-    def test_cdb_format_is_value_colon(self):
+    def test_cdb_format_is_key_then_provenance(self):
+        """`key:source:confidence` - one line per key, provenance always present."""
         self._run()
         for path in (self.domains, self.ips):
-            for line in path.read_text(encoding="utf-8").splitlines():
-                self.assertTrue(line.endswith(":"), line)
-                self.assertNotIn(":", line[:-1])
+            lines = [l for l in path.read_text(encoding="utf-8").splitlines() if l]
+            keys = [l.split(":", 1)[0] for l in lines]
+            self.assertEqual(len(keys), len(set(keys)), "duplicate CDB key in %s" % path)
+            for line in lines:
+                key, _, tag = line.partition(":")
+                self.assertNotIn(":", key, line)
+                self.assertRegex(tag, r"^[a-z]+(:\d+)?(\|[a-z]+(:\d+)?)*$", line)
+
+    def test_provenance_carries_the_feed_confidence(self):
+        self._run()
+        dom = self.domains.read_text(encoding="utf-8").splitlines()
+        self.assertIn("tf-c2-evil.test:threatfox:100", dom)
+        self.assertIn("urlhaus-evil.test:urlhaus", dom)
+        ip = self.ips.read_text(encoding="utf-8").splitlines()
+        self.assertIn("203.0.113.9:threatfox:90", ip)
 
     def test_urlhaus_header_row_is_not_dropped(self):
         # The export has no header; a parser that skips row 1 loses an IOC/day.

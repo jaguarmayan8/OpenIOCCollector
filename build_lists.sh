@@ -37,7 +37,7 @@ echo "=== Building CDB lists ==="
 
 # IPs from IPsum (the aggregated multi-source blocklist).
 if [ -s "$LATEST_DIR/top_malicious.txt" ]; then
-  grep -E '^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$LATEST_DIR/top_malicious.txt" | awk '{print $1":"}' > malicious-ips.txt
+  python3 ioc_extract.py ips --ipsum "$LATEST_DIR/top_malicious.txt" --out malicious-ips.txt
 else
   echo "[!] top_malicious.txt missing/empty - keeping previous malicious-ips.txt"
 fi
@@ -75,14 +75,15 @@ if [ -s "$LATEST_DIR/urlhaus.csv" ] || [ "$TF_IOCS" -gt 0 ]; then
   # union does not lose ~2,900 entries and trip the guard. The sidecar is
   # committed, so this survives an outage instead of blocking the publish.
   if [ "$TF_IOCS" -eq 0 ] && [ -s threatfox-domains.txt ]; then
-    sort -u malicious-domains.txt threatfox-domains.txt -o malicious-domains.txt
+    python3 ioc_extract.py merge --out malicious-domains.txt malicious-domains.txt threatfox-domains.txt
     echo "[!] STALE COMPONENT: carried forward $(wc -l < threatfox-domains.txt) previous ThreatFox domains"
   fi
 
   if [ -s .threatfox-ips.tmp ]; then
     # Union with the ipsum list, keep it sorted and deduplicated.
-    sort -u malicious-ips.txt .threatfox-ips.tmp > .ips.merged
-    mv .ips.merged malicious-ips.txt
+    # Union BY KEY: `sort -u` would keep `1.2.3.4:` and `1.2.3.4:threatfox:100`
+    # as two lines with the same CDB key - a duplicate entry in the database.
+    python3 ioc_extract.py merge --out malicious-ips.txt malicious-ips.txt .threatfox-ips.tmp
     echo "[+] merged $(wc -l < .threatfox-ips.tmp) ThreatFox C2 IPs into malicious-ips.txt"
     rm -f .threatfox-ips.tmp
   fi
@@ -110,7 +111,8 @@ echo "=== Normalising lists (byte order, deduplicated) ==="
 for f in malicious-ips.txt malicious-domains.txt malicious-hashes.txt; do
   [ -s "$f" ] || continue
   before=$(wc -l < "$f")
-  sort -u "$f" -o "$f"
+  # Tag-aware: one line per key, provenance unioned, byte-order sorted.
+  python3 ioc_extract.py merge --out "$f" "$f" >/dev/null
   after=$(wc -l < "$f")
   if [ "$before" -ne "$after" ]; then
     echo "  $f: $before -> $after lines ($((before - after)) duplicates dropped)"

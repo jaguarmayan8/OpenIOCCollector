@@ -133,14 +133,28 @@
     return { value: v, tag: "" };
   }
 
-  /* "threatfox:100" -> {source:"threatfox", confidence:"100"} */
+  /* "threatfox:100" -> {source:"threatfox", confidence:"100"}
+     Multi-feed entries arrive as "threatfox:100|urlhaus" (strongest first);
+     the verdict names the strongest one. */
   function parseTag(tag) {
     if (!tag) { return { source: "", confidence: "" }; }
-    var p = String(tag).split(":");
-    if (p.length >= 2 && /^\d{1,3}$/.test(p[p.length - 1])) {
-      return { source: p.slice(0, -1).join(":"), confidence: p[p.length - 1] };
+    var parts = String(tag).split("|");
+    var best = { source: "", confidence: "" };
+    var bestScore = -1;
+    for (var i = 0; i < parts.length; i++) {
+      var p = parts[i].trim();
+      if (!p) { continue; }
+      var seg = p.split(":");
+      var src = p;
+      var conf = "";
+      if (seg.length >= 2 && /^\d{1,3}$/.test(seg[seg.length - 1])) {
+        conf = seg[seg.length - 1];
+        src = seg.slice(0, -1).join(":");
+      }
+      var score = conf === "" ? 0 : parseInt(conf, 10);
+      if (score > bestScore) { bestScore = score; best = { source: src, confidence: conf }; }
     }
-    return { source: tag, confidence: "" };
+    return best;
   }
 
   function buildIndex(text) {
