@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenIOCCollector Dashboard — 2026-11-22</title>
+<title>OpenIOCCollector Dashboard — 2026-11-23</title>
 <style>
   :root {
     --bg:#0b1220; --card:#121a2b; --line:#243049; --text:#e8eefc;
@@ -87,17 +87,17 @@
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-22</b>
-     · generated 2026-11-22 11:51 CST (7.9 h ago)</p>
+  <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-23</b>
+     · generated 2026-11-23 15:04 UTC (5 min ago)</p>
   
 </header>
 <main>
   <section class="grid">
-    <div class="card"><div class="num">139,496</div><div class="label">Malicious IPs</div></div>
-    <div class="card"><div class="num">3,645</div><div class="label">Malicious domains</div></div>
-    <div class="card"><div class="num">3,123</div><div class="label">Malicious hashes</div></div>
-    <div class="card bad"><div class="num">4/6 feeds with data</div>
-      <div class="label">Feeds with data (1 failed)</div></div>
+    <div class="card"><div class="num">142,583</div><div class="label">Malicious IPs</div></div>
+    <div class="card"><div class="num">3,337</div><div class="label">Malicious domains</div></div>
+    <div class="card"><div class="num">3,647</div><div class="label">Malicious hashes</div></div>
+    <div class="card"><div class="num">5/6 feeds with data</div>
+      <div class="label">Feeds with data (all feeds reported data)</div></div>
   </section>
 
   <section class="card" style="margin-top:16px;" id="lookup">
@@ -122,24 +122,24 @@
   </section>
 
   <section class="card">
-    <h2>Feeds — 2026-11-22</h2>
-    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>835.1 KB | ~11345 entries</span><span class="tag">ok</span></div>
+    <h2>Feeds — 2026-11-23</h2>
+    <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>512.0 KB | ~6895 entries</span><span class="tag">ok</span></div>
 <div class="feed expected"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected <em class="feed-note">— abuse.ch: no active C2 servers since Operation Endgame</em></span><span class="tag">expected empty</span></div>
-<div class="feed ok"><b>top_malicious.txt</b><span>2208.1 KB | ~139496 entries</span><span class="tag">ok</span></div>
-<div class="feed ok"><b>urlhaus.csv</b><span>29735.7 KB | ~116713 entries</span><span class="tag">ok</span></div>
-<div class="feed error"><b>threatfox_recent.json</b><span>Error - Response ended prematurely</span><span class="tag">error</span></div>
-<div class="feed ok"><b>malwarebazaar_recent.json</b><span>139.1 KB | ~100 entries</span><span class="tag">ok</span></div></div>
-    <p class="sub">Collector clock at run: 2026-11-22 17:45 · 6 feeds checked
-       · <b>146,264 unique IOCs published</b>
-         (139,496 IPs + 3,645 domains + 3,123 hashes)
-         from 267,654 raw feed entries before dedup and confidence filtering</p>
+<div class="feed ok"><b>top_malicious.txt</b><span>2231.0 KB | ~140895 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>urlhaus.csv</b><span>26187.6 KB | ~103829 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>threatfox_recent.json</b><span>7755.6 KB | ~10143 entries</span><span class="tag">ok</span></div>
+<div class="feed ok"><b>malwarebazaar_recent.json</b><span>135.8 KB | ~100 entries</span><span class="tag">ok</span></div></div>
+    <p class="sub">Collector clock at run: 2026-11-23 15:04 · 6 feeds checked
+       · <b>149,567 unique IOCs published</b>
+         (142,583 IPs + 3,337 domains + 3,647 hashes)
+         from 261,862 raw feed entries before dedup and confidence filtering</p>
   </section>
 
-  <section class="card" style="margin-top:16px;"><h2>VirusTotal sample</h2><p class="sub">No VirusTotal sample for this day.</p></section>
+  <section class="card" style="margin-top:16px;"><h2>VirusTotal sample</h2><div class="grid vt-grid"><div class="card"><div class="num">20</div><div class="label">hashes checked</div></div><div class="card bad"><div class="num">17</div><div class="label">with ≥1 VT detection</div></div><div class="card"><div class="num">0</div><div class="label">VT-clean</div></div></div><p class="vt-caveat"><span>A sample of 20 hashes from ThreatFox — not a verdict on the hash list or on the corpus.</span> <span>3 of them are unknown to VirusTotal (never submitted or not yet analysed) and are <b>not</b> counted as clean.</span></p><details class="vt-list"><summary>All 20 sampled hashes (full, linked)</summary><ul><li class="vt-row"><a href="https://www.virustotal.com/gui/file/7407d9772e0572b0f577bc39caa5d0e3e4e921cc03f7592bebafd14c6ee9ddd1" rel="noopener noreferrer" target="_blank"><code class="h">7407d9772e0572b0f577bc39caa5d0e3e4e921cc03f7592bebafd14c6ee9ddd1</code></a><span class="vt-meta">32 detections · downloader.snowlight/dloadr <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/ac6c45297f5237e3d7efec945277e117bc922b35e021da59ffd4c121f5418188" rel="noopener noreferrer" target="_blank"><code class="h">ac6c45297f5237e3d7efec945277e117bc922b35e021da59ffd4c121f5418188</code></a><span class="vt-meta">32 detections · downloader.dloadr/agent5 <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/cb5a396b5cfee4520b43d940de6ac2bbceb965ee7a3069012cffe716d49cd060" rel="noopener noreferrer" target="_blank"><code class="h">cb5a396b5cfee4520b43d940de6ac2bbceb965ee7a3069012cffe716d49cd060</code></a><span class="vt-meta">32 detections · downloader.snowlight/dloadr <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/159212db1279ca99ed5f4bef5e9c456e716adcf058f614f26cb1eaf6e76cf95b" rel="noopener noreferrer" target="_blank"><code class="h">159212db1279ca99ed5f4bef5e9c456e716adcf058f614f26cb1eaf6e76cf95b</code></a><span class="vt-meta">31 detections · downloader.dloadr/agent5 <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/f3fb44ad8a40b5936642a9b5123cf65ba8fa22bf3f642cc1c4cc697da7b994b6" rel="noopener noreferrer" target="_blank"><code class="h">f3fb44ad8a40b5936642a9b5123cf65ba8fa22bf3f642cc1c4cc697da7b994b6</code></a><span class="vt-meta">31 detections · downloader.dloadr/agent5 <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/d2c59d92d30ca23bd75790f217f922bd60da5755e69346224dc5076614de1f26" rel="noopener noreferrer" target="_blank"><code class="h">d2c59d92d30ca23bd75790f217f922bd60da5755e69346224dc5076614de1f26</code></a><span class="vt-meta">25 detections · trojan.mirai/hajime <span class="vt-tf">ThreatFox: Mirai</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/f2b94316e528c3c0c852710f1db84f9737bf00c346dcc0c7f23fb64d6b804163" rel="noopener noreferrer" target="_blank"><code class="h">f2b94316e528c3c0c852710f1db84f9737bf00c346dcc0c7f23fb64d6b804163</code></a><span class="vt-meta">24 detections · trojan.mirai/ddos <span class="vt-tf">ThreatFox: Mirai</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/11bc3d5be7e2ed5808be472f3e1394b9e39d2d04d5bd87d4353a77a4d5d4d48e" rel="noopener noreferrer" target="_blank"><code class="h">11bc3d5be7e2ed5808be472f3e1394b9e39d2d04d5bd87d4353a77a4d5d4d48e</code></a><span class="vt-meta">23 detections · trojan.mirai/hajime <span class="vt-tf">ThreatFox: Mirai</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/236b836ba8c39858fe6dde77830dbce358e241cbf32c514fb482191f41c3354a" rel="noopener noreferrer" target="_blank"><code class="h">236b836ba8c39858fe6dde77830dbce358e241cbf32c514fb482191f41c3354a</code></a><span class="vt-meta">22 detections · downloader.downloade/crit <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/60bb11c54b05e9d730c1a2cb26bafee84eb49407f364ea216469ed0b48fcb2c3" rel="noopener noreferrer" target="_blank"><code class="h">60bb11c54b05e9d730c1a2cb26bafee84eb49407f364ea216469ed0b48fcb2c3</code></a><span class="vt-meta">22 detections · downloader.downloade/crit <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/1f98c6bf1d31f7e66456ded3c6b0358a8d892460a920053a3a9b5f45cb317249" rel="noopener noreferrer" target="_blank"><code class="h">1f98c6bf1d31f7e66456ded3c6b0358a8d892460a920053a3a9b5f45cb317249</code></a><span class="vt-meta">21 detections · downloader.downloade/crit <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/736d35d102cbb9eaba524ac069235d016ff009dcad2c9597d1de349f78458950" rel="noopener noreferrer" target="_blank"><code class="h">736d35d102cbb9eaba524ac069235d016ff009dcad2c9597d1de349f78458950</code></a><span class="vt-meta">20 detections · downloader.downloade/multiverze <span class="vt-tf">ThreatFox: Unknown Loader</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/44ba2238310ceb94198d0f086f9ed4edf727b680569b330b10344140e41d08f0" rel="noopener noreferrer" target="_blank"><code class="h">44ba2238310ceb94198d0f086f9ed4edf727b680569b330b10344140e41d08f0</code></a><span class="vt-meta">17 detections · trojan.mirai/ddos <span class="vt-tf">ThreatFox: Mirai</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/7b8872207d39e81c3f9aa490825670b0868b251ffed3ab6c4319c85f748d6406" rel="noopener noreferrer" target="_blank"><code class="h">7b8872207d39e81c3f9aa490825670b0868b251ffed3ab6c4319c85f748d6406</code></a><span class="vt-meta">5 detections · trojan. <span class="vt-tf">ThreatFox: Unknown malware</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/f87e4951effb37eca10eb9d3790267b8f0b8bbcb385f6739d8133647c5bcc4c4" rel="noopener noreferrer" target="_blank"><code class="h">f87e4951effb37eca10eb9d3790267b8f0b8bbcb385f6739d8133647c5bcc4c4</code></a><span class="vt-meta">5 detections · trojan.lukkb9f4rhj <span class="vt-tf">ThreatFox: Unknown malware</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/0e4d57e1ab9e5d1e421907f90a563c4e32d0b85426135c301405e6b692a716f2" rel="noopener noreferrer" target="_blank"><code class="h">0e4d57e1ab9e5d1e421907f90a563c4e32d0b85426135c301405e6b692a716f2</code></a><span class="vt-meta">4 detections · trojan. <span class="vt-tf">ThreatFox: Unknown malware</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/5befc799e7433c255b7243047e645f4635d627907db41d32aac5af38017bb77f" rel="noopener noreferrer" target="_blank"><code class="h">5befc799e7433c255b7243047e645f4635d627907db41d32aac5af38017bb77f</code></a><span class="vt-meta">4 detections · trojan. <span class="vt-tf">ThreatFox: Unknown malware</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/ddd9e549d33949ddfa0c8e9abbcfafbfdba4f43b249f0898b686f8e3fd8ca627" rel="noopener noreferrer" target="_blank"><code class="h">ddd9e549d33949ddfa0c8e9abbcfafbfdba4f43b249f0898b686f8e3fd8ca627</code></a><span class="vt-meta">not seen by VirusTotal <span class="vt-tf">ThreatFox: Unknown malware</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/ded3d51b18d0c87f9119a4bb6c855cb466c6dec914bdd6b49d84ee795bdbe036" rel="noopener noreferrer" target="_blank"><code class="h">ded3d51b18d0c87f9119a4bb6c855cb466c6dec914bdd6b49d84ee795bdbe036</code></a><span class="vt-meta">not seen by VirusTotal <span class="vt-tf">ThreatFox: Unknown malware</span></span></li><li class="vt-row"><a href="https://www.virustotal.com/gui/file/f4f6f3aac558a73f9509557f7c4f5e9055b8499f406d096a775de2cf355159c1" rel="noopener noreferrer" target="_blank"><code class="h">f4f6f3aac558a73f9509557f7c4f5e9055b8499f406d096a775de2cf355159c1</code></a><span class="vt-meta">not seen by VirusTotal <span class="vt-tf">ThreatFox: Unknown malware</span></span></li></ul><p class="sub"><a href="https://github.com/jaguarmayan8/OpenIOCCollector/blob/main/Output/2026/2026-11/20261123/vt_enrichment.json">raw VT results (JSON)</a></p></details></section>
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
-    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261122">Raw dumps for 2026-11-22</a>
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261123">Raw dumps for 2026-11-23</a>
   </p>
 </main>
 <script id="ioc-lookup">
@@ -164,7 +164,7 @@
 (function () {
   "use strict";
 
-  var CFG = {"counts": {"domains": 3645, "hashes": 3123, "ips": 139496}, "dataDate": "2026-11-22", "lists": [{"key": "ips", "label": "IP list", "path": "malicious-ips.txt"}, {"key": "domains", "label": "Domain list", "path": "malicious-domains.txt"}, {"key": "hashes", "label": "Hash list", "path": "malicious-hashes.txt"}], "raw": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/", "stale": false};
+  var CFG = {"counts": {"domains": 3337, "hashes": 3647, "ips": 142583}, "dataDate": "2026-11-23", "lists": [{"key": "ips", "label": "IP list", "path": "malicious-ips.txt"}, {"key": "domains", "label": "Domain list", "path": "malicious-domains.txt"}, {"key": "hashes", "label": "Hash list", "path": "malicious-hashes.txt"}], "raw": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/", "stale": false};
   var root = (typeof window !== "undefined") ? window : globalThis;
 
   function fmt(n) {
