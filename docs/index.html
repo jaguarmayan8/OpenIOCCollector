@@ -42,6 +42,18 @@
   th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); }
   th { color:var(--muted); font-weight:600; }
   .hash { font-family:monospace; }
+  .feed.expected { border-left:4px solid #3a4763; }
+  .feed.expected .tag { color:var(--muted); }
+  .feed-note { color:var(--muted); font-size:12px; font-style:normal; }
+  .vt-grid { margin:16px 0 10px; }
+  .vt-caveat { color:var(--muted); font-size:12.5px; line-height:1.6; margin:0 0 12px; }
+  .vt-caveat span { display:inline; }
+  .vt-list summary { cursor:pointer; font-size:13px; color:var(--accent); }
+  .vt-list ul { list-style:none; padding:0; margin:12px 0 0; }
+  .vt-row { padding:9px 0; border-bottom:1px solid var(--line); }
+  .vt-row code.h { font-family:monospace; font-size:12px; word-break:break-all; }
+  .vt-meta { display:block; color:var(--muted); font-size:12px; margin-top:3px; }
+  .vt-tf { color:var(--text); }
   a { color:var(--accent); }
   .lookup { display:flex; gap:10px; margin:16px 0 6px; }
   .lookup input { flex:1 1 auto; min-width:0; background:#0f1726; border:1px solid var(--line);
@@ -76,7 +88,7 @@
 <header>
   <h1>OpenIOCCollector</h1>
   <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-22</b>
-     · generated 2026-11-22 19:10 CST (0 min ago)</p>
+     · generated 2026-11-22 11:51 CST (7.9 h ago)</p>
   
 </header>
 <main>
@@ -112,7 +124,7 @@
   <section class="card">
     <h2>Feeds — 2026-11-22</h2>
     <div class="feeds"><div class="feed ok"><b>ssl_blacklist.csv</b><span>835.1 KB | ~11345 entries</span><span class="tag">ok</span></div>
-<div class="feed empty"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected</span><span class="tag">empty</span></div>
+<div class="feed expected"><b>feodo_tracker.txt</b><span>Empty (0.6 KB) - this may be expected <em class="feed-note">— abuse.ch: no active C2 servers since Operation Endgame</em></span><span class="tag">expected empty</span></div>
 <div class="feed ok"><b>top_malicious.txt</b><span>2208.1 KB | ~139496 entries</span><span class="tag">ok</span></div>
 <div class="feed ok"><b>urlhaus.csv</b><span>29735.7 KB | ~116713 entries</span><span class="tag">ok</span></div>
 <div class="feed error"><b>threatfox_recent.json</b><span>Error - Response ended prematurely</span><span class="tag">error</span></div>
@@ -123,17 +135,7 @@
          from 267,654 raw feed entries before dedup and confidence filtering</p>
   </section>
 
-  <section class="card" style="margin-top:16px;">
-    <h2>VirusTotal sample</h2>
-    <table>
-      <thead>
-        <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
-      </thead>
-      <tbody>
-        <tr><td colspan='6'>No VirusTotal sample yet.</td></tr>
-      </tbody>
-    </table>
-  </section>
+  <section class="card" style="margin-top:16px;"><h2>VirusTotal sample</h2><p class="sub">No VirusTotal sample for this day.</p></section>
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·

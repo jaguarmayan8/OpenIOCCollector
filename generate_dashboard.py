@@ -113,7 +113,83 @@ def lookup_script(info, ips, domains, hashes):
 # still carries today's date (e.g. the cron ran at 04:30 and died mid-run).
 STALE_AFTER_HOURS = 26
 
-STATUSES = ("ok", "empty", "unknown", "error")
+STATUSES = ("ok", "empty", "expected", "unknown", "error")
+
+# A feed that is empty because that is its normal state, not because something
+# broke. abuse.ch states Feodo Tracker has shipped an empty dataset since
+# Operation Endgame, so flagging it amber every single day is a warning that is
+# permanently wrong - and a colour that never clears is how people learn to
+# ignore the one that does.
+FEED_CONFIG = {
+    "feodo_tracker.txt": {
+        "expected_empty": True,
+        "note": "abuse.ch: no active C2 servers since Operation Endgame",
+    },
+}
+
+# VirusTotal "malicious" votes at or above this count as a detection.
+VT_HIT_MIN = 1
+VT_GUI = "https://www.virustotal.com/gui/file/"
+
+# Only set by the offline preview builder; never true in the pipeline.
+DEBUG_NO_LINKS = False
+
+
+def apply_feed_config(feeds):
+    """Tag expected-empty feeds. An ERROR is never downgraded.
+
+    "The feed answered and had nothing" and "the feed never answered" stay
+    different things: a 410 from Feodo is still a red row.
+    """
+    for feed in feeds:
+        cfg = FEED_CONFIG.get(feed.get("name"))
+        if not cfg:
+            continue
+        feed["expected_empty"] = bool(cfg.get("expected_empty"))
+        feed["note"] = cfg.get("note", "")
+        if feed["status"] == "empty" and feed["expected_empty"]:
+            feed["status"] = "expected"
+    return feeds
+
+
+def _vt_int(value):
+    try:
+        return int(value)
+    except (TypeError, ValueError):
+        return 0
+
+
+def _vt_found(row):
+    value = row.get("found")
+    return value is True or str(value).strip().lower() == "true"
+
+
+def vt_summary(rows):
+    """Counts behind the VirusTotal headline.
+
+    "Not found" is not "clean". VirusTotal answers 404 for a hash it has never
+    seen, and the previous table rendered that as `Found: False` next to
+    `Malicious: 0` - which reads as a clean verdict on a sample nothing had
+    analysed. Unknown and clean are counted separately and never added.
+    """
+    errors = [r for r in rows if "error" in r]
+    ok = [r for r in rows if "error" not in r]
+    found = [r for r in ok if _vt_found(r)]
+    hits = [r for r in ok if _vt_int(r.get("malicious")) >= VT_HIT_MIN]
+    clean = [
+        r
+        for r in found
+        if _vt_int(r.get("malicious")) == 0 and _vt_int(r.get("suspicious")) == 0
+    ]
+    unknown = [r for r in ok if not _vt_found(r)]
+    return {
+        "checked": len(rows),
+        "errors": len(errors),
+        "found": len(found),
+        "hits": len(hits),
+        "clean": len(clean),
+        "unknown": len(unknown),
+    }
 
 
 def classify_detail(detail):
@@ -290,11 +366,110 @@ def _age_text(hours):
     return f"{hours / 24:.1f} days ago"
 
 
+def render_vt_section(rows, day):
+    """Three numbers plus the full hashes, never a wall of truncated rows.
+
+    The old table showed 20 rows cut to 16 characters each, a third of them
+    `Found: False / Unknown malware` - which is noise, not evidence: those rows
+    were hashes VirusTotal had never seen. The numbers answer "is this feed
+    worth sampling?" and the hash list stays available, in full and linked,
+    for the one analyst who wants to look one up.
+    """
+    stats = vt_summary(rows)
+    day_name = Path(day).name
+    raw_href = "%s/blob/main/Output/%s/%s-%s/%s/vt_enrichment.json" % (
+        REPO, day_name[:4], day_name[:4], day_name[4:6], day_name
+    )
+
+    if not rows:
+        return (
+            '  <section class="card" style="margin-top:16px;">'
+            "<h2>VirusTotal sample</h2>"
+            '<p class="sub">No VirusTotal sample for this day.</p></section>\n'
+        )
+
+    cards = "".join(
+        '<div class="card%s"><div class="num">%s</div>'
+        '<div class="label">%s</div></div>' % (cls, n, label)
+        for cls, n, label in (
+            ("", fmt_num(stats["checked"]), "hashes checked"),
+            (" bad" if stats["hits"] else "", fmt_num(stats["hits"]),
+             "with ≥1 VT detection"),
+            ("", fmt_num(stats["clean"]), "VT-clean"),
+        )
+    )
+
+    caveats = [
+        "A sample of %s hashes from ThreatFox — not a verdict on the hash list "
+        "or on the corpus." % fmt_num(stats["checked"])
+    ]
+    if stats["unknown"]:
+        caveats.append(
+            "%s of them are unknown to VirusTotal (never submitted or not yet "
+            "analysed) and are <b>not</b> counted as clean."
+            % fmt_num(stats["unknown"])
+        )
+    if stats["errors"]:
+        caveats.append("%s lookup(s) failed." % fmt_num(stats["errors"]))
+    caveat_html = " ".join('<span>%s</span>' % c for c in caveats)
+
+    def rank(row):
+        return (
+            -_vt_int(row.get("malicious")),
+            -_vt_int(row.get("suspicious")),
+            row.get("hash", ""),
+        )
+
+    items = []
+    for row in sorted(rows, key=rank):
+        h = esc(row.get("hash", ""))
+        parts = []
+        if "error" in row:
+            verdict = "lookup failed: %s" % esc(row["error"])
+        elif not _vt_found(row):
+            verdict = "not seen by VirusTotal"
+        else:
+            det = _vt_int(row.get("malicious"))
+            susp = _vt_int(row.get("suspicious"))
+            verdict = "%d detection%s" % (det, "" if det == 1 else "s")
+            if susp:
+                verdict += " · %d suspicious" % susp
+            label = (row.get("label") or "").strip()
+            if label:
+                verdict += " · %s" % esc(label)
+        if row.get("malware"):
+            parts.append('<span class="vt-tf">ThreatFox: %s</span>' % esc(row["malware"]))
+        if DEBUG_NO_LINKS:  # pragma: no cover - only for offline previews
+            head = "<code class=\"h\">%s</code>" % h
+        else:
+            head = (
+                '<a href="%s%s" rel="noopener noreferrer" target="_blank">'
+                '<code class="h">%s</code></a>' % (VT_GUI, h, h)
+            )
+        items.append(
+            '<li class="vt-row">%s<span class="vt-meta">%s%s</span></li>'
+            % (head, verdict, " " + " ".join(parts) if parts else "")
+        )
+
+    return (
+        '  <section class="card" style="margin-top:16px;">'
+        "<h2>VirusTotal sample</h2>"
+        '<div class="grid vt-grid">%s</div>'
+        '<p class="vt-caveat">%s</p>'
+        '<details class="vt-list"><summary>All %s sampled hashes (full, linked)</summary>'
+        "<ul>%s</ul>"
+        '<p class="sub"><a href="%s">raw VT results (JSON)</a></p>'
+        "</details></section>\n"
+        % (cards, caveat_html, fmt_num(stats["checked"]), "".join(items), raw_href)
+    )
+
+
 def render(day, base=None, now=None):
     """Build the dashboard HTML string for `day` (a Path to a daily folder)."""
     base = Path(base) if base else BASE
     day = Path(day)
     parsed = parse_summary(day / "daily_summary.md")
+    apply_feed_config(parsed["feeds"])
     info = freshness(day, day / "daily_summary.md", now=now)
 
     ips = count_lines(base / "malicious-ips.txt")
@@ -318,19 +493,22 @@ def render(day, base=None, now=None):
     n_soft = counts["empty"] + counts["unknown"]
 
     feed_html = "\n".join(
-        '<div class="feed {status}"><b>{name}</b><span>{detail}</span>'
-        '<span class="tag">{status}</span></div>'.format(
-            status=f["status"], name=esc(f["name"]), detail=esc(f["detail"])
+        '<div class="feed {status}"><b>{name}</b><span>{detail}{note}</span>'
+        '<span class="tag">{tag}</span></div>'.format(
+            status=f["status"],
+            name=esc(f["name"]),
+            detail=esc(f["detail"]),
+            note=(
+                ' <em class="feed-note">— %s</em>' % esc(f["note"])
+                if f.get("note")
+                else ""
+            ),
+            tag="expected empty" if f["status"] == "expected" else f["status"],
         )
         for f in parsed["feeds"]
     ) or "<p>No feed summary found.</p>"
 
-    vt_html = "\n".join(
-        f"<tr><td class='hash'>{esc(r['hash'][:16])}…</td><td>{esc(r['found'])}</td>"
-        f"<td>{esc(r['malicious'])}</td><td>{esc(r['suspicious'])}</td>"
-        f"<td>{esc(r['label'])}</td><td>{esc(r['malware'])}</td></tr>"
-        for r in vt
-    ) or "<tr><td colspan='6'>No VirusTotal sample yet.</td></tr>"
+    vt_section = render_vt_section(vt, day)
 
     if info["stale"]:
         if not info["is_today"]:
@@ -404,6 +582,18 @@ def render(day, base=None, now=None):
   th, td {{ text-align:left; padding:10px 8px; border-bottom:1px solid var(--line); }}
   th {{ color:var(--muted); font-weight:600; }}
   .hash {{ font-family:monospace; }}
+  .feed.expected {{ border-left:4px solid #3a4763; }}
+  .feed.expected .tag {{ color:var(--muted); }}
+  .feed-note {{ color:var(--muted); font-size:12px; font-style:normal; }}
+  .vt-grid {{ margin:16px 0 10px; }}
+  .vt-caveat {{ color:var(--muted); font-size:12.5px; line-height:1.6; margin:0 0 12px; }}
+  .vt-caveat span {{ display:inline; }}
+  .vt-list summary {{ cursor:pointer; font-size:13px; color:var(--accent); }}
+  .vt-list ul {{ list-style:none; padding:0; margin:12px 0 0; }}
+  .vt-row {{ padding:9px 0; border-bottom:1px solid var(--line); }}
+  .vt-row code.h {{ font-family:monospace; font-size:12px; word-break:break-all; }}
+  .vt-meta {{ display:block; color:var(--muted); font-size:12px; margin-top:3px; }}
+  .vt-tf {{ color:var(--text); }}
   a {{ color:var(--accent); }}
   .lookup {{ display:flex; gap:10px; margin:16px 0 6px; }}
   .lookup input {{ flex:1 1 auto; min-width:0; background:#0f1726; border:1px solid var(--line);
@@ -459,18 +649,7 @@ def render(day, base=None, now=None):
          from {esc(total_raw)} raw feed entries before dedup and confidence filtering</p>
   </section>
 
-  <section class="card" style="margin-top:16px;">
-    <h2>VirusTotal sample</h2>
-    <table>
-      <thead>
-        <tr><th>Hash</th><th>Found</th><th>Malicious</th><th>Suspicious</th><th>VT label</th><th>ThreatFox</th></tr>
-      </thead>
-      <tbody>
-        {vt_html}
-      </tbody>
-    </table>
-  </section>
-
+{vt_section}
   <p style="margin-top:24px;">
     <a href="{REPO}">GitHub repository</a> ·
     <a href="{REPO}/releases/tag/iocs-{day.name}">Raw dumps for {info['data_date']:%Y-%m-%d}</a>
