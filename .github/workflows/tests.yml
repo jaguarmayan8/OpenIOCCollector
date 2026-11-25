@@ -1,0 +1,46 @@
+name: Tests
+
+# The nightly job already runs this suite before it publishes anything, but
+# that only helps on the scheduler's clock: a pull request could sit for a day
+# with no signal at all. This is the same command, on every push and every PR,
+# with no secrets and no write access - so a branch that breaks the parser or
+# the dashboard turns red while you are still looking at the diff.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Pinned to commit SHAs, same as the nightly workflow: a tag can be
+      # re-pointed at any commit by whoever controls the action's repository.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262   # v4
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065   # v5
+        with:
+          python-version: "3.12"
+
+      # No pip install: the suite imports only the standard library plus the
+      # modules under test, and pulls `requests` in nowhere. A dependency that
+      # crawls in here is a dependency the tests should not need.
+      - name: Unit tests
+        run: python3 -m unittest discover -s tests -v
+
+      # The dashboard is the only artefact a stranger sees; rendering it from
+      # the committed data catches a template error that unit tests would not.
+      - name: Render the dashboard from committed data
+        run: |
+          python3 generate_dashboard.py
+          test -s docs/index.html
+          test -s docs/api/manifest.json

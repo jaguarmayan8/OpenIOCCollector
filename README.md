@@ -5,6 +5,7 @@ threat-intelligence feeds every night, published as checksummed Wazuh CDB
 lists with a staleness guard and a feed-health dashboard.**
 
 [![Daily IOC collection](https://github.com/jaguarmayan8/OpenIOCCollector/actions/workflows/collector.yml/badge.svg)](https://github.com/jaguarmayan8/OpenIOCCollector/actions/workflows/collector.yml)
+[![Tests](https://github.com/jaguarmayan8/OpenIOCCollector/actions/workflows/tests.yml/badge.svg)](https://github.com/jaguarmayan8/OpenIOCCollector/actions/workflows/tests.yml)
 [![License: GPL-3.0](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 [![Last commit](https://img.shields.io/github/last-commit/jaguarmayan8/OpenIOCCollector)](https://github.com/jaguarmayan8/OpenIOCCollector/commits/main)
 [![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
