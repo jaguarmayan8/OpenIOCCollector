@@ -3,7 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OpenIOCCollector Dashboard — 2026-11-25</title>
+<title>OpenIOCCollector — daily IOC list, 2026-11-25</title>
+<meta name="description" content="Daily, deduplicated indicators of compromise from six public threat-intelligence feeds, republished as checksummed Wazuh CDB lists, with a lookup tool and feed-health dashboard. Data for 2026-11-25.">
+<meta name="theme-color" content="#0b1220">
+<link rel="canonical" href="https://jaguarmayan8.github.io/OpenIOCCollector/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="og.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="OpenIOCCollector">
+<meta property="og:title" content="OpenIOCCollector — 155,120 indicators from open threat-intel feeds sources">
+<meta property="og:description" content="Daily, deduplicated indicators of compromise from six public threat-intelligence feeds, republished as checksummed Wazuh CDB lists, with a lookup tool and feed-health dashboard. Data for 2026-11-25.">
+<meta property="og:url" content="https://jaguarmayan8.github.io/OpenIOCCollector/">
+<meta property="og:image" content="https://jaguarmayan8.github.io/OpenIOCCollector/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="OpenIOCCollector — 155,120 indicators from open threat-intel feeds sources">
+<meta name="twitter:description" content="Daily, deduplicated indicators of compromise from six public threat-intelligence feeds, republished as checksummed Wazuh CDB lists, with a lookup tool and feed-health dashboard. Data for 2026-11-25.">
+<meta name="twitter:image" content="https://jaguarmayan8.github.io/OpenIOCCollector/og.png">
 <style>
   :root {
     --bg:#0b1220; --card:#121a2b; --line:#243049; --text:#e8eefc;
@@ -81,14 +98,39 @@
   .result .hint { margin:11px 0 0; }
   .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
               clip:rect(0 0 0 0); white-space:nowrap; border:0; }
-  @media (max-width:560px) { .lookup { flex-direction:column; } .lookup button { width:100%; } }
+  .kpi-sub { color:var(--muted); font-size:11.5px; margin-top:4px; }
+  .feed-dots { display:flex; gap:4px; margin-top:10px; }
+  .dot { display:block; height:4px; flex:1 1 0; border-radius:2px; background:#2a3550; }
+  .dot.ok { background:var(--ok); }
+  .dot.empty, .dot.unknown { background:var(--warn); }
+  .dot.expected { background:#4a5b7d; }
+  .dot.error { background:var(--bad); }
+  .trend { width:100%; height:auto; display:block; margin:16px 0 4px; }
+  .trend-line { fill:none; stroke:var(--accent); stroke-width:2; vector-effect:non-scaling-stroke; }
+  .trend-area { fill:rgba(110,168,254,.12); stroke:none; }
+  .trend-dot { fill:var(--text); stroke:var(--accent); stroke-width:2; }
+  .trend-head { margin:4px 0 0; font-size:14px; }
+  .trend-axis { display:flex; justify-content:space-between; color:var(--muted); font-size:12px; margin:0; }
+  .trend-note { margin:12px 0 0; font-size:13px; color:var(--muted); }
+  .up { color:var(--ok); } .down { color:var(--warn); }
+  code { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; }
+  @media (max-width:560px) {
+    .grid { grid-template-columns:repeat(2,1fr); gap:12px; margin:18px 0; }
+    .num { font-size:23px; }
+    .card, .feed { padding:14px; }
+    .feed { flex-wrap:wrap; }
+    .feed b { flex:1 1 100%; }
+    header, main { padding:18px; }
+    .lookup { flex-direction:column; }
+    .lookup button { width:100%; }
+  }
 </style>
 </head>
 <body>
 <header>
   <h1>OpenIOCCollector</h1>
-  <p class="sub">Home-lab threat intel dashboard · data for <b>2026-11-25</b>
-     · generated 2026-11-25 14:43 UTC (5 min ago)</p>
+  <p class="sub">Daily IOC dashboard · data for <b>2026-11-25</b>
+     · generated 2026-11-25 14:55 UTC (17 min ago)</p>
   
 </header>
 <main>
@@ -96,10 +138,13 @@
     <div class="card"><div class="num">148,558</div><div class="label">Malicious IPs</div></div>
     <div class="card"><div class="num">2,630</div><div class="label">Malicious domains</div></div>
     <div class="card"><div class="num">3,932</div><div class="label">Malicious hashes</div></div>
-    <div class="card"><div class="num">5/6 feeds with data</div>
-      <div class="label">Feeds with data (all feeds reported data)</div></div>
+    <div class="card"><div class="num">5/6</div>
+      <div class="label">feeds reporting</div>
+      <div class="kpi-sub">1 expected empty (feodo_tracker.txt)</div>
+      <div class="feed-dots"><i class="dot ok" title="ssl_blacklist.csv"></i><i class="dot expected" title="feodo_tracker.txt"></i><i class="dot ok" title="top_malicious.txt"></i><i class="dot ok" title="urlhaus.csv"></i><i class="dot ok" title="threatfox_recent.json"></i><i class="dot ok" title="malwarebazaar_recent.json"></i></div></div>
   </section>
 
+<section class="card"><h2>Trend — last 90 days</h2><p class="trend-head"><b>155,120</b> published indicators today, <b class="up">+31,328</b> (25.3%) since 2026-08-19</p><svg class="trend" viewBox="0 0 660 150" role="img" aria-label="Published indicator count from 2026-08-19 to 2026-11-25, low 109935.12, high 155,120"><polygon class="trend-area" points="18.0,102.4 25.0,114.4 32.0,121.2 39.0,112.0 46.0,113.3 53.1,109.7 60.1,109.8 67.1,109.1 74.1,107.9 81.1,69.7 88.1,79.0 95.1,81.0 102.1,79.1 109.1,97.4 116.2,104.5 123.2,102.2 130.2,93.1 137.2,86.3 144.2,116.9 151.2,104.1 158.2,99.9 165.2,102.7 172.2,83.3 179.3,80.2 186.3,76.4 193.3,134.1 200.3,89.2 207.3,81.4 214.3,83.5 221.3,124.5 228.3,114.4 235.3,101.3 242.4,102.1 249.4,113.1 256.4,105.3 263.4,117.7 270.4,137.0 277.4,131.8 284.4,124.9 291.4,123.8 298.4,120.7 305.5,121.7 312.5,113.1 319.5,111.8 326.5,118.5 333.5,111.4 340.5,104.9 347.5,89.3 354.5,99.6 361.6,93.0 368.6,100.7 375.6,108.3 382.6,111.6 389.6,116.2 396.6,106.2 403.6,94.1 410.6,90.2 417.6,86.2 424.7,79.8 431.7,58.7 438.7,60.9 445.7,47.0 452.7,39.5 459.7,42.9 466.7,47.4 473.7,53.2 480.7,60.5 487.8,53.8 494.8,53.9 501.8,62.5 508.8,44.1 515.8,40.3 522.8,52.9 529.8,72.9 536.8,80.0 543.8,72.0 550.9,58.9 557.9,47.0 564.9,52.8 571.9,54.5 578.9,58.0 585.9,57.2 592.9,48.9 599.9,27.8 606.9,30.3 614.0,34.5 621.0,38.3 628.0,28.8 635.0,46.8 642.0,13.0 642.0,142.0 18.0,142.0"/><polyline class="trend-line" points="18.0,102.4 25.0,114.4 32.0,121.2 39.0,112.0 46.0,113.3 53.1,109.7 60.1,109.8 67.1,109.1 74.1,107.9 81.1,69.7 88.1,79.0 95.1,81.0 102.1,79.1 109.1,97.4 116.2,104.5 123.2,102.2 130.2,93.1 137.2,86.3 144.2,116.9 151.2,104.1 158.2,99.9 165.2,102.7 172.2,83.3 179.3,80.2 186.3,76.4 193.3,134.1 200.3,89.2 207.3,81.4 214.3,83.5 221.3,124.5 228.3,114.4 235.3,101.3 242.4,102.1 249.4,113.1 256.4,105.3 263.4,117.7 270.4,137.0 277.4,131.8 284.4,124.9 291.4,123.8 298.4,120.7 305.5,121.7 312.5,113.1 319.5,111.8 326.5,118.5 333.5,111.4 340.5,104.9 347.5,89.3 354.5,99.6 361.6,93.0 368.6,100.7 375.6,108.3 382.6,111.6 389.6,116.2 396.6,106.2 403.6,94.1 410.6,90.2 417.6,86.2 424.7,79.8 431.7,58.7 438.7,60.9 445.7,47.0 452.7,39.5 459.7,42.9 466.7,47.4 473.7,53.2 480.7,60.5 487.8,53.8 494.8,53.9 501.8,62.5 508.8,44.1 515.8,40.3 522.8,52.9 529.8,72.9 536.8,80.0 543.8,72.0 550.9,58.9 557.9,47.0 564.9,52.8 571.9,54.5 578.9,58.0 585.9,57.2 592.9,48.9 599.9,27.8 606.9,30.3 614.0,34.5 621.0,38.3 628.0,28.8 635.0,46.8 642.0,13.0"/><circle class="trend-dot" cx="642.0" cy="13.0" r="3.5"/></svg><p class="trend-axis"><span>2026-08-19</span><span>2026-11-25</span></p><p class="trend-note"><b class="up">+27,213</b> indicators entered the lists since the last run · <b class="down">−15,364</b> dropped out</p><p class="sub">Totals published after dedup and confidence filtering, one point per run.</p></section>
   <section class="card" style="margin-top:16px;" id="lookup">
     <h2>Look up an indicator</h2>
     <p class="hint">Checks today's published lists in your browser — nothing is uploaded.
@@ -139,7 +184,9 @@
 
   <p style="margin-top:24px;">
     <a href="https://github.com/jaguarmayan8/OpenIOCCollector">GitHub repository</a> ·
-    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261125">Raw dumps for 2026-11-25</a>
+    <a href="https://github.com/jaguarmayan8/OpenIOCCollector/releases/tag/iocs-20261125">Raw dumps for 2026-11-25</a> ·
+    <a href="api/manifest.json" title="counts, feed status and SHA-256 of every published list">API manifest</a> ·
+    <a href="history.json" title="one point per run, the source of the trend chart">history</a>
   </p>
 </main>
 <script id="ioc-lookup">
@@ -407,28 +454,136 @@
     return parent;
   }
 
+  /* ---------------------------------------------------------------------
+   * Cache + progress
+   *
+   * The IP list is ~3 MB and it changes once a day, so without a cache every
+   * visit re-downloads all of it before the first lookup can answer - on a
+   * phone that is a multi-second freeze that looks like a broken page.
+   * IndexedDB keeps the text keyed by the date it belongs to: a second visit
+   * is instant, a new day misses the cache and refetches. A browser that
+   * refuses IndexedDB (private mode, storage disabled) takes the plain fetch
+   * path - the cache is an optimisation, never a requirement.
+   * ------------------------------------------------------------------- */
+  var DB_NAME = "openiocollector";
+  var DB_STORE = "lists";
+
+  function openDb() {
+    if (typeof indexedDB === "undefined") { return Promise.resolve(null); }
+    return new Promise(function (resolve) {
+      var req;
+      try { req = indexedDB.open(DB_NAME, 1); } catch (e) { return resolve(null); }
+      req.onupgradeneeded = function () {
+        var db = req.result;
+        if (!db.objectStoreNames.contains(DB_STORE)) { db.createObjectStore(DB_STORE, { keyPath: "path" }); }
+      };
+      req.onsuccess = function () { resolve(req.result); };
+      req.onerror = function () { resolve(null); };
+      req.onblocked = function () { resolve(null); };
+    });
+  }
+
+  function cacheRead(paths, day) {
+    return openDb().then(function (db) {
+      if (!db) { return null; }
+      return new Promise(function (resolve) {
+        var out = {}, pending = paths.length;
+        if (!pending) { return resolve(null); }
+        var tx;
+        try { tx = db.transaction(DB_STORE, "readonly"); } catch (e) { return resolve(null); }
+        var store = tx.objectStore(DB_STORE);
+        paths.forEach(function (path) {
+          var req = store.get(path);
+          req.onsuccess = function () {
+            var row = req.result;
+            /* A row from another day is a miss: a stale index would answer
+               "not in today's lists" for something added today. */
+            if (row && row.day === day && typeof row.text === "string") { out[path] = row.text; }
+            pending -= 1;
+            if (!pending) { resolve(Object.keys(out).length === paths.length ? out : null); }
+          };
+          req.onerror = function () { pending -= 1; if (!pending) { resolve(null); } };
+        });
+      });
+    }).catch(function () { return null; });
+  }
+
+  function cacheWrite(items, day) {
+    openDb().then(function (db) {
+      if (!db) { return; }
+      try {
+        var tx = db.transaction(DB_STORE, "readwrite");
+        var store = tx.objectStore(DB_STORE);
+        items.forEach(function (it) { store.put({ path: it.path, day: day, text: it.text }); });
+      } catch (e) { /* quota or a locked DB - the next visit re-downloads */ }
+    }).catch(function () {});
+  }
+
+  /* Fetch with a real percentage. raw.githubusercontent sends
+     content-length, so the reader can report bytes received; without a body
+     stream (older browsers) this falls back to a plain r.text(). */
+  function fetchText(path, onProgress) {
+    return fetch(CFG.raw + path, { mode: "cors" }).then(function (r) {
+      if (!r.ok) { throw new Error(path + " -> HTTP " + r.status); }
+      var total = parseInt(r.headers.get("content-length") || "0", 10);
+      if (!r.body || typeof r.body.getReader !== "function" || !total) { return r.text(); }
+      var reader = r.body.getReader();
+      var chunks = [], received = 0;
+      return (function pump() {
+        return reader.read().then(function (step) {
+          if (step.done) {
+            var all = new Uint8Array(received), off = 0;
+            for (var i = 0; i < chunks.length; i++) { all.set(chunks[i], off); off += chunks[i].byteLength; }
+            return new TextDecoder("utf-8").decode(all);
+          }
+          chunks.push(step.value);
+          received += step.value.byteLength;
+          onProgress(Math.min(1, received / total));
+          return pump();
+        });
+      })();
+    });
+  }
+
   function load() {
     if (indices) { return Promise.resolve(indices); }
     if (loading) { return loading; }
+    var day = CFG.dataDate || "";
+    var paths = CFG.lists.map(function (l) { return l.path; });
     var acc = {};
     var done = 0;
-    setStatus("Loading " + fmt(expectedCount()) + " indicators…", "");
-    loading = Promise.all(CFG.lists.map(function (l) {
-      return fetch(CFG.raw + l.path, { mode: "cors" })
-        .then(function (r) {
-          if (!r.ok) { throw new Error(l.path + " -> HTTP " + r.status); }
-          return r.text();
-        })
-        .then(function (text) {
+
+    setStatus("Loading " + fmt(expectedCount()) + " indicators\u2026", "");
+
+    loading = cacheRead(paths, day).then(function (hit) {
+      if (hit) {
+        CFG.lists.forEach(function (l) { acc[l.key] = buildIndex(hit[l.path]); });
+        setStatus("Loading lists\u2026 cached copy", "");
+        return acc;
+      }
+      var texts = [];
+      return Promise.all(CFG.lists.map(function (l) {
+        return fetchText(l.path, function (p) {
+          setStatus(
+            "Loading " + l.path + "\u2026 " + Math.round(p * 100) + "% (" +
+            (done + 1) + "/" + CFG.lists.length + " files)", ""
+          );
+        }).then(function (text) {
+          texts.push({ path: l.path, text: text });
           acc[l.key] = buildIndex(text);
           done += 1;
           setStatus(
-            "Loading lists… " + done + "/" + CFG.lists.length +
+            "Loading lists\u2026 " + done + "/" + CFG.lists.length +
             " (" + fmt(acc[l.key].size) + " " + labelFor(l.key).toLowerCase() + ")",
             ""
           );
+          return acc;
         });
-    })).then(function () {
+      })).then(function () {
+        cacheWrite(texts, day);
+        return acc;
+      });
+    }).then(function () {
       indices = acc;
       var stale = CFG.stale
         ? " · STALE: the nightly run failed, these lists are from " + CFG.dataDate
