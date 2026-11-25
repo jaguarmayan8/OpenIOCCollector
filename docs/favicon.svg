@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="OpenIOCCollector">
+  <rect width="64" height="64" rx="14" fill="#0b1220"/>
+  <path d="M32 12l14 5v13c0 10-6 17-14 22-8-5-14-12-14-22V17z" fill="none" stroke="#6ea8fe" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="32" cy="31" r="4.5" fill="#3ddc97"/>
+  <path d="M22 41l5-5M42 41l-5-5" stroke="#6ea8fe" stroke-width="3" stroke-linecap="round"/>
+</svg>

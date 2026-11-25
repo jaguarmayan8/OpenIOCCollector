@@ -231,6 +231,25 @@ def fetch_malwarebazaar(session: requests.Session, path: Path, auth_key: str):
     return 0
 
 
+def write_summary_json(path, *, run_label, run_dt, feeds, feeds_with_data,
+                       feeds_total, raw_entries):
+    """Write the machine-readable twin of daily_summary.md.
+
+    Kept deliberately flat and additive-free: consumers index `feeds` by `name`
+    and never have to know anything about the markdown layout.
+    """
+    payload = {
+        "schema": 1,
+        "generated_at": run_dt.astimezone().isoformat(timespec="seconds"),
+        "run_label": run_label,
+        "feeds": feeds,
+        "feeds_with_data": feeds_with_data,
+        "feeds_total": feeds_total,
+        "raw_entries": raw_entries,
+    }
+    Path(path).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+
+
 # --------------------------------------------------------------------------
 # Main
 # --------------------------------------------------------------------------
@@ -263,10 +282,14 @@ def main() -> int:
     summary = [f"# Daily IOC Report - {now.strftime('%Y-%m-%d %H:%M')}", ""]
     success_count = 0
     total_iocs = 0
+    feed_rows = []          # machine-readable twin of the summary lines below
 
     def record(name: str, ok: bool, detail: str, ioc_count: int):
         nonlocal success_count, total_iocs
         total_iocs += ioc_count
+        feed_rows.append(
+            {"name": name, "ok": bool(ok), "detail": detail, "iocs": ioc_count}
+        )
         if ok:
             success_count += 1
             summary.append(f"- **{name}**: {detail}")
@@ -350,6 +373,20 @@ def main() -> int:
         f.write("\n".join(summary))
         f.write(f"\n\n**Success rate:** {success_count}/{feed_total} feeds with data")
         f.write(f"\n**Approximate total IOCs collected:** {total_iocs}")
+
+    # Machine-readable twin of daily_summary.md. The markdown stays the human
+    # view; anything that needs the numbers (the trend chart, a consumer that
+    # does not want to parse Markdown, a future API) reads this instead of
+    # regexing the report. Same run, same facts, no second source of truth.
+    write_summary_json(
+        output_dir / "summary.json",
+        run_label=now.strftime("%Y-%m-%d %H:%M"),
+        run_dt=now,
+        feeds=feed_rows,
+        feeds_with_data=success_count,
+        feeds_total=feed_total,
+        raw_entries=total_iocs,
+    )
 
     print(f"\n[+] Files saved to: {output_dir}")
     print(f"[+] Summary report saved: {report_path.name}")

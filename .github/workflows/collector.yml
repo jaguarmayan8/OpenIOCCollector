@@ -72,7 +72,11 @@ jobs:
         run: |
           git config user.name "ioc-collector[bot]"
           git config user.email "ioc-collector[bot]@users.noreply.github.com"
-          git add Output/ docs/index.html checksums.sha256 malicious-ips.txt malicious-domains.txt malicious-hashes.txt
+          # docs/ as a whole: the dashboard, the trend file and the generated
+          # API manifest all live there now, and a hand-maintained file list is
+          # one forgotten path away from a page that references data it never
+          # published.
+          git add Output/ docs/ checksums.sha256 malicious-ips.txt malicious-domains.txt malicious-hashes.txt
           # The sidecar only exists after the first healthy ThreatFox day; a
           # bare `git add` of a missing path exits non-zero and fails the step.
           [ -f threatfox-domains.txt ] && git add threatfox-domains.txt || true
@@ -98,4 +102,23 @@ jobs:
             gh issue comment "$EXISTING" --body "$BODY" || echo "could not comment on issue #$EXISTING"
           else
             gh issue create --title "$TITLE" --body "$BODY" || echo "could not open an issue - see $RUN_URL"
+          fi
+
+      # A green run closes the failure issue the reporter above opened. Without
+      # this the issue outlives the outage and a visitor sees "nightly
+      # collection failed" on the repository's front page while the pipeline is
+      # perfectly healthy.
+      - name: Close the failure issue after a good run
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -uo pipefail
+          EXISTING=$(gh issue list --state open --limit 100 \
+                       --search "in:title nightly IOC collection failed" \
+                       --json number --jq '.[0].number // empty' 2>/dev/null) || EXISTING=""
+          if [ -n "${EXISTING:-}" ]; then
+            gh issue close "$EXISTING" --comment \
+              "Closed automatically: the nightly collection completed successfully on $(date -u +%Y-%m-%d). The lists and dashboard hold this run's data." \
+              || echo "could not close issue #$EXISTING - close it by hand"
           fi

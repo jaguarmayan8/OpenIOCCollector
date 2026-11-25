@@ -262,28 +262,136 @@
     return parent;
   }
 
+  /* ---------------------------------------------------------------------
+   * Cache + progress
+   *
+   * The IP list is ~3 MB and it changes once a day, so without a cache every
+   * visit re-downloads all of it before the first lookup can answer - on a
+   * phone that is a multi-second freeze that looks like a broken page.
+   * IndexedDB keeps the text keyed by the date it belongs to: a second visit
+   * is instant, a new day misses the cache and refetches. A browser that
+   * refuses IndexedDB (private mode, storage disabled) takes the plain fetch
+   * path - the cache is an optimisation, never a requirement.
+   * ------------------------------------------------------------------- */
+  var DB_NAME = "openiocollector";
+  var DB_STORE = "lists";
+
+  function openDb() {
+    if (typeof indexedDB === "undefined") { return Promise.resolve(null); }
+    return new Promise(function (resolve) {
+      var req;
+      try { req = indexedDB.open(DB_NAME, 1); } catch (e) { return resolve(null); }
+      req.onupgradeneeded = function () {
+        var db = req.result;
+        if (!db.objectStoreNames.contains(DB_STORE)) { db.createObjectStore(DB_STORE, { keyPath: "path" }); }
+      };
+      req.onsuccess = function () { resolve(req.result); };
+      req.onerror = function () { resolve(null); };
+      req.onblocked = function () { resolve(null); };
+    });
+  }
+
+  function cacheRead(paths, day) {
+    return openDb().then(function (db) {
+      if (!db) { return null; }
+      return new Promise(function (resolve) {
+        var out = {}, pending = paths.length;
+        if (!pending) { return resolve(null); }
+        var tx;
+        try { tx = db.transaction(DB_STORE, "readonly"); } catch (e) { return resolve(null); }
+        var store = tx.objectStore(DB_STORE);
+        paths.forEach(function (path) {
+          var req = store.get(path);
+          req.onsuccess = function () {
+            var row = req.result;
+            /* A row from another day is a miss: a stale index would answer
+               "not in today's lists" for something added today. */
+            if (row && row.day === day && typeof row.text === "string") { out[path] = row.text; }
+            pending -= 1;
+            if (!pending) { resolve(Object.keys(out).length === paths.length ? out : null); }
+          };
+          req.onerror = function () { pending -= 1; if (!pending) { resolve(null); } };
+        });
+      });
+    }).catch(function () { return null; });
+  }
+
+  function cacheWrite(items, day) {
+    openDb().then(function (db) {
+      if (!db) { return; }
+      try {
+        var tx = db.transaction(DB_STORE, "readwrite");
+        var store = tx.objectStore(DB_STORE);
+        items.forEach(function (it) { store.put({ path: it.path, day: day, text: it.text }); });
+      } catch (e) { /* quota or a locked DB - the next visit re-downloads */ }
+    }).catch(function () {});
+  }
+
+  /* Fetch with a real percentage. raw.githubusercontent sends
+     content-length, so the reader can report bytes received; without a body
+     stream (older browsers) this falls back to a plain r.text(). */
+  function fetchText(path, onProgress) {
+    return fetch(CFG.raw + path, { mode: "cors" }).then(function (r) {
+      if (!r.ok) { throw new Error(path + " -> HTTP " + r.status); }
+      var total = parseInt(r.headers.get("content-length") || "0", 10);
+      if (!r.body || typeof r.body.getReader !== "function" || !total) { return r.text(); }
+      var reader = r.body.getReader();
+      var chunks = [], received = 0;
+      return (function pump() {
+        return reader.read().then(function (step) {
+          if (step.done) {
+            var all = new Uint8Array(received), off = 0;
+            for (var i = 0; i < chunks.length; i++) { all.set(chunks[i], off); off += chunks[i].byteLength; }
+            return new TextDecoder("utf-8").decode(all);
+          }
+          chunks.push(step.value);
+          received += step.value.byteLength;
+          onProgress(Math.min(1, received / total));
+          return pump();
+        });
+      })();
+    });
+  }
+
   function load() {
     if (indices) { return Promise.resolve(indices); }
     if (loading) { return loading; }
+    var day = CFG.dataDate || "";
+    var paths = CFG.lists.map(function (l) { return l.path; });
     var acc = {};
     var done = 0;
-    setStatus("Loading " + fmt(expectedCount()) + " indicators…", "");
-    loading = Promise.all(CFG.lists.map(function (l) {
-      return fetch(CFG.raw + l.path, { mode: "cors" })
-        .then(function (r) {
-          if (!r.ok) { throw new Error(l.path + " -> HTTP " + r.status); }
-          return r.text();
-        })
-        .then(function (text) {
+
+    setStatus("Loading " + fmt(expectedCount()) + " indicators\u2026", "");
+
+    loading = cacheRead(paths, day).then(function (hit) {
+      if (hit) {
+        CFG.lists.forEach(function (l) { acc[l.key] = buildIndex(hit[l.path]); });
+        setStatus("Loading lists\u2026 cached copy", "");
+        return acc;
+      }
+      var texts = [];
+      return Promise.all(CFG.lists.map(function (l) {
+        return fetchText(l.path, function (p) {
+          setStatus(
+            "Loading " + l.path + "\u2026 " + Math.round(p * 100) + "% (" +
+            (done + 1) + "/" + CFG.lists.length + " files)", ""
+          );
+        }).then(function (text) {
+          texts.push({ path: l.path, text: text });
           acc[l.key] = buildIndex(text);
           done += 1;
           setStatus(
-            "Loading lists… " + done + "/" + CFG.lists.length +
+            "Loading lists\u2026 " + done + "/" + CFG.lists.length +
             " (" + fmt(acc[l.key].size) + " " + labelFor(l.key).toLowerCase() + ")",
             ""
           );
+          return acc;
         });
-    })).then(function () {
+      })).then(function () {
+        cacheWrite(texts, day);
+        return acc;
+      });
+    }).then(function () {
       indices = acc;
       var stale = CFG.stale
         ? " · STALE: the nightly run failed, these lists are from " + CFG.dataDate

@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "generated_at": "2026-11-25T15:13:42+00:00",
+  "data_date": "2026-11-25",
+  "counts": {
+    "ips": 148558,
+    "domains": 2630,
+    "hashes": 3932,
+    "published": 155120
+  },
+  "raw_entries": 229839,
+  "feeds": [
+    {
+      "name": "ssl_blacklist.csv",
+      "status": "ok",
+      "detail": "838.1 KB | ~11385 entries"
+    },
+    {
+      "name": "feodo_tracker.txt",
+      "status": "expected",
+      "detail": "Empty (0.6 KB) - this may be expected"
+    },
+    {
+      "name": "top_malicious.txt",
+      "status": "ok",
+      "detail": "2251.5 KB | ~142311 entries"
+    },
+    {
+      "name": "urlhaus.csv",
+      "status": "ok",
+      "detail": "14476.8 KB | ~60681 entries"
+    },
+    {
+      "name": "threatfox_recent.json",
+      "status": "ok",
+      "detail": "12001.7 KB | ~15362 entries"
+    },
+    {
+      "name": "malwarebazaar_recent.json",
+      "status": "ok",
+      "detail": "127.2 KB | ~100 entries"
+    }
+  ],
+  "feeds_with_data": 5,
+  "feeds_total": 6,
+  "churn": {
+    "date": "2026-11-25",
+    "entered": 27213,
+    "dropped": 15364
+  },
+  "files": {
+    "malicious-ips.txt": {
+      "entries": 148558,
+      "bytes": 3046699,
+      "sha256": "ee9de279f4c7f835ab38fa17bf84ab8c7d1114c5f9d2a0feed0235981bc15343",
+      "url": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-ips.txt"
+    },
+    "malicious-domains.txt": {
+      "entries": 2630,
+      "bytes": 81324,
+      "sha256": "96a42bb9047b6cd0d0391a6a777cd011b3bcf3dd1f2c074bfa14050f9139626e",
+      "url": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-domains.txt"
+    },
+    "malicious-hashes.txt": {
+      "entries": 3932,
+      "bytes": 281187,
+      "sha256": "b0a66d1140d19fff64c4cd5262fc12e961b4e1756db3a4af9776b467c6effd77",
+      "url": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-hashes.txt"
+    }
+  },
+  "format": {
+    "encoding": "utf-8",
+    "line": "<indicator>[:<feeds>[|<feeds>...][:<confidence>]]",
+    "notes": "CDB list: the key is the whole indicator; an optional tail carries provenance so the same file can answer 'which feed, at what confidence'. Wazuh matches keys only, so the tail never changes what a rule catches."
+  },
+  "history": "https://jaguarmayan8.github.io/OpenIOCCollector/history.json",
+  "repo": "https://github.com/jaguarmayan8/OpenIOCCollector",
+  "docs": "https://jaguarmayan8.github.io/OpenIOCCollector/",
+  "license": "GPL-3.0-or-later"
+}
