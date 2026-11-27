@@ -1001,5 +1001,17 @@
 "feeds_total": 6,
 "new": 19250,
 "dropped": 18627
+},
+{
+"date": "2026-11-27",
+"ips": 152279,
+"domains": 3489,
+"hashes": 4237,
+"published": 160005,
+"raw": 215234,
+"feeds_with_data": 5,
+"feeds_total": 6,
+"new": 19897,
+"dropped": 15635
 }
 ]

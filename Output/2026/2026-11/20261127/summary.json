@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "generated_at": "2026-11-27T14:04:22+00:00",
+  "run_label": "2026-11-27 14:04",
+  "feeds": [
+    {
+      "name": "ssl_blacklist.csv",
+      "ok": true,
+      "detail": "838.5 KB | ~11391 entries",
+      "iocs": 11391
+    },
+    {
+      "name": "feodo_tracker.txt",
+      "ok": false,
+      "detail": "Empty (0.6 KB) - this may be expected",
+      "iocs": 0
+    },
+    {
+      "name": "top_malicious.txt",
+      "ok": true,
+      "detail": "2299.3 KB | ~145238 entries",
+      "iocs": 145238
+    },
+    {
+      "name": "urlhaus.csv",
+      "ok": true,
+      "detail": "9290.6 KB | ~40796 entries",
+      "iocs": 40796
+    },
+    {
+      "name": "threatfox_recent.json",
+      "ok": true,
+      "detail": "13809.5 KB | ~17709 entries",
+      "iocs": 17709
+    },
+    {
+      "name": "malwarebazaar_recent.json",
+      "ok": true,
+      "detail": "145.8 KB | ~100 entries",
+      "iocs": 100
+    }
+  ],
+  "feeds_with_data": 5,
+  "feeds_total": 6,
+  "raw_entries": 215234
+}
