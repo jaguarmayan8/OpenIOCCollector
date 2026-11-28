@@ -1,19 +1,19 @@
 {
   "schema": 1,
-  "generated_at": "2026-11-27T14:09:47+00:00",
-  "data_date": "2026-11-27",
+  "generated_at": "2026-11-28T13:27:42+00:00",
+  "data_date": "2026-11-28",
   "counts": {
-    "ips": 152279,
-    "domains": 3489,
-    "hashes": 4237,
-    "published": 160005
+    "ips": 153777,
+    "domains": 3259,
+    "hashes": 3811,
+    "published": 160847
   },
-  "raw_entries": 215234,
+  "raw_entries": 212305,
   "feeds": [
     {
       "name": "ssl_blacklist.csv",
       "status": "ok",
-      "detail": "838.5 KB | ~11391 entries"
+      "detail": "838.6 KB | ~11392 entries"
     },
     {
       "name": "feodo_tracker.txt",
@@ -23,48 +23,48 @@
     {
       "name": "top_malicious.txt",
       "status": "ok",
-      "detail": "2299.3 KB | ~145238 entries"
+      "detail": "2318.8 KB | ~146370 entries"
     },
     {
       "name": "urlhaus.csv",
       "status": "ok",
-      "detail": "9290.6 KB | ~40796 entries"
+      "detail": "8201.5 KB | ~36660 entries"
     },
     {
       "name": "threatfox_recent.json",
       "status": "ok",
-      "detail": "13809.5 KB | ~17709 entries"
+      "detail": "13897.3 KB | ~17783 entries"
     },
     {
       "name": "malwarebazaar_recent.json",
       "status": "ok",
-      "detail": "145.8 KB | ~100 entries"
+      "detail": "147.0 KB | ~100 entries"
     }
   ],
   "feeds_with_data": 5,
   "feeds_total": 6,
   "churn": {
-    "date": "2026-11-27",
-    "entered": 19897,
-    "dropped": 15635
+    "date": "2026-11-28",
+    "entered": 17549,
+    "dropped": 16707
   },
   "files": {
     "malicious-ips.txt": {
-      "entries": 152279,
-      "bytes": 3129118,
-      "sha256": "e2e3757fbf526353c098a0f0cf42314272bd27ebf3c85b09f7b3bec3cb4e40fb",
+      "entries": 153777,
+      "bytes": 3163539,
+      "sha256": "c785b48828fda36ea5e00e74aac39a4237abc825e0d19e141827a53801baa200",
       "url": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-ips.txt"
     },
     "malicious-domains.txt": {
-      "entries": 3489,
-      "bytes": 109598,
-      "sha256": "cf7d4d890c7075ec8b4aee8f65859f3571adf03dace2c3e775fc588e200c95ab",
+      "entries": 3259,
+      "bytes": 102457,
+      "sha256": "e39c1490f91ece66eb8ce39b3ef7999be282dcf14f740f6ec31ff9afe6878a70",
       "url": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-domains.txt"
     },
     "malicious-hashes.txt": {
-      "entries": 4237,
-      "bytes": 297403,
-      "sha256": "72ec8c213acbc68ca7c4b2996693dbd9d002839f4f17200a9000c3d8f7435849",
+      "entries": 3811,
+      "bytes": 268774,
+      "sha256": "cb28bdcecda7a450210c4929871b225ff22e39f2fc752654ef3aa4ecd740344c",
       "url": "https://raw.githubusercontent.com/jaguarmayan8/OpenIOCCollector/main/malicious-hashes.txt"
     }
   },
